@@ -11,6 +11,7 @@
 |
 */
 
+<<<<<<< HEAD
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,3 +19,6 @@ Route::get('/', function () {
 Route::get('/layout', function() {
     return view('layouts/layout');
 });
+=======
+Route::get('/', 'welcomeController@index');
+>>>>>>> 5cbe66da58cd8aead46454d17b2f656938d8781b
