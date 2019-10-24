@@ -37,7 +37,7 @@
 </head>
 @yield('popUp')
 
-<body class="theme-red">
+<body class="theme-blue-grey">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -180,6 +180,7 @@
     <!-- #Content -->
     <section class="content">
         <div class="container-fluid">
+
             @yield('content')
         </div>
     </section>
