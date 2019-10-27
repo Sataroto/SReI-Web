@@ -1,45 +1,34 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
+<?php
+    $array = [
+        'opcion 1',
+        'opcion 2',
+        'opcion 3',
+        'opcion 4',
+    ];
+?>
+@extends('layouts.layout')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('title')
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+@stop()
 
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
+@section('css')
 
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
+@stop()
 
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
+@section('popUp')
+@stop()
 
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
-            </div>
-        </div>
-    </body>
-</html>
+@section('content')
+    @if($sp == null)
+        <label>no conectado</label>
+    @else
+        @foreach($sp as $s)
+            <label>{{$s->nombre}}</label><br/>
+        @endforeach
+    @endif
+@stop
+
+@section('scripts')
+
+@stop()

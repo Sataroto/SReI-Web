@@ -41,6 +41,11 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+/* Configuraciones para usar mongo con Eloquent*/
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
+
+//$app->withEloquent();
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

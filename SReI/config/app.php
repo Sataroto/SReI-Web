@@ -148,6 +148,9 @@ return [
         /*HTML Service Provider*/
         Collective\Html\HtmlServiceProvider::class,
 
+        /*MongoDB Service Provider*/
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
+
     ],
 
     /*
