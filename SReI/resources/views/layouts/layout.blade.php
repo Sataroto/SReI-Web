@@ -92,7 +92,7 @@
         <aside id="leftsidebar" class="sidebar">
             <!-- User Info -->
             <div class="user-info">
-                <div class="image">
+                  <div class="image">
                     <img src="{{asset('Template/images/user.png')}}" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
@@ -104,7 +104,6 @@
             <!-- Menu -->
             <div class="menu">
                 <ul class="list">
-                    <li class="header">MAIN NAVIGATION</li>
                     <li class="active-">
                         <a href="">
                             <i class="material-icons">home</i>
