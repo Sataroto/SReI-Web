@@ -17,3 +17,11 @@ Route::get('/layout', function() {
 });
 
 Route::get('/', 'welcomeController@index');
+
+Route::get('/registroMaquina', 'MaquinariaController@create');
+Route::get('/listaMaquina', 'MaquinariaController@list');
+
+Route::get('/create', 'welcomeController@formCreate');
+Route::post('/create', 'welcomeController@create');
+
+Route::post('/registro', 'welcomeController@registrar');
