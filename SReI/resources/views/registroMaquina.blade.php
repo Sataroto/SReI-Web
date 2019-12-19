@@ -35,6 +35,21 @@
                                     {!!Form::text('modelo', null, ['class'=>'form-control', 'placeholder'=>'Modelo de la maquina', 'id'=>'modelo'])!!}
                                 </div>
                             </div>
+
+                            <h2 class="card-inside-title">Checklist</h2>
+                            <div class="row clearfix">
+                                <div class="col-md-6">
+                                    <div class="input-group spinner" data-trigger="spinner">
+                                        <div class="form-line">
+                                            {!!Form::text('nCheckList',1,['class'=>'form-control text-center', 'data-rule'=>'quantity','id'=>'nCheckList'])!!}
+                                        </div>
+                                        <span class="input-group-addon">
+                                            <a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                                            <a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -7558,15 +7558,15 @@ fieldset[disabled] .form-control {
       margin-top: 5px;
       font-size: 13px; }
   .sidebar .user-info {
-    align-items: center;
-    justify-content: center;
+    padding: 13px 15px 12px 15px;
+    white-space: nowrap;
+    position: relative;
     border-bottom: 1px solid #e9e9e9;
-    background: #607D8B;
+    background: url("../images/user-img-background.jpg") no-repeat no-repeat;
     height: 135px; }
     .sidebar .user-info .image {
-        padding-left:  40%;
-        padding-top: 5%;
-      }
+      margin-right: 12px;
+      display: inline-block; }
       .sidebar .user-info .image img {
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
@@ -7575,10 +7575,9 @@ fieldset[disabled] .form-control {
         vertical-align: bottom !important; }
     .sidebar .user-info .info-container {
       cursor: default;
-      top: 25px;
-      padding-left:  15%;
-      padding-top: 5%;
-    text-align: center;}
+      display: block;
+      position: relative;
+      top: 25px; }
       .sidebar .user-info .info-container .name {
         white-space: nowrap;
         -ms-text-overflow: ellipsis;
@@ -7598,7 +7597,7 @@ fieldset[disabled] .form-control {
         max-width: 200px;
         color: #fff; }
       .sidebar .user-info .info-container .user-helper-dropdown {
-        position: relative;
+        position: absolute;
         right: -3px;
         bottom: -12px;
         -webkit-box-shadow: none;
@@ -7622,7 +7621,7 @@ fieldset[disabled] .form-control {
         font-weight: 600;
         padding: 8px 16px; }
       .sidebar .menu .list i.material-icons {
-        margin-top: 5px; }
+        margin-top: 4px; }
       .sidebar .menu .list .menu-toggle:after, .sidebar .menu .list .menu-toggle:before {
         position: absolute;
         top: calc(50% - 14px);
