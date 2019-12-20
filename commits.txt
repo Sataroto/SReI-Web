@@ -1,0 +1,91 @@
+commit 9c3b4e715d0ca65853504a1d5a71d80f3f7243c3
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Thu Dec 19 17:32:03 2019 -0600
+
+    arreglos menores en layout
+
+commit ab699dfca19b38560b7c5ce6c65f7d1a20d1b59c
+Merge: 78c5eaf e80ad9f
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Wed Nov 27 23:03:10 2019 -0600
+
+    Controlador de maquinaria, modelo de Equipo, prototipos de formulario y listado de maquinas
+
+commit 78c5eafbaaa80210fa14ef060631fa7404951dac
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Wed Nov 27 23:02:34 2019 -0600
+
+    controlador de maquinaria, modelo de equipo, registr y listado de maquinaria
+
+commit e80ad9f9306373dfa9cba1bbfb1da149d01877d0
+Author: orlandobel <40770494+orlandobel@users.noreply.github.com>
+Date:   Fri Nov 15 19:06:51 2019 -0600
+
+    Create README.md
+
+commit 80ef2fe6c1f87f5246553bae160a7f0fd2697c23
+Author: Guillermo Bautista <guillermo.bg99@gmail.com>
+Date:   Wed Oct 30 22:51:25 2019 -0600
+
+    IntentoLayout 1 byMemo
+
+commit b602b389976991b6f693c8302d7fa6b27ae5b77f
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Sat Oct 26 23:04:01 2019 -0500
+
+    Mongo was connet
+
+commit 1d745f4a710d9243467da70d7d2433ffd0e0cb1a
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Thu Oct 24 13:16:21 2019 -0500
+
+    color de layout y HTMLFacades
+
+commit 0c19dcd54f567397e443ce7924bedd9a75da9750
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Sat Oct 19 20:19:09 2019 -0500
+
+    Layout base terminado, rutas de redireccion pendientes
+
+commit 525d6a16ef8c0d1cb2bd52d948e3764bbe4c8cc7
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Sat Oct 19 18:34:02 2019 -0500
+
+    layout empezado
+
+commit 8213e4f81514784f8cd9255ab89799b78a4ba51d
+Merge: 04ccf3c 5cbe66d
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Sat Oct 19 18:29:06 2019 -0500
+
+    layout empezado
+
+commit 04ccf3cf2575f46bfc3ba74bce8f2f7291d91a40
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Sat Oct 19 18:28:14 2019 -0500
+
+    layout empezado
+
+commit 5cbe66da58cd8aead46454d17b2f656938d8781b
+Author: IzaccBelmont <jisagiizacc@gmail.com>
+Date:   Fri Oct 11 19:35:43 2019 -0500
+
+    Se agrega el controlador de welcome y se edita la ruta para que funcione a partir del controlador
+
+commit 9985e1f0f550b8a7e9cdbbe387666a6513fa0e79
+Author: IzaccBelmont <jisagiizacc@gmail.com>
+Date:   Fri Oct 4 01:10:49 2019 -0500
+
+    error
+
+commit 9232b726b6b1d79911dc8561bd7984eab9f79eb2
+Author: IzaccBelmont <jisagiizacc@gmail.com>
+Date:   Fri Oct 4 00:51:22 2019 -0500
+
+    Repositorio para el desarrollo web de SReI junto con la plantilla Boostrap Admin material
+
+commit 178ae20cab51f4d202a7183b84fbf09fbaae2f42
+Author: IzaccBelmont <jisagiizacc@gmail.com>
+Date:   Fri Oct 4 00:35:37 2019 -0500
+
+    initial commit
