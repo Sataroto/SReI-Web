@@ -19,6 +19,7 @@ Route::get('/layout', function() {
 Route::get('/', 'welcomeController@index');
 
 Route::get('/registroMaquina', 'MaquinariaController@create');
+Route::post('/registroMaquina', 'MaquinariaController@store');
 Route::get('/listaMaquina', 'MaquinariaController@list');
 
 Route::get('/create', 'welcomeController@formCreate');

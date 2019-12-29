@@ -351,15 +351,14 @@
     <!-- Bootstrap Tags Input Plugin Js -->
     <script src="{{asset('Template/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')}}"></script>
 
-    <!-- noUISlider Plugin Js -->
-    <script src="{{asset('Template/plugins/nouislider/nouislider.js')}}"></script>
+
 
     <!-- Waves Effect Plugin Js -->
     <script src="{{asset('Template/plugins/node-waves/waves.js')}}"></script>
 
     <!-- Custom Js -->
     <script src="{{asset('Template/js/admin.js')}}"></script>
-    <script src="{{asset('Template/js/pages/forms/advanced-form-elements.js')}}"></script>
+    
 
     <!-- Demo Js -->
     <script src="{{asset('Template/js/demo.js')}}"></script>
