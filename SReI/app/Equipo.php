@@ -12,6 +12,19 @@ class Equipo extends Eloquent
     protected $connection = 'mongodb';
     protected $collection = 'Equipo';
 
+    protected $fillable = [
+        'tipo',
+        'nombre',
+        'estado',
+        'propietario',
+        'mantenimientos',
+        'mantenimiento',
+        'caracteristicas',
+        'descripcion',
+        'especificaciones',
+        'checklist'
+    ];
+
     /*
         Genera la relación de 'Equipo' con 'checklist' para llenar el arreglo
         de checklist

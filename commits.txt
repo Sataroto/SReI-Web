@@ -1,3 +1,15 @@
+commit 83a525e7835ea25510de1d7d017c6a006957e119
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Sun Dec 29 12:07:11 2019 -0600
+
+    Formulario de maquinas terminado y registro a base de datos
+
+commit b012441e30ca4b2a09dc394561a85dff76532592
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Thu Dec 19 18:25:46 2019 -0600
+
+    arreglos en importaciones de layout
+
 commit 9c3b4e715d0ca65853504a1d5a71d80f3f7243c3
 Author: orlanobel <orlando.bel.jimmy@gmail.com>
 Date:   Thu Dec 19 17:32:03 2019 -0600

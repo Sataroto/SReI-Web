@@ -23,6 +23,10 @@ class MaquinariaController extends Controller
     }
 
     public function list() {
+        /*
+            Busqueda de los objetos de 'Equipo' de tipo 'maquinaria' dentro de
+            la base de datos
+        */
         $maquinaria = Equipo::where('tipo','=','maquinaria')->get();
 
         $array = [
@@ -51,34 +55,36 @@ class MaquinariaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $maquina = new Equipo(); // Creación de objeto 'Equipo'
-
-        /*Inicialización de los atributos*/
-        $maquina->tipo = "maquinaria";
-        $maquina->nombre = $request->nombre;
-        $maquina->estado = 0.0;
-        $maquina->Propietario = 'ObjectId("5dd9f07fa37ae152693bc5ea")';
-        $maquina->mantenimientos = [];
-        $maquina->mantenimiento = null;
-        $maquina->caracteristicas = [
-            $request->fabricante,
-            $request->modelo
-        ];
-        $maquina->descripcion = "";
-        $maquina->observaciones = "";
-        $maquinaria->checklist = [];
-
-        $maquina->save(); // Guardado del objeto 'Equipo' dentro de la base de datos
+        // Creación de objeto 'Equipo' dentro de la base de datos
+        $maquina = Equipo::create([
+            'tipo' => "maquinaria",
+            'nombre' => $request->nombre,
+            'estado' => 0.0,
+            'propietario' => 'ObjectId("5dd9f07fa37ae152693bc5ea")',
+            'mantenimientos' => [],
+            'caracteristicas' => [
+                $request->fabricante,
+                $request->modelo
+            ],
+            'descripcion' => "",
+            'observaciones' => "",
+            'checklist' => [],
+        ]);
 
         // Recorrer el arreglo de checklist tomado del forulario
         foreach ($request->checklist as $ch) {
-            $check = new checklist(); // Creació de un objeto 'checklist'
+
             /*
-                El objeto 'checklist' tiene un modelo pero no una colección
-                dentro de la base de datos, siendo un objeto embebido o
-                subcolección del objeto 'Equipo'
+            El objeto 'checklist' tiene un modelo pero no una colección
+            dentro de la base de datos, siendo un objeto embebido o
+            subcolección del objeto 'Equipo'
             */
+            // Creació de un objeto 'checklist'
+            $check = $maquina->checklist()->create([
+                'nomenclatura' => $ch,
+                'estado' => 1.0,
+            ]);
+            /*$check = new checklist();
 
             // Vease el modelo de checklist para asigar los siguientes atributos
             $check->nomenclatura = $ch;
@@ -88,7 +94,7 @@ class MaquinariaController extends Controller
                 Guardado del objeto 'checklist dentro de su arreglo en el objeto
                 'Equipo'
             */
-            $check = $maquina->checklist()->save($check);
+            //$check = $maquina->checklist()->save($check);
         }
 
         return redirect('/registroMaquina');
