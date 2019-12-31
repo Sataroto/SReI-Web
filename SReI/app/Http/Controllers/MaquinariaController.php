@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 use App\Equipo;
 use App\checklist;
+use \App\Laboratorio;
+use MongoDB\BSON\ObjectID;
 
 class MaquinariaController extends Controller
 {
@@ -44,7 +46,14 @@ class MaquinariaController extends Controller
     public function create()
     {
         //
-        return view('registroMaquina');
+
+        $laboratorios = Laboratorio::where('edificio', '=', 'Pesados 1')->lists('nombre','_id');
+
+        $array = [
+            'laboratorios' => $laboratorios,
+        ];
+
+        return view('registroMaquina', $array);
     }
 
     /**
@@ -59,14 +68,22 @@ class MaquinariaController extends Controller
         $maquina = Equipo::create([
             'tipo' => "maquinaria",
             'nombre' => $request->nombre,
-            'estado' => 0.0,
-            'propietario' => 'ObjectId("5dd9f07fa37ae152693bc5ea")',
+
+            /*
+                Estados :
+                    0 -> Dañado
+                    1 -> en buen estado
+                    2 -> en mantenimiento
+            */
+            'estado' => 1.0,
+            'disponible' => true,
+            'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
+            'laboratorio' => new ObjectId($request->laboratorio),
             'mantenimientos' => [],
             'caracteristicas' => [
                 $request->fabricante,
                 $request->modelo
             ],
-            'descripcion' => "",
             'observaciones' => "",
             'checklist' => [],
         ]);

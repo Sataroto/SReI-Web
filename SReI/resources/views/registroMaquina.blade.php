@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <div class="form-line" id="ds_datepicker_container">
                                     {!!Form::select('laboratorio',
-                                        ['soldadura','otro'], 0,
+                                        $laboratorios, 0,
                                         ['class'=>'form-control',
                                         'id'=>'laboratorio'])!!}
                                 </div>

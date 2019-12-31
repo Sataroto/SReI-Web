@@ -25,11 +25,12 @@
                     <!--Cabecera de la tabla -->
                     <thead>
                         <tr>
-                            <th>Nombre de la maquina</th>
                             <th>Código</th>
+                            <th>Nombre de la maquina</th>
                             <th>Fabricante</th>
                             <th>Modelo</th>
                             <th>Estado</th>
+                            <th>Laboratorio</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -40,20 +41,24 @@
                         @unless($maquina == null)
                             @foreach($maquina as $m)
                                 <tr>
-                                    <th scope="row">{{$m->nombre}}</th>
-                                    <td>some code</td>
+                                    <th>{{$m->_id}}</th>
+                                    <td scope="row">{{$m->nombre}}</td>
                                     <td>{{$m->caracteristicas[0]}}</td>
                                     <td>{{$m->caracteristicas[1]}}</td>
                                     <td>
                                         @if($m->estado == 0)
-                                            Disponible
-                                        @elseif($m->estado == 1)
-                                            Ocupado
-                                        @elseif($m->estado == 2)<!Este estado esta sujeto a cambios>
-                                            En mantenimiento
-                                        @elseif($m->estado == 3)
                                             Averiado
+                                        @elseif($m->estado == 1)
+                                            En buen estado
+                                        <!Este estado esta sujeto a cambios>
+                                        @elseif($m->estado == 2)
+                                            En mantenimiento
                                         @endif
+                                    </td>
+                                    <td>
+                                        @unless($m->laboratorio == null)
+                                            {{$m->lab->nombre}}
+                                        @endunless
                                     </td>
 
                                     <!-- Botones de acción -->

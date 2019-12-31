@@ -16,7 +16,9 @@ class Equipo extends Eloquent
         'tipo',
         'nombre',
         'estado',
+        'disponible',
         'propietario',
+        'laboratorio',
         'mantenimientos',
         'mantenimiento',
         'caracteristicas',
@@ -25,6 +27,10 @@ class Equipo extends Eloquent
         'checklist'
     ];
 
+    public function lab() {
+        return $this->hasOne('\App\Laboratorio', '_id', 'laboratorio');
+    }
+
     /*
         Genera la relación de 'Equipo' con 'checklist' para llenar el arreglo
         de checklist
@@ -32,4 +38,5 @@ class Equipo extends Eloquent
     public function checklist() {
         return $this->embedsMany('App\checklist');
     }
+
 }
