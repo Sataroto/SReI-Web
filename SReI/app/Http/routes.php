@@ -21,6 +21,7 @@ Route::get('/', 'welcomeController@index');
 Route::get('/registroMaquina', 'MaquinariaController@create');
 Route::post('/registroMaquina', 'MaquinariaController@store');
 Route::get('/listaMaquina', 'MaquinariaController@list');
+Route::get('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
 
 Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');

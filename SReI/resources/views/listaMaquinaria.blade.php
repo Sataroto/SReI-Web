@@ -40,9 +40,9 @@
                     <tbody>
                         @unless($maquina == null)
                             @foreach($maquina as $m)
-                                <tr>
-                                    <th>{{$m->_id}}</th>
-                                    <td scope="row">{{$m->nombre}}</td>
+                                <tr id="{{$m->_id}}">
+                                    <th scope="row">{{$m->_id}}</th>
+                                    <td>{{$m->nombre}}</td>
                                     <td>{{$m->caracteristicas[0]}}</td>
                                     <td>{{$m->caracteristicas[1]}}</td>
                                     <td>
@@ -62,20 +62,35 @@
                                     </td>
 
                                     <!-- Botones de acción -->
-                                    <td>
+                                    <th id="action_buttons">
                                         <button type="button"
-                                            class="btn btn-primary m-t-15 waves-effect">
+                                            class="btn btn-primary m-t-15 waves-effect"
+                                            onclick="edit('{{$m->_id}}');">
 
                                             <i class="material-icons">mode_edit</i>
                                         </button>
-                                        <button type="button"
+                                        <a href="/maquinaria/eliminar/{{$m->_id}}"
                                             class="btn btn-danger m-t-15 waves-effect">
 
                                             <i class="material-icons">delete</i>
-                                        </button>
-                                    </td>
-
+                                        </a>
+                                    </th>
                                     <!-- Fin de botones de acción -->
+
+                                    <th id="edit_buttons" hidden>
+                                        <button type="button"
+                                            class="btn btn-primary m-t-15 waves-effect"
+                                            onclick="edit('{{$m->_id}}');">
+
+                                            <i class="material-icons">send</i>
+                                        </button>
+                                        <button type="button"
+                                            class="btn btn-danger m-t-15 waves-effect"
+                                            onclick="cancel('{{$m->_id}}')">
+
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </th>
                                 </tr>
                             @endforeach
                         @endunless
@@ -88,3 +103,7 @@
 </div>
 <!-- Fin del contenedor de la lista -->
 @stop()
+
+@section('js')
+<script src="{{asset('Template/custom-js/editMaquina.js')}}"></script>
+@stop

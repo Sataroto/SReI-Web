@@ -160,5 +160,9 @@ class MaquinariaController extends Controller
     public function destroy($id)
     {
         //
+
+        Equipo::find($id)->delete();
+
+        return redirect('/listaMaquina');
     }
 }
