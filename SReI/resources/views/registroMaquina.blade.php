@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="body">
                     <!-- Inicio del formulario -->
-                    {!!Form::open(array('url'=>'/registroMaquina',
+                    {!!Form::open(array('url'=>'/maquinaria/nuevo',
                         'id'=>'addMaquinaForm', 'method'=>'POST'))!!}
                     <div class="row clearfix">
                         <div class="col-xs-3">

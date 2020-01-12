@@ -85,7 +85,7 @@ function initiChecklist() {
     a = document.getElementById('n_checklist').value;
 
     for(i=1; i<=a; i++) {
-        
+
         /*
             Crea el numero de campos de checklist con la misma estructura
             mostrada arriba

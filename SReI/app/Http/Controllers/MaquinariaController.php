@@ -30,9 +30,11 @@ class MaquinariaController extends Controller
             la base de datos
         */
         $maquinaria = Equipo::where('tipo','=','maquinaria')->get();
+        $laboratorios = Laboratorio::where('edificio', '=', 'Pesados 1')->lists('nombre','_id');
 
         $array = [
-            'maquina' => $maquinaria
+            'maquina' => $maquinaria,
+            'laboratorios' => $laboratorios
         ];
 
         return view('listaMaquinaria', $array);
@@ -114,7 +116,7 @@ class MaquinariaController extends Controller
             //$check = $maquina->checklist()->save($check);
         }
 
-        return redirect('/registroMaquina');
+        return redirect('/maquinaria/nuevo');
     }
 
     /**
@@ -137,6 +139,7 @@ class MaquinariaController extends Controller
     public function edit($id)
     {
         //
+        return response()->json(['success'=>'Got Simple Ajax Request.']);
     }
 
     /**
@@ -149,6 +152,22 @@ class MaquinariaController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $maquina = Equipo::find($id);
+
+
+        $maquina->update([
+            'nombre' => $request->nombre,
+            'estado' => $request->estado,
+            'caracteristicas' => [
+                $request->fabricante,
+                $request->modelo
+            ],
+            'laboratorio' => new ObjectId($request->laboratorio)
+
+        ]);
+
+        return response()->json(['success'=>'Got Simple Ajax Request.']);
     }
 
     /**
@@ -163,6 +182,6 @@ class MaquinariaController extends Controller
 
         Equipo::find($id)->delete();
 
-        return redirect('/listaMaquina');
+        return response()->json(['success'=>'Got Simple Ajax Request.']);
     }
 }
