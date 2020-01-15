@@ -25,7 +25,7 @@
                                 <div class="form-line" id="bs_datepicker_container">
                                     {!!Form::text('nombre', null,
                                         ['class'=>'form-control',
-                                        'placeholder'=>'nombre de la maquina',
+                                        'placeholder'=>'nombre del equipo',
                                         'id'=>'nombre'])!!}
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                                 <div class="form-line">
                                     {!!Form::text('fabricante', null,
                                         ['class'=>'form-control',
-                                        'placeholder'=>'Fabricante de la maquina',
+                                        'placeholder'=>'Fabricante del equipo',
                                         'id'=>'fabricante'])!!}
                                 </div>
                             </div>
@@ -55,47 +55,37 @@
                                 <div class="form-line">
                                     {!!Form::text('modelo', null,
                                         ['class'=>'form-control',
-                                        'placeholder'=>'Modelo de la maquina',
+                                        'placeholder'=>'Modelo del equipo',
                                         'id'=>'modelo'])!!}
                                 </div>
                             </div>
-
-                            <!--seccion de checklist-->
-                            <h2 class="card-inside-title">Checklist</h2>
-                            <div class="row clearfix">
-                                <div class="col-md-6">
-                                    <div class="input-group spinner" data-trigger="spinner">
-                                        <div class="form-line">
-                                            {!!Form::text('n_checklist', 1,
-                                                ['class'=>'form-control text-center',
-                                                'onchange'=>'updateCheklist();',
-                                                'data-rule'=>'quantity',
-                                                'id'=>'n_checklist'])!!}
-                                        </div>
-
-                                        <span class="input-group-addon">
-                                            <a href="javascript:;" class="spin-up"
-                                                data-spin="up" id="add">
-
-                                                <i class="glyphicon glyphicon-chevron-up"></i>
-                                            </a>
-                                            <a href="javascript:;" class="spin-down"
-                                                data-spin="down" id="rmv">
-
-                                                <i class="glyphicon glyphicon-chevron-down"></i>
-                                            </a>
-                                        </span>
-                                    </div>
+                            <h2 class="card-inside-title">Descripción</h2>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {!!Form::textarea('descrip', null,
+                                        ['class'=>'form-control',
+                                        'placeholder'=>'Descripción',
+                                        'id'=>'modelo'])!!}
                                 </div>
                             </div>
-
-                            <!-- Sección de checklist -->
-                            <table id="checkList_table">
-                                <div id="checklist_container">
-
+                            <h2 class="card-inside-title">Número de serie</h2>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {!!Form::text('serie', null,
+                                        ['class'=>'form-control',
+                                        'placeholder'=>'Serie de equipo',
+                                        'id'=>'modelo'])!!}
                                 </div>
-                            </table>
-                            <!-- Fin del checklist -->
+                            </div>
+                            <h2 class="card-inside-title">Procedencia</h2>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {!!Form::text('procede', null,
+                                        ['class'=>'form-control',
+                                        'placeholder'=>'Procedencia',
+                                        'id'=>'modelo'])!!}
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-primary waves-effect">Enviar</button>
                         </div>
                     </div>

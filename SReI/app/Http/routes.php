@@ -18,8 +18,15 @@ Route::get('/layout', function() {
 
 Route::get('/', 'welcomeController@index');
 
+//---Equipo de Electronica---//
+Route::get('/equipoElectronica/nuevo', 'EquipoElectronicaController@create');
+Route::post('/equipoElectronica/nuevo', 'EquipoElectronicaController@store');
+Route::get('/equipoElectronica/lista', 'EquipoElectronicaController@list');
+Route::patch('/equipoElectronica/edit/{id}', 'EquipoElectronicaController@update');
+
+//---Maquinaria---//
 //Route::get('/maquinaria/nuevo', 'MaquinariaController@create');
-//Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
+Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
 Route::patch('/maquinaria/edit/{id}', 'MaquinariaController@update');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');

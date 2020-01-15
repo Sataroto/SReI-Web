@@ -27,8 +27,8 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    Maquinaria
-                    <small>Lista de maquinaria en los laboratorios de pesados</small>
+                    Electrónica
+                    <small>Lista de equipo en los laboratorios de ligeros</small>
                 </h2>
             </div>
             <!-- Inicio de la tabla -->
@@ -38,11 +38,14 @@
                     <thead>
                         <tr>
                             <th>Código</th>
-                            <th>Nombre de la maquina</th>
+                            <th>Nombre del equipo</th>
                             <th>Fabricante</th>
                             <th>Modelo</th>
                             <th>Estado</th>
                             <th>Laboratorio</th>
+                            <th>Descripción</th>
+                            <th># de Serie</th>
+                            <th>Procedencia</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -50,8 +53,8 @@
 
                     <!-- Cuerpo de la tabla -->
                     <tbody>
-                        @unless($maquina == null)
-                            @foreach($maquina as $m)
+                        @unless($equipoElectronica == null)
+                            @foreach($equipoElectronica as $m)
                                 <tr id="{{$m->_id}}">
                                     <th scope="row">{{$m->_id}}</th>
                                     <td>
@@ -96,6 +99,7 @@
                                             </div>
                                         </div>
                                     </td>
+
                                     <td>
                                         @unless($m->laboratorio == null)
                                         <p>
@@ -105,6 +109,47 @@
                                         <div class="form-group" hidden>
                                             <div class="form-line">
                                                 {!!Form::select('estado',$laboratorios,$m->lab->_id,['class'=>'form-control', 'id'=>'estado'])!!}
+                                            </div>
+                                        </div>
+                                        @endunless
+                                    </td>
+
+                                    <td>
+                                        @unless(sizeof($m->caracteristicas)<=2)
+                                        <p>
+                                                {{$m->caracteristicas[2]}}
+                                        </p>
+                                        <b hidden>{{$m->caracteristicas[2]}}</b>
+                                        <div class="form-group" hidden>
+                                            <div class="form-line">
+                                              {!!Form::textarea('descrip', $m->caracteristicas[2],['class'=>'form-control','id'=>'descrip'])!!}
+                                            </div>
+                                        </div>
+                                        @endunless
+                                    </td>
+
+                                    <td>
+                                        @unless(sizeof($m->caracteristicas)<=3)
+                                        <p>
+                                                {{$m->caracteristicas[3]}}
+                                        </p>
+                                        <b hidden>{{$m->caracteristicas[3]}}</b>
+                                        <div class="form-group" hidden>
+                                            <div class="form-line">
+                                                {!!Form::text('numSerie',$m->caracteristicas[3],['class'=>'form-control', 'id'=>'numSerie'])!!}
+                                            </div>
+                                        </div>
+                                        @endunless
+                                    </td>
+                                    <td>
+                                        @unless(sizeof($m->caracteristicas)<=4)
+                                        <p>
+                                                {{$m->caracteristicas[4]}}
+                                        </p>
+                                        <b hidden>{{$m->caracteristicas[4]}}</b>
+                                        <div class="form-group" hidden>
+                                            <div class="form-line">
+                                                {!!Form::text('procede',$m->caracteristicas[4],['class'=>'form-control', 'id'=>'procede'])!!}
                                             </div>
                                         </div>
                                         @endunless
@@ -155,5 +200,5 @@
 @stop()
 
 @section('js')
-<script src="{{asset('Template/custom-js/editMaquina.js')}}"></script>
+<script src="{{asset('Template/custom-js/editEE.js')}}"></script>
 @stop
