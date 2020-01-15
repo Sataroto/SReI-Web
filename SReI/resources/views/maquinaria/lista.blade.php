@@ -20,16 +20,141 @@
 
 @stop
 
+@section('popUp')
+<!-- Default Size -->
+<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+    <!-- Inicio del formulario -->
+    {!!Form::open(array('url'=>'/maquinaria/nuevo', 'id'=>'add_maquina_form',
+    'method'=>'POST'))!!}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <!-- Contenedor del formulario -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-xs-8">
+                                <h5 class="modal-title">Nombre</h5>
+                                <div class="form-group">
+                                    <div class="form-line" id="bs_datepicker_container">
+                                        {!!Form::text('nombre', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'nombre de la maquina',
+                                            'id'=>'nombre'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Laboratorio</h5>
+                                <div class="form-group">
+                                    <div class="form-line" id="ds_datepicker_container">
+                                        {!!Form::select('laboratorio',
+                                            $laboratorios, 0,
+                                            ['class'=>'form-control',
+                                            'id'=>'laboratorio'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Fabricante</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('fabricante', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Fabricante de la maquina',
+                                            'id'=>'fabricante'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Modelo</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('modelo', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Modelo de la maquina',
+                                            'id'=>'modelo'])!!}
+                                    </div>
+                                </div>
+
+                                <!--seccion de checklist-->
+                                <h5 class="card-inside-title">Checklist</h5>
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <div class="input-group spinner" data-trigger="spinner">
+                                            <div class="form-line">
+                                                {!!Form::text('n_checklist', 1,
+                                                    ['class'=>'form-control text-center',
+                                                    'onchange'=>'updateCheklist();',
+                                                    'data-rule'=>'quantity',
+                                                    'id'=>'n_checklist'])!!}
+                                            </div>
+
+                                            <span class="input-group-addon">
+                                                <a href="javascript:;" class="spin-up"
+                                                    data-spin="up" id="add">
+
+                                                    <i class="glyphicon glyphicon-chevron-up"></i>
+                                                </a>
+                                                <a href="javascript:;" class="spin-down"
+                                                    data-spin="down" id="rmv">
+
+                                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección de checklist -->
+                                <table id="checkList_table">
+                                    <div id="checklist_container">
+
+                                    </div>
+                                </table>
+                                <!-- Fin del checklist -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin del contenedor del formulario -->
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-link waves-effect">Enviar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    {!!Form::close()!!}
+    <!-- Fin del formulario -->
+</div>
+@stop
+
 @section('content')
 <!-- Contenedor de la lista -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <p>Corrige los siguientes errores:</p>
+            <ul>
+                @foreach ($errors->all() as $message)
+                <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <div class="card">
             <div class="header">
-                <h2>
-                    Maquinaria
+                <h5>
+                    Maquinaria<br/>
                     <small>Lista de maquinaria en los laboratorios de pesados</small>
-                </h2>
+                </h5>
+                <ul class="header-dropdown m-r--5">
+                    <button type="button" class="btn btn-success waves-effect m-r-20"
+                    data-toggle="modal" data-target="#defaultModal">Nuevo</button>
+                </ul>
             </div>
             <!-- Inicio de la tabla -->
             <div class="body table-responsive">
@@ -117,8 +242,8 @@
                                             onclick="edit('{{$m->_id}}');">
 
                                             <i class="material-icons">mode_edit</i>
-                                        </button>
-                                        <btton type="button"
+                                        </button><br/>
+                                        <button type="button"
                                             class="btn btn-danger m-t-6 waves-effect"
                                             onclick="destroy('{{$m->_id}}');">
 
@@ -133,7 +258,7 @@
                                             onclick="send('{{$m->_id}}');">
 
                                             <i class="material-icons">send</i>
-                                        </button>
+                                        </button><br/>
                                         <button type="button"
                                             class="btn btn-danger m-t-15 waves-effect"
                                             onclick="cancel('{{$m->_id}}')">
@@ -156,4 +281,16 @@
 
 @section('js')
 <script src="{{asset('Template/custom-js/editMaquina.js')}}"></script>
+
+<script src="{{asset('Template/custom-js/maquinariaForm.js')}}"></script>
+
+<script>
+    // Evita que el botón 'Enter' envie el formulario
+    document.getElementById('add_maquina_form').addEventListener('keypress', function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+</script>
+
 @stop

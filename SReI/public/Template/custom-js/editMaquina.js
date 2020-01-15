@@ -41,10 +41,8 @@ function send(id) {
         $('#'+id).find('td:eq(4)').find('select').val()
     ];
 
-    console.log(aux[4]);
-
     $.ajax({
-        url : 'maquinaria/edit/'+id,
+        url : '/maquinaria/edit/'+id,
         method : 'patch',
         data : {
             nombre : aux[0],
@@ -56,6 +54,7 @@ function send(id) {
         cache : false,
         success : function(response) {
             console.log(response);
+            location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR);
@@ -67,15 +66,16 @@ function send(id) {
 
 function destroy(id) {
     $.ajax({
-        url : 'maquinaria/eliminar/'+id,
+        url : '/maquinaria/eliminar/'+id,
         method : 'delete',
         success : function(response) {
             console.log(response);
+            $("#"+id).remove();
         },
         /*'error':function(x,xs,xt){
             //nos dara el error si es que hay alguno
-            //window.open(JSON.stringify(x));
-            alert('error: ' + JSON.stringify(x) +"\n error string: "+ xs + "\n error throwed: " + xt);
+            window.open(JSON.stringify(x));
+            //alert('error: ' + JSON.stringify(x) +"\n error string: "+ xs + "\n error throwed: " + xt);
         }*/
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR);
@@ -83,6 +83,4 @@ function destroy(id) {
             console.log(errorThrown);
         }
     });
-
-    $("#"+id).remove();
 }

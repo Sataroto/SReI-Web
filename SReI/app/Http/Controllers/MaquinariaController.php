@@ -9,7 +9,8 @@ use App\Http\Controllers\Controller;
 
 use App\Equipo;
 use App\checklist;
-use \App\Laboratorio;
+use App\Laboratorio;
+use App\Bitacora;
 use MongoDB\BSON\ObjectID;
 
 class MaquinariaController extends Controller
@@ -37,7 +38,7 @@ class MaquinariaController extends Controller
             'laboratorios' => $laboratorios
         ];
 
-        return view('listaMaquinaria', $array);
+        return view('maquinaria.lista', $array);
     }
 
     /**
@@ -55,7 +56,7 @@ class MaquinariaController extends Controller
             'laboratorios' => $laboratorios,
         ];
 
-        return view('registroMaquina', $array);
+        return view('maquinaria.registro', $array);
     }
 
     /**
@@ -66,6 +67,19 @@ class MaquinariaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request, [
+            'nombre' => 'required',
+            'fabricante' => 'required',
+            'modelo' =>'required',
+        ],
+        [
+            'nombre.required' => 'Por favor llene el campo "Nombre"',
+            'fabricante.required' => 'Por favor llene el campo "Fabricante"',
+            'modelo.required' => 'Por favor llene el campo "Modelo"',
+        ]
+    );
+
         // Creación de objeto 'Equipo' dentro de la base de datos
         $maquina = Equipo::create([
             'tipo' => "maquinaria",
@@ -81,12 +95,10 @@ class MaquinariaController extends Controller
             'disponible' => true,
             'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
             'laboratorio' => new ObjectId($request->laboratorio),
-            'mantenimientos' => [],
             'caracteristicas' => [
                 $request->fabricante,
                 $request->modelo
             ],
-            'observaciones' => "",
             'checklist' => [],
         ]);
 
@@ -103,20 +115,17 @@ class MaquinariaController extends Controller
                 'nomenclatura' => $ch,
                 'estado' => 1.0,
             ]);
-            /*$check = new checklist();
-
-            // Vease el modelo de checklist para asigar los siguientes atributos
-            $check->nomenclatura = $ch;
-            $check->estado = 1.0;
-
-            /*
-                Guardado del objeto 'checklist dentro de su arreglo en el objeto
-                'Equipo'
-            */
-            //$check = $maquina->checklist()->save($check);
         }
 
-        return redirect('/maquinaria/nuevo');
+        /*Bitacora([
+            'tipo' => 'Borrado',
+            'movimiento' => 'Maquinaria dada de baja',
+            'usuario' => new ObjectID(),
+            'coleccion' => 'Equipo'
+        ]);*/
+
+        //return redirect('/maquinaria/nuevo');
+        return redirect('/maquinaria/lista');
     }
 
     /**
@@ -167,6 +176,13 @@ class MaquinariaController extends Controller
 
         ]);
 
+        /*Bitacora([
+            'tipo' => 'Edición',
+            'movimiento' => 'Maquinaria editada',
+            'usuario' => new ObjectID(),
+            'coleccion' => 'Equipo'
+        ]);*/
+
         return response()->json(['success'=>'Got Simple Ajax Request.']);
     }
 
@@ -181,6 +197,13 @@ class MaquinariaController extends Controller
         //
 
         Equipo::find($id)->delete();
+
+        /*Bitacora([
+            'tipo' => 'Borrado',
+            'movimiento' => 'Maquinaria dada de baja',
+            'usuario' => new ObjectID(),
+            'coleccion' => 'Equipo'
+        ]);*/
 
         return response()->json(['success'=>'Got Simple Ajax Request.']);
     }

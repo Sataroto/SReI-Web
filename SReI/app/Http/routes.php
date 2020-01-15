@@ -18,8 +18,8 @@ Route::get('/layout', function() {
 
 Route::get('/', 'welcomeController@index');
 
-Route::get('/maquinaria/nuevo', 'MaquinariaController@create');
-Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
+//Route::get('/maquinaria/nuevo', 'MaquinariaController@create');
+//Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
 Route::patch('/maquinaria/edit/{id}', 'MaquinariaController@update');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
