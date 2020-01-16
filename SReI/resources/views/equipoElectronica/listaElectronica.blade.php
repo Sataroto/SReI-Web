@@ -1,8 +1,8 @@
 <!--
     Versión 1.0
     Creado al 15/01/2020
-    Modificao al 15/01/2020
-    Editado por: gbautista
+    Modificao al 16/01/2020
+    Editado por: obelmonte
     Copyright SReI
 -->
 
@@ -116,13 +116,13 @@
 
                                     <td>
                                         @unless(sizeof($m->caracteristicas)<=2)
-                                        <p>
-                                                {{$m->caracteristicas[2]}}
-                                        </p>
+                                        <p>{{$m->caracteristicas[2]}}</p>
                                         <b hidden>{{$m->caracteristicas[2]}}</b>
                                         <div class="form-group" hidden>
                                             <div class="form-line">
-                                              {!!Form::textarea('descrip', $m->caracteristicas[2],['class'=>'form-control','id'=>'descrip'])!!}
+                                              {!!Form::textarea('descrip',
+                                              $m->caracteristicas[2],
+                                              ['class'=>'form-control','id'=>'descrip'])!!}
                                             </div>
                                         </div>
                                         @endunless
@@ -130,26 +130,26 @@
 
                                     <td>
                                         @unless(sizeof($m->caracteristicas)<=3)
-                                        <p>
-                                                {{$m->caracteristicas[3]}}
-                                        </p>
+                                        <p>{{$m->caracteristicas[3]}}</p>
                                         <b hidden>{{$m->caracteristicas[3]}}</b>
                                         <div class="form-group" hidden>
                                             <div class="form-line">
-                                                {!!Form::text('numSerie',$m->caracteristicas[3],['class'=>'form-control', 'id'=>'numSerie'])!!}
+                                                {!!Form::text('numSerie',
+                                                $m->caracteristicas[3],
+                                                ['class'=>'form-control', 'id'=>'numSerie'])!!}
                                             </div>
                                         </div>
                                         @endunless
                                     </td>
                                     <td>
                                         @unless(sizeof($m->caracteristicas)<=4)
-                                        <p>
-                                                {{$m->caracteristicas[4]}}
-                                        </p>
+                                        <p>{{$m->caracteristicas[4]}}</p>
                                         <b hidden>{{$m->caracteristicas[4]}}</b>
                                         <div class="form-group" hidden>
                                             <div class="form-line">
-                                                {!!Form::text('procede',$m->caracteristicas[4],['class'=>'form-control', 'id'=>'procede'])!!}
+                                                {!!Form::text('procede',
+                                                $m->caracteristicas[4],
+                                                ['class'=>'form-control', 'id'=>'procede'])!!}
                                             </div>
                                         </div>
                                         @endunless
@@ -201,4 +201,5 @@
 
 @section('js')
 <script src="{{asset('Template/custom-js/editEE.js')}}"></script>
+<script src="{{asset('Template/custom-js/editButtons.js')}}"></script>
 @stop

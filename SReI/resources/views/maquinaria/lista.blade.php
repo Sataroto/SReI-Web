@@ -1,7 +1,7 @@
 <!--
     Versión 1.0
     Creado al 17/12/2019
-    Modificao al 06/01/2020
+    Modificao al 16/01/2020
     Editado por: obelmonte
     Copyright SReI
 -->
@@ -280,9 +280,12 @@
 @stop()
 
 @section('js')
-<script src="{{asset('Template/custom-js/editMaquina.js')}}"></script>
-
+<!-- js del formulario de registro de maquinaria -->
 <script src="{{asset('Template/custom-js/maquinariaForm.js')}}"></script>
+
+<!-- js para la edición de la información de las maquinas -->
+<script src="{{asset('Template/custom-js/editMaquina.js')}}"></script>
+<script src="{{asset('Template/custom-js/editButtons.js')}}"></script>
 
 <script>
     // Evita que el botón 'Enter' envie el formulario
