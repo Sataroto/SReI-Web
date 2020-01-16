@@ -18,6 +18,11 @@ Route::get('/layout', function() {
 
 Route::get('/', 'welcomeController@index');
 
+Route::get('/tarjetas-programables/nuevo', 'TarjetaController@create');
+Route::post('/tarjetas-programables/nuevo', 'TarjetaController@store');
+Route::get('/tarjetas-programables/lista', 'TarjetaController@list');
+
+
 Route::get('/maquinaria/nuevo', 'MaquinariaController@create');
 Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
