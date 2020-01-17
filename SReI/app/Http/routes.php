@@ -18,12 +18,22 @@ Route::get('/layout', function() {
 
 Route::get('/', 'welcomeController@index');
 
-Route::get('/tarjetas-programables/nuevo', 'TarjetaController@create');
+//---Tarjetas Programables---//
+//Route::get('/tarjetas-programables/nuevo', 'TarjetaController@create');
 Route::post('/tarjetas-programables/nuevo', 'TarjetaController@store');
 Route::get('/tarjetas-programables/lista', 'TarjetaController@list');
+Route::patch('/tarjetas-programables/edit/{id}', 'TarjetaController@update');
 
 
-Route::get('/maquinaria/nuevo', 'MaquinariaController@create');
+//---Equipo de Electronica---//
+Route::get('/equipoElectronica/nuevo', 'EquipoElectronicaController@create');
+Route::post('/equipoElectronica/nuevo', 'EquipoElectronicaController@store');
+Route::get('/equipoElectronica/lista', 'EquipoElectronicaController@list');
+Route::patch('/equipoElectronica/edit/{id}', 'EquipoElectronicaController@update');
+
+//---Maquinaria---//
+
+//Route::get('/maquinaria/nuevo', 'MaquinariaController@create');
 Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
 Route::patch('/maquinaria/edit/{id}', 'MaquinariaController@update');

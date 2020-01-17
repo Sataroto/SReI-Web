@@ -1,7 +1,7 @@
 <!--
     Versión 1.0
     Creado al 19/12/2019
-    Modificao al 30/12/2019
+    Modificao al 13/01/2020
     Editado por: obelmonte
     Copyright SReI
 -->
@@ -17,7 +17,7 @@
                 <div class="body">
                     <!-- Inicio del formulario -->
                     {!!Form::open(array('url'=>'/maquinaria/nuevo',
-                        'id'=>'addMaquinaForm', 'method'=>'POST'))!!}
+                        'id'=>'add_maquina_form', 'method'=>'POST'))!!}
                     <div class="row clearfix">
                         <div class="col-xs-3">
                             <h2 class="card-inside-title">Nombre</h2>
@@ -114,7 +114,7 @@
 
 <script>
     // Evita que el botón 'Enter' envie el formulario
-    document.getElementById('addMaquinaForm').addEventListener('keypress', function(event) {
+    document.getElementById('add_maquina_form').addEventListener('keypress', function(event) {
         if (event.keyCode == 13) {
             event.preventDefault();
         }

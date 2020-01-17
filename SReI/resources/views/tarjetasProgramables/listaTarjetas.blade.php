@@ -1,11 +1,13 @@
 <!--
     Versión 1.0
     Creado al 14/01/2020
-    Modificao al 14/01/2020
-    Editado por: obelmonte
+    Modificao al 16/01/2020
+    Editado por: mlopez
     Copyright SReI
 -->
+<!--arreglo de estados para el select -->
 
+</select>>
 <?php
     $estados = [
         "Averiado",
@@ -13,22 +15,123 @@
         "En mantenimiento"
     ];
 ?>
-
+<!-- fin del arreglo de estados -->
 @extends('layouts.layout')
 
 @section('css')
 
 @stop
 
+@section('popUp')
+<!-- Default Size -->
+<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+    <!-- Inicio del formulario -->
+    {!!Form::open(array('url'=>'/tarjetas-programables/nuevo', 'id'=>'add_tp_form',
+    'method'=>'POST'))!!}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <!-- Contenedor del formulario -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="body">
+                        <!-- Inicio del formulario -->
+                        <div class="row clearfix">
+                            <div class="col-xs-8">
+                                <h5 class="card-inside-title">Nombre tarjeta</h5>
+                                <div class="form-group">
+                                    <div class="form-line" id="bs_datepicker_container">
+                                        {!!Form::text('nombre', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'nombre de la tarjeta',
+                                            'id'=>'nombre'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Laboratorio</h5>
+                                <div class="form-group">
+                                    <div class="form-line" id="ds_datepicker_container">
+                                        {!!Form::select('laboratorio',
+                                            $laboratorios, 0,
+                                            ['class'=>'form-control',
+                                            'id'=>'laboratorio'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Fabricante</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('fabricante', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Fabricante de la tarjeta',
+                                            'id'=>'fabricante'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Modelo</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('modelo', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Modelo de la tarjeta',
+                                            'id'=>'modelo'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Descripción</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::textarea('descripcion', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Descripción de la tarjeta',
+                                            'id'=>'descripcion'])!!}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Fin del formulario -->
+                    </div>
+                </div>
+                <!-- Fin del contenedor del formulario -->
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-link waves-effect">Enviar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    {!!Form::close()!!}
+    <!-- Fin del formulario -->
+</div>
+@stop
+
 @section('content')
 <!-- Contenedor de la lista -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <p>Corrige los siguientes errores:</p>
+            <ul>
+                @foreach ($errors->all() as $message)
+                <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <div class="card">
             <div class="header">
                 <h2>
                     Tarjetas Programables
                     <small>Lista de tarjetas programables en los laboratorios de ligeros</small>
+                    <ul class="header-dropdown m-r--5">
+                        <button type="button" class="btn btn-success waves-effect m-r-20"
+                        data-toggle="modal" data-target="#defaultModal">Nuevo</button>
+                    </ul>
                 </h2>
             </div>
             <!-- Inicio de la tabla -->
@@ -50,20 +153,29 @@
 
                     <!-- Cuerpo de la tabla -->
                     <tbody>
+                        <!-- evalua si el arreglo $tarjeta es nulo o no -->
                         @unless($tarjeta == null)
 
+                        <!--recorre el arreglo hasta que no se encuentren mas tarjetas -->
                             @foreach($tarjeta as $m)
+                            <!-- se abre un php para obtener el dato Id dentro de la tarjeta -->
                                 <tr id="{{$m->_id}}">
+                                    <!-- imprime el dato obtenido dentro de la primer casilla de la fila -->
                                     <th scope="row">{{$m->_id}}</th>
+                                    <!-- inicio de la celda siguiente -->
                                     <td>
+                                        <!-- inicio de parrafo eh impresion de el dato nombre correspondiente al Id antes obtenido -->
                                         <p>{{$m->nombre}}</p>
+                                        <!-- inicio de un input -->
                                         <div class="form-group" hidden>
                                             <div class="form-line">
                                                 {!!Form::text('nombre',$m->nombre,['class'=>'form-control', 'id'=>'nombre'])!!}
                                             </div>
                                         </div>
+                                        <!-- fin de el input -->
                                     </td>
                                     <td>
+                                        <!-- input de un elemento dentro del arreglo caracteristicas -->
                                         <p>{{$m->caracteristicas[0]}}</p>
                                         <div class="form-group" hidden>
                                             <div class="form-line">
@@ -71,6 +183,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <!-- input de un segundo elemento dentro del arreglo caracteristicas -->
                                     <td>
                                         <p>{{$m->caracteristicas[1]}}</p>
                                         <div class="form-group" hidden>
@@ -156,5 +269,6 @@
 @stop()
 
 @section('js')
-<script src="{{asset('Template/custom-js/editMaquina.js')}}"></script>
+<script src="{{asset('Template/custom-js/editButtons.js')}}"></script>
+<script src="{{asset('Template/custom-js/editTarjeta.js')}}"></script>
 @stop

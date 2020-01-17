@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Equipo;
+use App\checklist;
 use App\Laboratorio;
 use App\Bitacora;
 
@@ -32,14 +33,14 @@ class TarjetaController extends Controller
      */
     public function create()
     {
-        //
+        //objeto laboratorio donde se hace la consulta a la base de datos accediendo a el nombre y el Id
         $laboratorio = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
 
         $array = [
           'laboratorios' => $laboratorio,
 
         ];
-
+        //regresa una vista que se encuentra en la direccion de los parametros
         return view('tarjetasProgramables.registroTarjetas', $array);
     }
 
@@ -51,22 +52,38 @@ class TarjetaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        Equipo::create([
-          'tipo' => 'Tarjeta Programable',
-          'nombre' => $request->nombre,
-          'estado' => 1,
-          'disponible' => true,
-          'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
-          'laboratorio' => new ObjectId($request->laboratorio),
-          'caracteristicas' => [
-            $request->fabricante,
-            $request->modelo
-          ],
-          'descripcion' => $request->descripcion
+        //dentro de la clase se hacen las siguientes evaluaciones donde se marcan como campos requeridos
+        $this->validate($request,[
+            'nombre' => 'required',
+            'fabricante' => 'required',
+            'modelo' => 'required',
+            'descripcion' => 'required'
+        ],[
+            //en caso de no cumplir con algun requerimiento
+            'nombre.required' => 'Por favor llene el campo "Nombre"',
+            'fabricante.required' => 'Por favor llene el campo "Fabricante"',
+            'modelo.required' => 'Por favor llene el campo "Modelo"',
+            'descripcion.required' => 'por favor agregue una descripción'
         ]);
 
-        return redirect('/tarjetas-programables/nuevo');
+        Equipo::create([
+            //parametros segidos al crear una targeta programable, aqui se pueden ver los valores por defaul y los obtenidos del formulario
+            'tipo' => 'Tarjeta Programable',
+            'nombre' => $request->nombre,
+            'estado' => 1,
+            'disponible' => true,
+            'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
+            'laboratorio' => new ObjectId($request->laboratorio),
+            'caracteristicas' => [
+                $request->fabricante,
+                $request->modelo
+            ],
+            'descripcion' => $request->descripcion
+        ]);
+
+        //return redirect('/tarjetas-programables/nuevo');
+        //regresa la direccion de la lista
+        return redirect('/tarjetas-programables/lista');
     }
 
     /**
@@ -100,7 +117,21 @@ class TarjetaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //se crea un objeto lista para hacer una consulta a la base de datos
+        $tarjeta = Equipo::find($id);
+
+        //se manda llamar el metodo update y manda la informacion obtenida en el formulario para modificarla
+        $tarjeta->update([
+            'nombre' => $request->nombre,
+            'estado' => $request->estado,
+            'laboratorio' => new ObjectID($request->laboratorio),
+            'caracteristicas' => [
+                $request->fabricante,
+                $request->modelo
+            ]
+        ]);
+        //ejecuta el metodo response donde accede al Json y manda un mensaje de exito
+        return response()->json(['success' => 'Got Simple Ajax Request']);
     }
 
     /**

@@ -13,7 +13,7 @@ use App\Laboratorio;
 use App\Bitacora;
 use MongoDB\BSON\ObjectID;
 
-class MaquinariaController extends Controller
+class EquipoElectronicaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,49 +22,24 @@ class MaquinariaController extends Controller
      */
     public function index()
     {
-
+        //
     }
-
     public function list() {
         /*
-            Busqueda de los objetos de 'Equipo' de tipo 'maquinaria' dentro de
+            Busqueda de los objetos de 'Equipo' de tipo 'electronica' dentro de
             la base de datos
         */
-        $maquinaria = Equipo::where('tipo','=','maquinaria')->get();
-        $laboratorios = Laboratorio::where('edificio', '=', 'Pesados 1')->lists('nombre','_id');
+        $equipo = Equipo::where('tipo','=','Electronica')->get();
+        $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
 
         $array = [
-            'maquina' => $maquinaria,
+            'equipoElectronica' => $equipo,
             'laboratorios' => $laboratorios
         ];
 
-        return view('maquinaria.lista', $array);
+        return view('equipoElectronica.listaElectronica', $array);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-
-        $laboratorios = Laboratorio::where('edificio', '=', 'Pesados 1')->lists('nombre','_id');
-
-        $array = [
-            'laboratorios' => $laboratorios,
-        ];
-
-        return view('maquinaria.registro', $array);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
@@ -72,17 +47,23 @@ class MaquinariaController extends Controller
             'nombre' => 'required',
             'fabricante' => 'required',
             'modelo' =>'required',
+            'descrip'=>'required',
+            'serie' => 'required',
+            'procede' =>'required'
         ],
         [
             'nombre.required' => 'Por favor llene el campo "Nombre"',
             'fabricante.required' => 'Por favor llene el campo "Fabricante"',
             'modelo.required' => 'Por favor llene el campo "Modelo"',
+            'descrip.required' => 'Por favor llene el campo "Descripción"',
+            'serie.required' => 'Por favor llene el campo "Modelo"',
+            'procede.required' => 'Por favor llene el campo "Procedencia"',
         ]
     );
 
         // Creación de objeto 'Equipo' dentro de la base de datos
-        $maquina = Equipo::create([
-            'tipo' => "maquinaria",
+        Equipo::create([
+            'tipo' => "Electronica",
             'nombre' => $request->nombre,
 
             /*
@@ -91,42 +72,43 @@ class MaquinariaController extends Controller
                     1 -> en buen estado
                     2 -> en mantenimiento
             */
+
             'estado' => 1.0,
             'disponible' => true,
             'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
             'laboratorio' => new ObjectId($request->laboratorio),
             'caracteristicas' => [
                 $request->fabricante,
-                $request->modelo
+                $request->modelo,
+                $request->descrip,
+                $request->serie,
+                $request->procede
+
             ],
-            'checklist' => [],
         ]);
 
-        // Recorrer el arreglo de checklist tomado del forulario
-        foreach ($request->checklist as $ch) {
-
-            /*
-            El objeto 'checklist' tiene un modelo pero no una colección
-            dentro de la base de datos, siendo un objeto embebido o
-            subcolección del objeto 'Equipo'
-            */
-            // Creació de un objeto 'checklist'
-            $check = $maquina->checklist()->create([
-                'nomenclatura' => $ch,
-                'estado' => 1.0,
-            ]);
-        }
-
-        /*Bitacora([
-            'tipo' => 'Borrado',
-            'movimiento' => 'Maquinaria dada de baja',
-            'usuario' => new ObjectID(),
-            'coleccion' => 'Equipo'
-        ]);*/
-
-        //return redirect('/maquinaria/nuevo');
-        return redirect('/maquinaria/lista');
+        return redirect('/equipoElectronica/nuevo');
+        //return redirect('/equipoElectronica/lista');
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function create()
+     {
+         //
+
+         $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
+
+         $array = [
+             'laboratorios' => $laboratorios,
+         ];
+
+         return view('equipoElectronica.registroEquipoElectronica', $array);
+     }
+
 
     /**
      * Display the specified resource.
@@ -148,7 +130,6 @@ class MaquinariaController extends Controller
     public function edit($id)
     {
         //
-        return response()->json(['success'=>'Got Simple Ajax Request.']);
     }
 
     /**
@@ -161,16 +142,18 @@ class MaquinariaController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $equipo = Equipo::find($id);
 
-        $maquina = Equipo::find($id);
 
-
-        $maquina->update([
+        $equipo->update([
             'nombre' => $request->nombre,
             'estado' => $request->estado,
             'caracteristicas' => [
                 $request->fabricante,
-                $request->modelo
+                $request->modelo,
+                $request->descripcion,
+                $request->numeroSerie,
+                $request->procedencia
             ],
             'laboratorio' => new ObjectId($request->laboratorio)
 
@@ -195,16 +178,5 @@ class MaquinariaController extends Controller
     public function destroy($id)
     {
         //
-
-        Equipo::find($id)->delete();
-
-        /*Bitacora([
-            'tipo' => 'Borrado',
-            'movimiento' => 'Maquinaria dada de baja',
-            'usuario' => new ObjectID(),
-            'coleccion' => 'Equipo'
-        ]);*/
-
-        return response()->json(['success'=>'Got Simple Ajax Request.']);
     }
 }

@@ -1,8 +1,8 @@
 <!--
     Versión 1.0
-    Creado al 13/01/2020
-    Modificao al 13/01/2020
-    Editado por: mlopez
+    Creado al 15/01/2020
+    Modificao al 15/01/2020
+    Editado por: gbautista
     Copyright SReI
 -->
 
@@ -13,34 +13,24 @@
 <div class="container-fluid">
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <p>Corrige los siguientes errores:</p>
-                <ul>
-                    @foreach ($errors->all() as $message)
-                    <li>{{ $message }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
             <div class="card">
                 <div class="body">
                     <!-- Inicio del formulario -->
-                    {!!Form::open(array('url'=>'/tarjetas-programables/nuevo',
-                        'id'=>'add_tp_form', 'method'=>'POST'))!!}
+                    {!!Form::open(array('url'=>'/equipoElectronica/nuevo',
+                        'id'=>'addEquipForm', 'method'=>'POST'))!!}
                     <div class="row clearfix">
                         <div class="col-xs-3">
-                            <h5 class="card-inside-title">Nombre tarjeta</h5>
+                            <h2 class="card-inside-title">Nombre</h2>
                             <div class="form-group">
                                 <div class="form-line" id="bs_datepicker_container">
                                     {!!Form::text('nombre', null,
                                         ['class'=>'form-control',
-                                        'placeholder'=>'nombre de la tarjeta',
+                                        'placeholder'=>'nombre del equipo',
                                         'id'=>'nombre'])!!}
                                 </div>
                             </div>
 
-                            <h5 class="card-inside-title">Laboratorio</h5>
+                            <h2 class="card-inside-title">Laboratorio</h2>
                             <div class="form-group">
                                 <div class="form-line" id="ds_datepicker_container">
                                     {!!Form::select('laboratorio',
@@ -50,36 +40,52 @@
                                 </div>
                             </div>
 
-                            <h5 class="card-inside-title">Fabricante</h5>
+                            <h2 class="card-inside-title">Fabricante</h2>
                             <div class="form-group">
                                 <div class="form-line">
                                     {!!Form::text('fabricante', null,
                                         ['class'=>'form-control',
-                                        'placeholder'=>'Fabricante de la tarjeta',
+                                        'placeholder'=>'Fabricante del equipo',
                                         'id'=>'fabricante'])!!}
                                 </div>
                             </div>
 
-                            <h5 class="card-inside-title">Modelo</h5>
+                            <h2 class="card-inside-title">Modelo</h2>
                             <div class="form-group">
                                 <div class="form-line">
                                     {!!Form::text('modelo', null,
                                         ['class'=>'form-control',
-                                        'placeholder'=>'Modelo de la tarjeta',
+                                        'placeholder'=>'Modelo del equipo',
                                         'id'=>'modelo'])!!}
                                 </div>
                             </div>
-
-                            <h5 class="card-inside-title">Descripción</h5>
+                            <h2 class="card-inside-title">Descripción</h2>
                             <div class="form-group">
                                 <div class="form-line">
-                                    {!!Form::textarea('descripcion', null,
+                                    {!!Form::textarea('descrip', null,
                                         ['class'=>'form-control',
-                                        'placeholder'=>'Descripción de la tarjeta',
-                                        'id'=>'descripcion'])!!}
+                                        'placeholder'=>'Descripción',
+                                        'id'=>'modelo'])!!}
                                 </div>
                             </div>
-
+                            <h2 class="card-inside-title">Número de serie</h2>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {!!Form::text('serie', null,
+                                        ['class'=>'form-control',
+                                        'placeholder'=>'Serie de equipo',
+                                        'id'=>'modelo'])!!}
+                                </div>
+                            </div>
+                            <h2 class="card-inside-title">Procedencia</h2>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {!!Form::text('procede', null,
+                                        ['class'=>'form-control',
+                                        'placeholder'=>'Procedencia',
+                                        'id'=>'modelo'])!!}
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-primary waves-effect">Enviar</button>
                         </div>
                     </div>
@@ -94,5 +100,14 @@
 @stop()
 
 @section('js')
+<script src="{{asset('Template/custom-js/maquinariaForm.js')}}"></script>
 
+<script>
+    // Evita que el botón 'Enter' envie el formulario
+    document.getElementById('addEquipForm').addEventListener('keypress', function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+</script>
 @stop()

@@ -1,3 +1,39 @@
+commit ba354ffa03e0fffb4e853569c70d5be8917cbfb7
+Author: memotets <guillermo.bg99@gmail.com>
+Date:   Wed Jan 15 11:21:48 2020 -0600
+
+    Inicio de front-end equipo Electronica
+
+commit fbee33beb7e0dfd7337021eab1154323f6bd64ae
+Author: orlandobel <orladno.bel.jimmy@gmail.com>
+Date:   Wed Jan 15 11:07:52 2020 -0600
+
+    formulario en modal de la lista
+
+commit 2746b18deab4cad1a92b935043ed062749cfde83
+Author: orlandobel <orladno.bel.jimmy@gmail.com>
+Date:   Sun Jan 12 17:38:18 2020 -0600
+
+    CRUD para maquianria terminado
+
+commit 20f56cedd9dfd0bf07968b06cde29903ff10e3c0
+Author: orlandobel <orladno.bel.jimmy@gmail.com>
+Date:   Sat Jan 4 19:16:21 2020 -0600
+
+    editado de maquinaria
+
+commit a09b6344852d0f37148a3e7b4418a12b38062791
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Mon Dec 30 21:34:05 2019 -0600
+
+    'relación' de laboratoios con maquinaria
+
+commit 7b7e86c9bb556ac934b4143b3943967cc9359752
+Author: orlanobel <orlando.bel.jimmy@gmail.com>
+Date:   Mon Dec 30 11:28:20 2019 -0600
+
+    rebición inicial de estadnar
+
 commit 83a525e7835ea25510de1d7d017c6a006957e119
 Author: orlanobel <orlando.bel.jimmy@gmail.com>
 Date:   Sun Dec 29 12:07:11 2019 -0600
