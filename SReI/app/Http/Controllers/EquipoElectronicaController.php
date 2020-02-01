@@ -87,8 +87,8 @@ class EquipoElectronicaController extends Controller
             ],
         ]);
 
-        return redirect('/equipoElectronica/nuevo');
-        //return redirect('/equipoElectronica/lista');
+        //return redirect('/equipoElectronica/nuevo');
+        return redirect('/equipoElectronica/lista');
     }
 
     /**

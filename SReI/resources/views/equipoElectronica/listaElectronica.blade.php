@@ -20,6 +20,109 @@
 
 @stop
 
+
+@section('popUp')
+<!-- Default Size -->
+<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+    <!-- Inicio del formulario -->
+    {!!Form::open(array('url'=>'/equipoElectronica/nuevo',
+        'id'=>'addEquipForm', 'method'=>'POST'))!!}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <!-- Contenedor del formulario -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-xs-8">
+                                <h5 class="card-inside-title">Nombre</h5>
+                                <div class="form-group">
+                                    <div class="form-line" id="bs_datepicker_container">
+                                        {!!Form::text('nombre', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'nombre del equipo',
+                                            'id'=>'nombre'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Laboratorio</h5>
+                                <div class="form-group">
+                                    <div class="form-line" id="ds_datepicker_container">
+                                        {!!Form::select('laboratorio',
+                                            $laboratorios, 0,
+                                            ['class'=>'form-control',
+                                            'id'=>'laboratorio'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Fabricante</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('fabricante', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Fabricante del equipo',
+                                            'id'=>'fabricante'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Modelo</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('modelo', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Modelo del equipo',
+                                            'id'=>'modelo'])!!}
+                                    </div>
+                                </div>
+                                <h5 class="card-inside-title">Descripción</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::textarea('descrip', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Descripción',
+                                            'id'=>'modelo'])!!}
+                                    </div>
+                                </div>
+                                <h5 class="card-inside-title">Número de serie</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('serie', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Serie de equipo',
+                                            'id'=>'modelo'])!!}
+                                    </div>
+                                </div>
+                                <h5 class="card-inside-title">Procedencia</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('procede', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Procedencia',
+                                            'id'=>'modelo'])!!}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin del contenedor del formulario -->
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-link waves-effect">Enviar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    {!!Form::close()!!}
+    <!-- Fin del formulario -->
+</div>
+@stop
+
 @section('content')
 <!-- Contenedor de la lista -->
 <div class="row clearfix">
@@ -29,6 +132,10 @@
                 <h2>
                     Electrónica
                     <small>Lista de equipo en los laboratorios de ligeros</small>
+                    <ul class="header-dropdown m-r--5">
+                        <button type="button" class="btn btn-success waves-effect m-r-20"
+                        data-toggle="modal" data-target="#defaultModal">Nuevo</button>
+                    </ul>
                 </h2>
             </div>
             <!-- Inicio de la tabla -->
@@ -42,10 +149,6 @@
                             <th>Fabricante</th>
                             <th>Modelo</th>
                             <th>Estado</th>
-                            <th>Laboratorio</th>
-                            <th>Descripción</th>
-                            <th># de Serie</th>
-                            <th>Procedencia</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -100,60 +203,6 @@
                                         </div>
                                     </td>
 
-                                    <td>
-                                        @unless($m->laboratorio == null)
-                                        <p>
-                                                {{$m->lab->nombre}}
-                                        </p>
-                                        <b hidden>{{$m->lab->_id}}</b>
-                                        <div class="form-group" hidden>
-                                            <div class="form-line">
-                                                {!!Form::select('estado',$laboratorios,$m->lab->_id,['class'=>'form-control', 'id'=>'estado'])!!}
-                                            </div>
-                                        </div>
-                                        @endunless
-                                    </td>
-
-                                    <td>
-                                        @unless(sizeof($m->caracteristicas)<=2)
-                                        <p>{{$m->caracteristicas[2]}}</p>
-                                        <b hidden>{{$m->caracteristicas[2]}}</b>
-                                        <div class="form-group" hidden>
-                                            <div class="form-line">
-                                              {!!Form::textarea('descrip',
-                                              $m->caracteristicas[2],
-                                              ['class'=>'form-control','id'=>'descrip'])!!}
-                                            </div>
-                                        </div>
-                                        @endunless
-                                    </td>
-
-                                    <td>
-                                        @unless(sizeof($m->caracteristicas)<=3)
-                                        <p>{{$m->caracteristicas[3]}}</p>
-                                        <b hidden>{{$m->caracteristicas[3]}}</b>
-                                        <div class="form-group" hidden>
-                                            <div class="form-line">
-                                                {!!Form::text('numSerie',
-                                                $m->caracteristicas[3],
-                                                ['class'=>'form-control', 'id'=>'numSerie'])!!}
-                                            </div>
-                                        </div>
-                                        @endunless
-                                    </td>
-                                    <td>
-                                        @unless(sizeof($m->caracteristicas)<=4)
-                                        <p>{{$m->caracteristicas[4]}}</p>
-                                        <b hidden>{{$m->caracteristicas[4]}}</b>
-                                        <div class="form-group" hidden>
-                                            <div class="form-line">
-                                                {!!Form::text('procede',
-                                                $m->caracteristicas[4],
-                                                ['class'=>'form-control', 'id'=>'procede'])!!}
-                                            </div>
-                                        </div>
-                                        @endunless
-                                    </td>
 
                                     <!-- Botones de acción -->
                                     <th id="action_buttons">
@@ -200,6 +249,6 @@
 @stop()
 
 @section('js')
-<script src="{{asset('Template/custom-js/editEE.js')}}"></script>
+<script src="{{asset('Template/custom-js/editTarjeta.js')}}"></script>
 <script src="{{asset('Template/custom-js/editButtons.js')}}"></script>
 @stop

@@ -1,5 +1,3 @@
-
-
 function send(id) {
 
     var aux = [
@@ -7,10 +5,7 @@ function send(id) {
         $('#'+id).find('td:eq(1)').find('input').val(),
         $('#'+id).find('td:eq(2)').find('input').val(),
         $('#'+id).find('td:eq(3)').find('select').val(),
-        $('#'+id).find('td:eq(4)').find('select').val(),
-        $('#'+id).find('td:eq(5)').find('textarea').val(),
-        $('#'+id).find('td:eq(6)').find('input').val(),
-        $('#'+id).find('td:eq(7)').find('input').val(),
+        $('#'+id).find('td:eq(4)').find('select').val()
     ];
 
     $.ajax({
@@ -21,10 +16,7 @@ function send(id) {
             fabricante : aux [1],
             modelo : aux[2],
             estado : aux[3],
-            laboratorio : aux[4],
-            descripcion : aux[5],
-            numeroSerie : aux[6],
-            procedencia : aux[7]
+            laboratorio : aux[4]
         },
         cache : false,
         success : function(response) {
