@@ -1,0 +1,9 @@
+git status -> mustra el seguimiento de cambios en el repositorio local
+
+git add -A -> añade todos los cambios a la lista de seguimiento del repositorio local
+git add 'archivo' -> añade los cambios al archivo especificado al repositorio local
+git commit -m "commit" -> comenta y actualiza el repositorio local
+git push -> sube los cambios en el repositorio local al remoto
+
+git feth -> busca actualizaciones en el repositorio remoto
+git pull -> descarga las actualizaiones encontradas en el repositorio remoto

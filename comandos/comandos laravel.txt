@@ -1,0 +1,8 @@
+composer update -> actualiza las dependencias de composer
+
+php artisan serv -> inicia el servidor laravel
+php artisan key:generate -> crea una llave para iniciar el servidor (se requiere el .env)
+
+php artisan make:controller NombreControlador -> crea un controlador con el nombre especificado
+php artisan make:model NombreModelo -> crea un modelo con el nombre especificado
+
