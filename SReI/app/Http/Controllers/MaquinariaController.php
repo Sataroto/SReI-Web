@@ -30,12 +30,13 @@ class MaquinariaController extends Controller
             Busqueda de los objetos de 'Equipo' de tipo 'maquinaria' dentro de
             la base de datos
         */
-        $maquinaria = Equipo::where('tipo','=','maquinaria')->get();
+        $maquinaria = Equipo::where('tipo','=','Maquinaria')->get();
         $laboratorios = Laboratorio::where('edificio', '=', 'Pesados 1')->lists('nombre','_id');
-
+        $herramienta  = Equipo::where('tipo', '=', 'Herramienta')->get();
         $array = [
             'maquina' => $maquinaria,
-            'laboratorios' => $laboratorios
+            'laboratorios' => $laboratorios,
+            'herramienta' => $herramienta
         ];
 
         return view('maquinaria.lista', $array);
@@ -72,17 +73,20 @@ class MaquinariaController extends Controller
             'nombre' => 'required',
             'fabricante' => 'required',
             'modelo' =>'required',
+            'serie' => 'required',
         ],
         [
-            'nombre.required' => 'Por favor llene el campo "Nombre"',
-            'fabricante.required' => 'Por favor llene el campo "Fabricante"',
-            'modelo.required' => 'Por favor llene el campo "Modelo"',
+            'nombre.required' => 'Por favor llene el campo "Nombre" del formulario de maquinaria',
+            'fabricante.required' => 'Por favor llene el campo "Fabricante" del formulario de maquinaria',
+            'modelo.required' => 'Por favor llene el campo "Modelo" del formulario de maquinaria',
+            'serie.required' => 'Por favor llene el campo "Numero de serie" del formulario de maquinaria',
         ]
     );
 
+    for($i=0;$i<$request->cantidad;$i++) {
         // Creación de objeto 'Equipo' dentro de la base de datos
         $maquina = Equipo::create([
-            'tipo' => "maquinaria",
+            'tipo' => "Maquinaria",
             'nombre' => $request->nombre,
 
             /*
@@ -95,12 +99,28 @@ class MaquinariaController extends Controller
             'disponible' => true,
             'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
             'laboratorio' => new ObjectId($request->laboratorio),
-            'caracteristicas' => [
-                $request->fabricante,
-                $request->modelo
-            ],
-            'checklist' => [],
+            'caracteristicas' => [],
+//            'checklist' => [],
         ]);
+
+        if(strlen($request->descripcion) == 0) {
+            $maquina->update([
+                'caracteristicas' => [
+                    $request->fabricante,
+                    $request->modelo,
+                    $request->serie
+                ],
+            ]);
+        } else {
+            $maquina->update([
+                'caracteristicas' => [
+                    $request->fabricante,
+                    $request->modelo,
+                    $request->serie,
+                    $request->descripcion
+                ],
+            ]);
+        }
 
         // Recorrer el arreglo de checklist tomado del forulario
         foreach ($request->checklist as $ch) {
@@ -116,6 +136,7 @@ class MaquinariaController extends Controller
                 'estado' => 1.0,
             ]);
         }
+    }
 
         /*Bitacora([
             'tipo' => 'Borrado',
@@ -128,6 +149,45 @@ class MaquinariaController extends Controller
         return redirect('/maquinaria/lista');
     }
 
+    public function nuevaHerramienta(Request $request) {
+        $this->validate($request,[
+            'nombre' => 'required',
+            'laboratorio' => 'required',
+            'fabricante' => 'required',
+            'modelo' => 'required',
+            'serie' => 'required',
+        ],[
+            'nombre.required' => 'Por favor llene el campo "Nombre"',
+            'fabricante.required' => 'Por favor llene el campo "Fabricante" del formulario de herramienta',
+            'modelo.required' => 'Por favor llene el campo "Modelo" del formulario de herramienta',
+            'serie.required' => 'Por favor llene el campo "Numero de serie" del formulario de herramienta',
+        ]);
+
+        for($i=0;$i<$request->cantidad;$i++) {
+        $herramienta = Equipo::create([
+            'tipo' => "Herramienta",
+            'nombre' => $request->nombre,
+
+            /*
+                Estados :
+                    0 -> Dañado
+                    1 -> en buen estado
+                    2 -> en mantenimiento
+            */
+            'estado' => 1.0,
+            'disponible' => true,
+            'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
+            'laboratorio' => new ObjectId($request->laboratorio),
+            'caracteristicas' => [
+                $request->fabricante,
+                $request->modelo,
+                $request->serie,
+            ],
+        ]);
+        }
+
+        return redirect('maquinaria/lista');
+    }
     /**
      * Display the specified resource.
      *

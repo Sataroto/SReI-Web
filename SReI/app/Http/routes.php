@@ -35,6 +35,7 @@ Route::patch('/equipoElectronica/edit/{id}', 'EquipoElectronicaController@update
 
 //Route::get('/maquinaria/nuevo', 'MaquinariaController@create');
 Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
+Route::post('maquinaria/nuevo/herramienta', 'MaquinariaController@nuevaHerramienta');
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
 Route::patch('/maquinaria/edit/{id}', 'MaquinariaController@update');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
