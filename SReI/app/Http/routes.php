@@ -40,6 +40,12 @@ Route::get('/maquinaria/lista', 'MaquinariaController@list');
 Route::patch('/maquinaria/edit/{id}', 'MaquinariaController@update');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
 
+//-----Articulos Personales----
+Route::post('/personal/nuevo', 'ArticulosPersonalesController@store');
+Route::get('/personal/lista', 'ArticulosPersonalesController@list');
+//Route::patch('/personal/edit/{id}', 'ArticulosPersonalesController@update');
+//Route::delete('/personal/eliminar/{id}', 'ArticulosPersonalesController@destroy');
+
 Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
 
