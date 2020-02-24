@@ -28,6 +28,7 @@ Route::patch('/tarjetas-programables/edit/{id}', 'TarjetaController@update');
 //---Equipo de Electronica---//
 Route::get('/equipoElectronica/nuevo', 'EquipoElectronicaController@create');
 Route::post('/equipoElectronica/nuevo', 'EquipoElectronicaController@store');
+Route::get('/equipoElectronica/nuevo/herramienta', 'EquipoElectronicaController@nuevaHerramienta');
 Route::get('/equipoElectronica/lista', 'EquipoElectronicaController@list');
 Route::patch('/equipoElectronica/edit/{id}', 'EquipoElectronicaController@update');
 

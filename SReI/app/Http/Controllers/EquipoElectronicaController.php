@@ -31,10 +31,12 @@ class EquipoElectronicaController extends Controller
         */
         $equipo = Equipo::where('tipo','=','Electronica')->get();
         $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
+        $herramienta = Laboratorio::where('tipo', '=', 'Herramiena');
 
         $array = [
             'equipoElectronica' => $equipo,
-            'laboratorios' => $laboratorios
+            'laboratorios' => $laboratorios,
+            'herramienta' => $herramienta,
         ];
 
         return view('equipoElectronica.listaElectronica', $array);
@@ -88,6 +90,45 @@ class EquipoElectronicaController extends Controller
         ]);
 
         //return redirect('/equipoElectronica/nuevo');
+        return redirect('/equipoElectronica/lista');
+    }
+
+    public function nuevaHerramienta(Request $request) {
+        $this->validate($request,[
+            'nombre' => 'required',
+            'laboratorio' => 'required',
+            'fabricante' => 'required',
+            'modelo' => 'required'
+        ],[
+            'nombre.required' => 'Por favor llene el campo "Nombre" del formulario de herramienta',
+            'laboratorio.required' => 'Por favor llene el campo "Laboratorio" de formulario de herramienta',
+            'fabricante' => 'Por favor llene el campo "fabricante" de formulario de herramienta',
+            'modelo' => 'Por favor llene el campo "Modelo" de formulario de herramienta'
+        ]);
+
+        $herramienta = Equippo::create([
+            'tipo' => "Electronica",
+            'nombre' => $request->nombre,
+
+            /*
+                Estados :
+                    0 -> Dañado
+                    1 -> en buen estado
+                    2 -> en mantenimiento
+            */
+
+            'estado' => 1.0,
+            'disponible' => true,
+            'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
+            'laboratorio' => new ObjectId($request->laboratorio),
+            'caracteristicas' => [
+                $request->fabricante,
+                $request->modelo,
+                $request->serie,
+                $request->descripcion,
+            ],
+        ]);
+
         return redirect('/equipoElectronica/lista');
     }
 
