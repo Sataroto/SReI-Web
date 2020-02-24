@@ -103,13 +103,11 @@ class EquipoElectronicaController extends Controller
 
     public function nuevaHerramienta(Request $request) {
         $this->validate($request,[
-            'nombre' => 'required',
-            'laboratorio' => 'required',
-            'fabricante' => 'required',
-            'modelo' => 'required'
+            'nombre' => 'required|between:3,50|alpha_num',
+            'fabricante' => 'required|between:3,100|alpha_num',
+            'modelo' =>'required|between:3,50|alpha_dash',
         ],[
             'nombre.required' => 'Por favor llene el campo "Nombre" del formulario de herramienta',
-            'laboratorio.required' => 'Por favor llene el campo "Laboratorio" de formulario de herramienta',
             'fabricante' => 'Por favor llene el campo "fabricante" de formulario de herramienta',
             'modelo' => 'Por favor llene el campo "Modelo" de formulario de herramienta'
         ]);
