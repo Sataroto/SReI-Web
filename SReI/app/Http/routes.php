@@ -47,6 +47,13 @@ Route::get('/personal/lista', 'ArticulosPersonalesController@list');
 //Route::patch('/personal/edit/{id}', 'ArticulosPersonalesController@update');
 //Route::delete('/personal/eliminar/{id}', 'ArticulosPersonalesController@destroy');
 
+//-----Listado Alumnos(Vista Estatica)-----
+Route::get('/alumnos/listado', function(){
+    return view('ListadoAlumnos/Alumnos');
+});
+
+
+
 Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
 
