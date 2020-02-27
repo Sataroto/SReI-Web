@@ -56,10 +56,10 @@ class EquipoElectronicaController extends Controller
         [
             'nombre.required' => 'Por favor llene el campo "Nombre"',
             'nombre.between' => '"Nombre" esta fuera del rango',
-            'nombre.alpha_num' => 'Favor de usar valores alfanumericos'
+            'nombre.alpha_num' => 'Favor de usar valores alfanumericos',
             'fabricante.required' => 'Por favor llene el campo "Fabricante"',
             'fabricante.between' => '"Fabricante" esta fuera del rango',
-            'fabricante.alpha_num' => 'Favor de usar valores alfanumericos'
+            'fabricante.alpha_num' => 'Favor de usar valores alfanumericos',
             'modelo.required' => 'Por favor llene el campo "Modelo"',
             'modelo.between' => '"Modelo" esta fuera del rango',
             'descrip.required' => 'Por favor llene el campo "Descripción"',
@@ -201,10 +201,10 @@ class EquipoElectronicaController extends Controller
         [
             'nombre.required' => 'Por favor llene el campo "Nombre"',
             'nombre.between' => '"Nombre" esta fuera del rango',
-            'nombre.alpha_num' => 'Favor de usar valores alfanumericos'
+            'nombre.alpha_num' => 'Favor de usar valores alfanumericos',
             'fabricante.required' => 'Por favor llene el campo "Fabricante"',
             'fabricante.between' => '"Fabricante" esta fuera del rango',
-            'fabricante.alpha_num' => 'Favor de usar valores alfanumericos'
+            'fabricante.alpha_num' => 'Favor de usar valores alfanumericos',
             'modelo.required' => 'Por favor llene el campo "Modelo"',
             'modelo.between' => '"Modelo" esta fuera del rango',
             'descrip.required' => 'Por favor llene el campo "Descripción"',
