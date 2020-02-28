@@ -28,7 +28,7 @@ Route::get('/equipoElectronica/nuevo', 'EquipoElectronicaController@create');
 Route::post('/equipoElectronica/nuevo', 'EquipoElectronicaController@store');
 Route::get('/equipoElectronica/nuevo/herramienta', 'EquipoElectronicaController@nuevaHerramienta');
 Route::get('/equipoElectronica/lista', 'EquipoElectronicaController@list');
-Route::patch('/equipoElectronica/edit/{id}', 'EquipoElectronicaController@update');
+Route::patch('/eE/edit/{id}', 'EquipoElectronicaController@update');
 
 //---Maquinaria---//
 //Route::get('/maquinaria/nuevo', 'MaquinariaController@create');

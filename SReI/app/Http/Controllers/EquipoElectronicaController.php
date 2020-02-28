@@ -49,7 +49,7 @@ class EquipoElectronicaController extends Controller
             'nombre' => 'required|between:3,50|alpha_num',
             'fabricante' => 'required|between:3,100|alpha_num',
             'modelo' =>'required|between:3,50|alpha_dash',
-            'descrip'=>'required|between:20,350',
+            'descrip'=>'required|between:10,350',
             'serie' => 'required|between:1,25',
             'procede' =>'required|between:5,50'
         ],
@@ -194,9 +194,6 @@ class EquipoElectronicaController extends Controller
             'nombre' => 'required|between:3,50|alpha_num',
             'fabricante' => 'required|between:3,100|alpha_num',
             'modelo' =>'required|between:3,50|alpha_dash',
-            'descrip'=>'required|between:20,350',
-            'serie' => 'required|between:1,25',
-            'procede' =>'required|between:5,50'
         ],
         [
             'nombre.required' => 'Por favor llene el campo "Nombre"',
@@ -207,12 +204,6 @@ class EquipoElectronicaController extends Controller
             'fabricante.alpha_num' => 'Favor de usar valores alfanumericos',
             'modelo.required' => 'Por favor llene el campo "Modelo"',
             'modelo.between' => '"Modelo" esta fuera del rango',
-            'descrip.required' => 'Por favor llene el campo "Descripción"',
-            'descrip.between' => '"Descripcion" esta fuera del rango',
-            'serie.required' => 'Por favor llene el campo "Serie"',
-            'serie.between' => '"Serie" esta fuera del rango',
-            'procede.required' => 'Por favor llene el campo "Procedencia"',
-            'procede.between' => '"Procedencia" esta fuera del rango',
         ]
     );
 
@@ -226,9 +217,9 @@ class EquipoElectronicaController extends Controller
             'caracteristicas' => [
                 $request->fabricante,
                 $request->modelo,
-                $request->descripcion,
-                $request->numeroSerie,
-                $request->procedencia
+  //            $request->descripcion,
+  //              $request->numeroSerie,
+  //              $request->procedencia
             ],
             'laboratorio' => new ObjectId($request->laboratorio)
 

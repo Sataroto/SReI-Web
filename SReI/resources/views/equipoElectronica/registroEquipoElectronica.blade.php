@@ -5,7 +5,6 @@
     Editado por: gbautista
     Copyright SReI
 -->
-
 @extends('layouts.layout')
 
 @section('content')
@@ -88,6 +87,8 @@
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect">Enviar</button>
                         </div>
+
+
                     </div>
                     {!!Form::close()!!}
                     <!-- Fin del formulario -->

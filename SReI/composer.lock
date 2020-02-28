@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aeeb9b575cce740335dd94bc857cdd3b",
+    "content-hash": "41d35843ed656da36c425809c663a660",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -455,23 +455,23 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v5.0.0",
+            "version": "v5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e"
+                "reference": "4566062c68f76f43d44f1643f4970fe89757d4c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
-                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/4566062c68f76f43d44f1643f4970fe89757d4c6",
+                "reference": "4566062c68f76f43d44f1643f4970fe89757d4c6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": " 4.8.35"
+                "phpunit/phpunit": "^4.8|^5"
             },
             "type": "library",
             "autoload": {
@@ -497,7 +497,7 @@
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
-            "time": "2017-06-27T22:17:23+00:00"
+            "time": "2020-02-24T23:15:03+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -778,16 +778,16 @@
         },
         {
             "name": "jenssegers/mongodb",
-            "version": "v3.6.1",
+            "version": "v3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/laravel-mongodb.git",
-                "reference": "a8918acadb79f4f90d42eaddf0e996054ddd8184"
+                "reference": "12adb3909c46bdcbcb12ef073223d075a4431ecd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/laravel-mongodb/zipball/a8918acadb79f4f90d42eaddf0e996054ddd8184",
-                "reference": "a8918acadb79f4f90d42eaddf0e996054ddd8184",
+                "url": "https://api.github.com/repos/jenssegers/laravel-mongodb/zipball/12adb3909c46bdcbcb12ef073223d075a4431ecd",
+                "reference": "12adb3909c46bdcbcb12ef073223d075a4431ecd",
                 "shasum": ""
             },
             "require": {
@@ -798,11 +798,12 @@
                 "mongodb/mongodb": "^1.4"
             },
             "require-dev": {
+                "cedx/coveralls": "^11.2",
                 "doctrine/dbal": "^2.5",
                 "mockery/mockery": "^1.0",
                 "orchestra/testbench": "^3.1|^4.0",
-                "phpunit/phpunit": "^6.0|^7.0|^8.0",
-                "satooshi/php-coveralls": "^2.0"
+                "phpunit/phpcov": "^6.0",
+                "phpunit/phpunit": "^6.0|^7.0|^8.0"
             },
             "suggest": {
                 "jenssegers/mongodb-sentry": "Add Sentry support to Laravel-MongoDB",
@@ -843,7 +844,57 @@
                 "mongo",
                 "mongodb"
             ],
-            "time": "2019-10-31T13:55:43+00:00"
+            "time": "2020-02-26T19:55:33+00:00"
+        },
+        {
+            "name": "khanamiryan/qrcode-detector-decoder",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/khanamiryan/php-qrcode-detector-decoder.git",
+                "reference": "a75482d3bc804e3f6702332bfda6cccbb0dfaa76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/khanamiryan/php-qrcode-detector-decoder/zipball/a75482d3bc804e3f6702332bfda6cccbb0dfaa76",
+                "reference": "a75482d3bc804e3f6702332bfda6cccbb0dfaa76",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6|^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zxing\\": "lib/"
+                },
+                "files": [
+                    "lib/Common/customFunctions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ashot Khanamiryan",
+                    "email": "a.khanamiryan@gmail.com",
+                    "homepage": "https://github.com/khanamiryan",
+                    "role": "Developer"
+                }
+            ],
+            "description": "QR code decoder / reader",
+            "homepage": "https://github.com/khanamiryan/php-qrcode-detector-decoder/",
+            "keywords": [
+                "barcode",
+                "qr",
+                "zxing"
+            ],
+            "time": "2018-04-26T11:41:33+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
