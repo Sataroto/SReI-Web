@@ -171,6 +171,9 @@ return [
 
          /*MongoDB Service Provider*/
          Jenssegers\Mongodb\MongodbServiceProvider::class,
+         DesignMyNight\Mongodb\MongodbPassportServiceProvider::class,
+
+         Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Application Service Providers...

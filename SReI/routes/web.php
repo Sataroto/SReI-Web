@@ -55,3 +55,9 @@ Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
 
 Route::post('/registro', 'welcomeController@registrar');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/ejemplo', 'clientController@index')->middleware('auth');
