@@ -49,8 +49,6 @@ Route::get('/alumnos/listado', function(){
     return view('ListadoAlumnos/Alumnos');
 });
 
-
-
 Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
 

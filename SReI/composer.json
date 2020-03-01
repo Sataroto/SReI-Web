@@ -15,6 +15,7 @@
         "khanamiryan/qrcode-detector-decoder": "^1.0",
         "laravel/framework": "^6.0",
         "laravel/passport": "^8.4",
+        "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.2",
         "laravelcollective/html": "^6.0.3"

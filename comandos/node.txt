@@ -1,0 +1,6 @@
+npm install nodemon morgan mongoose express cors 
+	nodemon  -> abre el servidor de la api y se auto actualiza
+	morgan   -> arroja todos los mensajes del servidor
+	mongoose -> conección a db de mongo
+	express  -> framework de js
+	cors     -> comunicación entre puertos
