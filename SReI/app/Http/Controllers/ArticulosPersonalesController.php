@@ -30,11 +30,18 @@ class ArticulosPersonalesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+     public function create()
+     {
+         //objeto laboratorio donde se hace la consulta a la base de datos accediendo a el nombre y el Id
+         $laboratorio = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
 
+         $array = [
+           'laboratorios' => $laboratorio,
 
-    }
+         ];
+         //regresa una vista que se encuentra en la direccion de los parametros
+         return view('articulosPersonales.registroPersonal', $array);
+     }
 
     public function list() {
         /*
@@ -62,20 +69,23 @@ class ArticulosPersonalesController extends Controller
      {
 
          $this->validate($request, [
-             'foto' => 'required',
-             'nombre' => 'required',
-             'codigo' =>'required'
+           'nombre' => 'required',
+           'fabricante' => 'required',
+           'modelo' =>'required',
+           'serie' => 'required',
          ],
          [
-             'foto.required' => 'Por favor cargue una foto en el campo',
-             'nombre.required' => 'Por favor llene el campo "Nombre"',
-             'codigo.required' => 'Por favor llene el campo "Modelo"',
+           'nombre.required' => 'Por favor llene el campo "Nombre" del formulario de maquinaria',
+           'fabricante.required' => 'Por favor llene el campo "Fabricante" del formulario de maquinaria',
+           'modelo.required' => 'Por favor llene el campo "Modelo" del formulario de maquinaria',
+           'serie.required' => 'Por favor llene el campo "Numero de serie" del formulario de maquinaria',
          ]
      );
 
+     for($i=0;$i<$request->cantidad;$i++) {
          // Creación de objeto 'Equipo' dentro de la base de datos
-         Equipo::create([
-             'tipo' => "Electronica",
+         $personal = Equipo::create([
+             'tipo' => "Maquinaria",
              'nombre' => $request->nombre,
 
              /*
@@ -84,22 +94,49 @@ class ArticulosPersonalesController extends Controller
                      1 -> en buen estado
                      2 -> en mantenimiento
              */
-
              'estado' => 1.0,
              'disponible' => true,
              'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
-             'laboratorio' => new ObjectId($request->laboratorio),
-             'caracteristicas' => [
-                 $request->fabricante,
-                 $request->modelo,
-                 $request->descrip,
-                 $request->serie,
-                 $request->procede
-
-             ],
+              'laboratorio' => new ObjectId($request->laboratorio),
+             'caracteristicas' => [],
+ //            'checklist' => [],
          ]);
 
-         return redirect('/Personal/nuevo');
+         if(strlen($request->descripcion) == 0) {
+            $personal->update([
+                 'caracteristicas' => [
+                     $request->fabricante,
+                     $request->modelo,
+                     $request->serie
+                 ],
+             ]);
+         } else {
+             $personal->update([
+                 'caracteristicas' => [
+                     $request->fabricante,
+                     $request->modelo,
+                     $request->serie,
+                     $request->descripcion
+                 ],
+             ]);
+         }
+         // Recorrer el arreglo de checklist tomado del forulario
+         foreach ($request->checklist as $ch) {
+
+             /*
+             El objeto 'checklist' tiene un modelo pero no una colección
+             dentro de la base de datos, siendo un objeto embebido o
+             subcolección del objeto 'Equipo'
+             */
+             // Creació de un objeto 'checklist'
+             $check = $personal->checklist()->create([
+                 'nomenclatura' => $ch,
+                 'estado' => 1.0,
+             ]);
+         }
+     }
+
+       return redirect('/personal/lista');
      }
 
     /**
@@ -133,7 +170,22 @@ class ArticulosPersonalesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //se crea un objeto lista para hacer una consulta a la base de datos
+        $personal = Equipo::find($id);
+
+        //se manda llamar el metodo update y manda la informacion obtenida en el formulario para modificarla
+        $personal->update([
+            'nombre' => $request->nombre,
+            'estado' => $request->estado,
+            'caracteristicas' => [
+                $request->fabricante,
+                $request->modelo
+            ],
+            'laboratorio' => new ObjectId($request->laboratorio)
+
+        ]);
+        //ejecuta el metodo response donde accede al Json y manda un mensaje de exito
+        return response()->json(['success' => 'Got Simple Ajax Request']);
     }
 
     /**
@@ -144,6 +196,22 @@ class ArticulosPersonalesController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
+
+  // public function list() {
+      /*
+          Busqueda de los objetos de 'Equipo' de tipo 'maquinaria' dentro de
+          la base de datos
+      */
+//     $personal = Equipo::where('tipo','=','Articulo Personal')->get();
+    // $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
+
+    //  $array = [
+      // 'tarjeta' => $tarjetas,
+        //  'laboratorios' => $laboratorios
+    //  ];
+
+  //  return view('personal/lista', $array);
+//    }
 }

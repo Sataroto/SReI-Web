@@ -84,15 +84,6 @@
                                             'id'=>'modelo'])!!}
                                     </div>
                                 </div>
-                                <h5 class="card-inside-title">Foto</h5>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        {!!Form::text('foto', null,
-                                            ['class'=>'form-control',
-                                            'placeholder'=>'Inserta una foto',
-                                            'id'=>'modelo'])!!}
-                                    </div>
-                                </div>
 
                             </div>
                         </div>
@@ -138,7 +129,6 @@
                             <th>Fabricante</th>
                             <th>Modelo</th>
                             <th>Estado</th>
-                            <th>Foto</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -146,6 +136,89 @@
 
                     <!-- Cuerpo de la tabla -->
                     <tbody>
+                      @unless($personal == null)
+                          @foreach($personal as $m)
+                              <tr id="{{$m->_id}}">
+                                  <th scope="row">{{$m->_id}}</th>
+                                  <td>
+                                      <p>{{$m->nombre}}</p>
+                                      <div class="form-group" hidden>
+                                          <div class="form-line">
+                                              {!!Form::text('nombre',$m->nombre,['class'=>'form-control', 'id'=>'nombre'])!!}
+                                          </div>
+                                      </div>
+                                  </td>
+                                  @unless(sizeof($m->caracteristicas) == 0)
+                                  <td>
+                                      <p>{{$m->caracteristicas[0]}}</p>
+                                      <div class="form-group" hidden>
+                                          <div class="form-line">
+                                              {!!Form::text('fabricante',$m->caracteristicas[0],['class'=>'form-control', 'id'=>'fabricante'])!!}
+                                          </div>
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <p>{{$m->caracteristicas[1]}}</p>
+                                      <div class="form-group" hidden>
+                                          <div class="form-line">
+                                              {!!Form::text('modelo',$m->caracteristicas[1],['class'=>'form-control', 'id'=>'modelo'])!!}
+                                          </div>
+                                      </div>
+                                  </td>
+                                  @endunless
+                                  <td>
+                                      <p>
+                                          @if($m->estado == 0)
+                                              Averiado
+                                          @elseif($m->estado == 1)
+                                              En buen estado
+                                          <!Este estado esta sujeto a cambios>
+                                          @elseif($m->estado == 2)
+                                              En mantenimiento
+                                          @endif
+                                      </p>
+                                      <b hidden>{{$m->estado}}</b>
+                                      <div class="form-group" hidden>
+                                          <div class="form-line">
+                                              {!!Form::select('estado',$estados,$m->estado,['class'=>'form-control', 'id'=>'estado'])!!}
+                                          </div>
+                                      </div>
+                                  </td>
+
+                                  <!-- Botones de acción -->
+                                  <th id="action_buttons">
+                                      <button type="button"
+                                          class="btn btn-primary m-t-6 waves-effect"
+                                          onclick="edit('{{$m->_id}}');">
+
+                                          <i class="material-icons">mode_edit</i>
+                                      </button><br/>
+                                      <button type="button"
+                                          class="btn btn-danger m-t-6 waves-effect"
+                                          onclick="destroy('{{$m->_id}}');">
+
+                                          <i class="material-icons">delete</i>
+                                      </button>
+                                  </th>
+                                  <!-- Fin de botones de acción -->
+
+                                  <th id="edit_buttons" hidden>
+                                      <button type="button"
+                                          class="btn btn-primary m-t-15 waves-effect"
+                                          onclick="send('{{$m->_id}}');">
+
+                                          <i class="material-icons">send</i>
+                                      </button><br/>
+                                      <button type="button"
+                                          class="btn btn-danger m-t-15 waves-effect"
+                                          onclick="cancel('{{$m->_id}}')">
+
+                                          <i class="material-icons">close</i>
+                                      </button>
+                                  </th>
+                              </tr>
+                          @endforeach
+                      @endunless
 
                     </tbody>
                     <!-- Find el cuerpo de la tabla -->

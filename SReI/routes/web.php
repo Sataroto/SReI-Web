@@ -45,7 +45,7 @@ Route::get('/personal/lista', 'ArticulosPersonalesController@list');
 //Route::delete('/personal/eliminar/{id}', 'ArticulosPersonalesController@destroy');
 
 //-----Listado Alumnos(Vista Estatica)-----
-Route::get('/alumnos/listado', function(){
+Route::get('/', function(){
     return view('ListadoAlumnos/Alumnos');
 });
 
