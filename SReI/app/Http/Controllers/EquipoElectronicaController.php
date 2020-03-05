@@ -24,6 +24,7 @@ class EquipoElectronicaController extends Controller
     {
         //
     }
+
     public function list() {
         /*
             Busqueda de los objetos de 'Equipo' de tipo 'electronica' dentro de

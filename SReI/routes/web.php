@@ -55,3 +55,6 @@ Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
 
 Route::post('/registro', 'welcomeController@registrar');
+
+//-----Imagen pruebas----//
+Route::get('/photo', 'PhotoController@photo');

@@ -7,10 +7,6 @@
 -->
 
 <?php
-use Zxing\QrReader;
-    $image = __DIR__ . "/wop.png";
-    $qrcode = new QrReader($image);
-    $text = $qrcode->text(); //return decoded text from QR Code
     $estados = [
         "Averiado",
         "En buen estado",
@@ -279,7 +275,7 @@ use Zxing\QrReader;
                                                     <p>{{$m->nombre}}</p>
                                                     <div class="form-group" hidden>
                                                         <div class="form-line">
-                                                            {!!Form::text('nombre',$text,['class'=>'form-control', 'id'=>'nombre'])!!}
+                                                            {!!Form::text('nombre',$m->nombre,['class'=>'form-control', 'id'=>'nombre'])!!}
                                                         </div>
                                                     </div>
                                                 </td>
