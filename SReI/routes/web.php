@@ -37,7 +37,8 @@ Route::post('maquinaria/nuevo/herramienta', 'MaquinariaController@nuevaHerramien
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
 Route::patch('/maquinaria/edit/{id}', 'MaquinariaController@update');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
-
+//--Ejemplo fotos--//
+Route::get('/photo', 'PhotoController@photo');
 //-----Articulos Personales----
 Route::post('/personal/nuevo', 'ArticulosPersonalesController@store');
 Route::get('/personal/lista', 'ArticulosPersonalesController@list');
@@ -45,16 +46,13 @@ Route::get('/personal/lista', 'ArticulosPersonalesController@list');
 //Route::delete('/personal/eliminar/{id}', 'ArticulosPersonalesController@destroy');
 
 //-----Listado Alumnos(Vista Estatica)-----
-Route::get('/alumnos/listado', function(){
+Route::get('/', function(){
     return view('ListadoAlumnos/Alumnos');
 });
 
-
-
 Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
-
 Route::post('/registro', 'welcomeController@registrar');
-
-//-----Imagen pruebas----//
-Route::get('/photo', 'PhotoController@photo');
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/ejemplo', 'clientController@index')->middleware('auth');

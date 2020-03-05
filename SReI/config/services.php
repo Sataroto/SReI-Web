@@ -34,4 +34,11 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
+    /* onfiguración de oauth con github */
+    'github' => [
+        'client_id' => env('GH_ID'),
+        'client_secret' => env('GH_SECRET'),
+        'redirect' => env('APP_URL').'/oauth/github/callback',
+    ],
+
 ];
