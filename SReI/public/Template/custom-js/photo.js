@@ -38,8 +38,26 @@ snap.addEventListener("click", function() {
 });
 
 send.addEventListener("click", function () {
-    //context.drawImage(video, 0, 0, 640, 360);
+    context.drawImage(video, 0, 0, 640, 360);
     toBin();
+    try {
+         var dataUrl = canvas.toDataURL("image/png");
+
+           $.ajax({
+                   url: '/photo',
+                   data:{
+                       img: dataUrl
+                   },
+                   type: 'post',
+                   success: function(data)
+                   {
+                     alert("Imagen guardada en servidor");
+                   }
+               });
+   }
+   catch(err) {
+         alert(err);
+   }
 });
 
 function toBin(){
