@@ -43,7 +43,7 @@ class PhotoController extends Controller
         }else {
             echo 'Un error ocurrio al convertir la imagen.';
         }
-        
+
         return view('Photo.photoEjemplo');
     }
 
