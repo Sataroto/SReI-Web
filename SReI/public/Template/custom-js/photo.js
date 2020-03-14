@@ -1,5 +1,11 @@
+$.ajaxSetup({
+     headers: {
+         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+     }
+ });
+
 const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
+var canvas = document.getElementById('canvas');
 const snap = document.getElementById("snap");
 var send =document.getElementById('can');
 const errorMsgElement = document.querySelector('span#errorMsg');
@@ -41,23 +47,27 @@ send.addEventListener("click", function () {
     context.drawImage(video, 0, 0, 640, 360);
     toBin();
     try {
-         var dataUrl = canvas.toDataURL("image/png");
+        var dataUrl = canvas.toDataURL("image/png");
 
-           $.ajax({
-                   url: '/photo',
-                   data:{
-                       img: dataUrl
-                   },
-                   type: 'post',
-                   success: function(data)
-                   {
-                     alert("Imagen guardada en servidor");
-                   }
-               });
-   }
-   catch(err) {
-         alert(err);
-   }
+        $.ajax({
+            url: '/photo',
+            data:{
+                img: dataUrl
+            },
+            type: 'POST',
+            success: function(data)
+            {
+                alert("Imagen guardada en servidor");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
+        });
+    } catch(err) {
+        alert(err);
+    }
 });
 
 function toBin(){

@@ -4,3 +4,5 @@ npm install nodemon morgan mongoose express cors
 	mongoose -> conección a db de mongo
 	express  -> framework de js
 	cors     -> comunicación entre puertos
+npm init -> inicia las configuraciones iniciales del proyecto
+
