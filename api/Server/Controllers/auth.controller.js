@@ -1,44 +1,25 @@
-const http = require('http');
+const request = require('request');
+const loger = {};
 
-function getJSON(option, cb) {
-    http.request(options, (res) => {
-        const header = {
+loger.buscar = (req, res) => {
+    /*request({
+        url: 'http://148.204.142.2/pump/web/index.php/login',
+        method: 'POST',
+        headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer 2001657889653220'
-        };
-
-        const body = {
-            'username': '2018671281',
-            'password': 'pokemon502'
-        };
-
-        res.on('data', (chunk) => {
-            body += chunk;
-        });
-
-        res.on('end', () => {
-            const boleta = JSON.parse(body);
-            console.log(boleta);
-        });
-
-        res.on('error', cb);
-    })
-    .on('error', cb)
-    .end();
+        },
+        body: JSON.stringify({
+            'username': req.body.username,
+            'password': req.body.password
+        })
+    }, (err, rs, body) => {
+        if(err) {
+            console.error(err);
+        } else {
+            console.log(rs.statusCode, body);
+        }
+    });*/
 }
 
-var options = {
-    'host': 'http://148.204.142.2/pump/web/index.php/login',
-    'method': 'POST'
-};
-
-
-
-getJSON(options, (err, res) => {
-    if(err) {
-        return console.log('Error en la consulta');
-    }
-
-    console.log(res)
-});
-    
+module.exports = loger;

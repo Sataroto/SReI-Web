@@ -37,9 +37,11 @@ Route::post('maquinaria/nuevo/herramienta', 'MaquinariaController@nuevaHerramien
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
 Route::patch('/maquinaria/edit/{id}', 'MaquinariaController@update');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
+
 //--Ejemplo fotos--//
 Route::get('/photo', 'PhotoController@photo');
-Route::post('/photo', 'PhotoController@xxj'); 
+Route::post('/photo', 'PhotoController@xxj');
+
 //-----Articulos Personales----
 Route::post('/personal/nuevo', 'ArticulosPersonalesController@store');
 Route::get('/personal/lista', 'ArticulosPersonalesController@list');
@@ -54,6 +56,8 @@ Route::get('/', function(){
 Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
 Route::post('/registro', 'welcomeController@registrar');
+
 Auth::routes();
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/ejemplo', 'clientController@index')->middleware('auth');
+Route::post('/login/ejemplo', 'HomeController@prueba');
