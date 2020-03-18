@@ -25,17 +25,18 @@ use Zxing\QrReader;
 @section('content')
 <!-- Stream video via webcam -->
 <div class="video-wrap">
-    <video id="video" playsinline autoplay></video>
+    <video id="video" playsinline autoplay style="display: none"></video>
+    <canvas id="videoCanvas"></canvas>
 </div>
 
 <!-- Trigger canvas web API -->
 <div class="controller">
     <button id="snap">Capture</button>
-    <button id="can">Send</button>
+    <button type="submit" id="can">Send</button>
 </div>
 
 <!-- Webcam video snapshot -->
-<canvas id="canvas" width="640" height="360"></canvas>
+<canvas id="canvas" width="640" height="480"></canvas>
 
 @stop()
 

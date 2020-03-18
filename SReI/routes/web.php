@@ -39,7 +39,8 @@ Route::patch('/maquinaria/edit/{id}', 'MaquinariaController@update');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
 //--Ejemplo fotos--//
 Route::get('/photo', 'PhotoController@photo');
-Route::post('/photo', 'PhotoController@xxj'); 
+Route::post('/photo', 'PhotoController@xxj');
+Route::get('/photo/new', 'PhotoController@read');
 //-----Articulos Personales----
 Route::post('/personal/nuevo', 'ArticulosPersonalesController@store');
 Route::get('/personal/lista', 'ArticulosPersonalesController@list');
