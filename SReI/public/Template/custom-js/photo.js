@@ -8,6 +8,9 @@ const video = document.getElementById('video');
 var canvas = document.getElementById('canvas');
 const snap = document.getElementById("snap");
 var send =document.getElementById('can');
+var cv = document.querySelector("#videoCanvas");
+var ctx = cv.getContext('2d');
+
 const errorMsgElement = document.querySelector('span#errorMsg');
 
 const constraints = {
@@ -31,20 +34,48 @@ async function init() {
 function handleSuccess(stream) {
   window.stream = stream;
   video.srcObject = stream;
+    video.onplay = function() {
+      setTimeout(drw , 300);
+    };
+}
+
+function drw() {
+      //var video = document.querySelector("#webCamera");
+
+      cv.width = video.videoWidth;
+      cv.height = video.videoHeight;
+
+
+      ctx.drawImage(video, 0, 0, cv.width, cv.height);
+
+      var faceArea = 200;
+      var pX=cv.width/2 - faceArea/2;
+      var pY=cv.height/2 - faceArea/2;
+
+      ctx.rect(pX,pY,faceArea,faceArea);
+      ctx.lineWidth = "6";
+      ctx.strokeStyle = "red";
+      ctx.stroke();
+
+
+      setTimeout(drw , 20);
 }
 
 // Load init
 init();
 
+
+
+
 // Draw image
 var context = canvas.getContext('2d');
 
 snap.addEventListener("click", function() {
-        context.drawImage(video, 0, 0, 640, 360);
+        context.drawImage(cv, 0, 0, cv.width, cv.height);
 });
 
 send.addEventListener("click", function () {
-    context.drawImage(video, 0, 0, 640, 360);
+    context.drawImage(cv, 0, 0, cv.width, cv.height);
     toBin();
     try {
         var dataUrl = canvas.toDataURL("image/png");
@@ -55,9 +86,8 @@ send.addEventListener("click", function () {
                 img: dataUrl
             },
             type: 'POST',
-            success: function(data)
-            {
-                alert("Imagen guardada en servidor");
+            success: function(data){
+              window.location='/photo/new';
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
@@ -71,7 +101,7 @@ send.addEventListener("click", function () {
 });
 
 function toBin(){
-  var imageData = context.getImageData(0, 0, 640, 360);
+  var imageData = context.getImageData(0, 0, cv.width, cv.height);
   var pixels = imageData.data;
   var numPixels = imageData.width * imageData.height;
   for ( var i = 0; i < numPixels; i++ ) {
