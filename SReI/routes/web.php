@@ -17,6 +17,10 @@ Route::get('/layout', function() {
 
 Route::get('/', 'welcomeController@index');
 
+//---Login ---//
+//Route::get('/login', 'Auth\LoginController@index');
+Route::get('/login/prueba', 'Auth\LoginController@searchUser');
+
 //---Tarjetas Programables---//
 //Route::get('/tarjetas-programables/nuevo', 'TarjetaController@create');
 Route::post('/tarjetas-programables/nuevo', 'TarjetaController@store');
@@ -61,4 +65,3 @@ Route::post('/registro', 'welcomeController@registrar');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/login/ejemplo', 'HomeController@prueba');

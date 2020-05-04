@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    {!!Form::open(['url'=>'/login/ejemplo','method'=>'post','id'=>'login'])!!}
+                    {!!Form::open(['url'=>'/login','method'=>'post','id'=>'login'])!!}
                     <div class="form-group">
                         <label class="form-label">RFC</label>
                         {!!Form::text('rfc',null,['class'=>'form-control','id'=>'rfc'])!!}
