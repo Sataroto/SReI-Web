@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use GuzzleHttp\Client;
 
+use \App\User;
 class LoginController extends Controller
 {
     /*
@@ -46,28 +47,38 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function searchUser(Request $request) {
+    public function searchUser() {
         $client = new Client([
             'base_uri' => 'http://localhost:3000/API/usuario/',
             'timeout' => 2.0
         ]);
 
-        $response = $client->request('POST', 'login',
+        $response = $client->request('GET', 'login',
             [
                 'json' => [
-                    'username' => "2222222222",
+                    'username' => "201800217",
                     'password' => "1234",
                 ]
             ]);
+
         $data = json_decode($response->getBody()->getContents());
+        $object_data = $data->usuario[0];
 
-        //dd($data->datos->token);
-        if($data->estatus == "true") {
-            //dd(Auth::attempt(['token' => $data->datos->token]));
-            dd($data->datos->token);
-        }
+        $user = new User([
+            '_id' => $object_data->_id,
+            'tipo' => $object_data->tipo,
+            'usuario' => $object_data->usuario,
+            'clave' => $object_data->clave,
+            'nombre' => $object_data->nombre,
+            'apellidoPaterno' => $object_data->apellidoPaterno,
+            'apellidoMaterno' => $object_data->apellidoMaterno,
+            'activo' => $object_data->activo,
+            'permisos' => $object_data->permisos
+        ]);
 
-        die();
+        Auth::login($user);
+
+        //return view('pruebas', ['user' => $user,'object' => $object_data]);
 
     }
 }

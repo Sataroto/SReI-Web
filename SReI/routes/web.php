@@ -18,8 +18,7 @@ Route::get('/layout', function() {
 Route::get('/', 'welcomeController@index');
 
 //---Login ---//
-//Route::get('/login', 'Auth\LoginController@index');
-Route::get('/login/prueba', 'Auth\LoginController@searchUser');
+Route::get('/login', 'Auth\LoginController@searchUser');
 
 //---Tarjetas Programables---//
 //Route::get('/tarjetas-programables/nuevo', 'TarjetaController@create');
