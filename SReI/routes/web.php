@@ -17,6 +17,9 @@ Route::get('/layout', function() {
 
 Route::get('/', 'welcomeController@index');
 
+//---Login ---//
+Route::get('/login', 'Auth\LoginController@searchUser');
+
 //---Tarjetas Programables---//
 //Route::get('/tarjetas-programables/nuevo', 'TarjetaController@create');
 Route::post('/tarjetas-programables/nuevo', 'TarjetaController@store');
@@ -37,10 +40,12 @@ Route::post('maquinaria/nuevo/herramienta', 'MaquinariaController@nuevaHerramien
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
 Route::patch('/maquinaria/edit/{id}', 'MaquinariaController@update');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
+
 //--Ejemplo fotos--//
 Route::get('/photo', 'PhotoController@photo');
 Route::post('/photo', 'PhotoController@xxj');
 Route::get('/photo/new', 'PhotoController@read');
+
 //-----Articulos Personales----
 Route::post('/personal/nuevo', 'ArticulosPersonalesController@store');
 Route::get('/personal/lista', 'ArticulosPersonalesController@list');
@@ -55,6 +60,7 @@ Route::get('/', function(){
 Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
 Route::post('/registro', 'welcomeController@registrar');
+
 Auth::routes();
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/ejemplo', 'clientController@index')->middleware('auth');
