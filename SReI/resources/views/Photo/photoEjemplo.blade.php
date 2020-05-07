@@ -1,6 +1,7 @@
 <!--
-    Versión 1.0
+    Versión 3.0
     Creado al 15/01/2020
+    Creado por: GBautista
     Modificao al 07/05/2020
     Editado por: GBautista
     Copyright SReI
@@ -13,74 +14,43 @@
 
 
 @section('content')
-    <video id="video"  name="video" playsinline autoplay style="display: none"></video> 
-    <canvas id="videoCanvas"></canvas>
-    <button id="reset">Reset</button>
-    <button id="stop" >Stop</button>
+    <video id="preview"></video> 
 
-    <p id="result"> ejemplo</p>
+    <p id="result"></p>
 
 
 @stop()
 
 @section('js')
-<script src="{{asset('Template/custom-js/qcode-decoder/build/qcode-decoder.min.js')}}"></script>
-<!--Descomentar para ver canvas-->
-<!--script src="{{asset('Template/custom-js/photo.js')}}"></script-->
-
 <!--
-  Script prueba para ver lectura de QR
-  No tiene lineas de falla, pero tampoco mmuestra alerts
-  dado a que son las 3 de la mañana no tengo idea si es mi navegador, cache, o algo puse mal
-  si alguien tiene tiempo de probarlo sería cuestion de probar la ruta y ver si en otro navegador
-  tiene una respuesta distinta
-
-  En caso de funcionar, avisar para poder estructurarlo de forma formal a otro js en custom-js
+  Script funcional en linea
+  Es necesario tener internet para que funcione
+  Posible mejora es encontrar ese script funcional de forma local
+<script src="{{asset('Template/custom-js/instascan.min.js')}}"></script>
 -->
-<script  type="text/javascript">
- (function () {
-    'use strict';
+<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" ></script>
+<!--
+    Scanner sacado de git https://github.com/rcarneironet/qrcode-js
+    Aplicación de : https://github.com/schmich/instascan 
+-->
+<script>
+        let scanner = new Instascan.Scanner(
+            {
+                video: document.getElementById('preview')
+            }
+        );
+        scanner.addListener('scan', function(content) {
+            var texto = document.getElementById('result')
+            texto.innerHTML = content
+        });
+        Instascan.Camera.getCameras().then(cameras => 
+        {
+            if(cameras.length > 0){
+                scanner.start(cameras[0]);
+            } else {
+                console.error("No existe la camara o dispositivo");
+            }
+        });
+    </script>
 
-    var qr = new QCodeDecoder();
-
-    if (!(qr.isCanvasSupported() && qr.hasGetUserMedia())) {
-      alert('Your browser doesn\'t match the required specs.');
-      throw new Error('Canvas and getUserMedia are required');
-    }
-
-    var video = document.getElementById('video');
-    var reset = document.getElementById('reset');
-    var stop = document.getElementById('stop');
-    var valor = document.getElementById('result');
-
-    function resultHandler (err, result) {
-      if (err)  alert("help");
-      alert(result);
-    }
-
-    // prepare a canvas element that will receive
-    // the image to decode, sets the callback for
-    // the result and then prepares the
-    // videoElement to send its source to the
-    // decoder.
-
-   
-    qr.decodeFromCamera(video, function(er,res){
-      alert(res);
-    });
-
-
-    // attach some event handlers to reset and
-    // stop whenever we want.
-
-    reset.onclick = function () {
-      qr.decodeFromCamera(video, resultHandler);
-    };
-
-    stop.onclick = function () {
-      qr.stop();
-    };
-
-  })();
-  </script>
 @stop
