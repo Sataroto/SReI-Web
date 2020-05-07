@@ -1,13 +1,11 @@
-$.ajaxSetup({
+/*$.ajaxSetup({
      headers: {
          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
      }
  });
+*/
 
 const video = document.getElementById('video');
-var canvas = document.getElementById('canvas');
-const snap = document.getElementById("snap");
-var send =document.getElementById('can');
 var cv = document.querySelector("#videoCanvas");
 var ctx = cv.getContext('2d');
 
@@ -15,9 +13,7 @@ const errorMsgElement = document.querySelector('span#errorMsg');
 
 const constraints = {
   audio: false,
-  video: {
-    width: 640, height: 360
-  }
+  video: {width: 640, height: 360}
 };
 
 // Access webcam
@@ -48,13 +44,7 @@ function drw() {
 
       ctx.drawImage(video, 0, 0, cv.width, cv.height);
 
-      var faceArea = 200;
-      var pX=cv.width/2 - faceArea/2;
-      var pY=cv.height/2 - faceArea/2;
-
-      ctx.rect(pX,pY,faceArea,faceArea);
-      ctx.lineWidth = "6";
-      ctx.strokeStyle = "red";
+     
       ctx.stroke();
 
 
@@ -63,65 +53,3 @@ function drw() {
 
 // Load init
 init();
-
-
-
-
-// Draw image
-var context = canvas.getContext('2d');
-
-snap.addEventListener("click", function() {
-        context.drawImage(cv, 0, 0, cv.width, cv.height);
-});
-
-send.addEventListener("click", function () {
-    context.drawImage(cv, 0, 0, cv.width, cv.height);
-    toBin();
-    try {
-        var dataUrl = canvas.toDataURL("image/png");
-
-        $.ajax({
-            url: '/photo',
-            data:{
-                img: dataUrl
-            },
-            type: 'POST',
-            success: function(data){
-              window.location='/photo/new';
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-            }
-        });
-    } catch(err) {
-        alert(err);
-    }
-});
-
-function toBin(){
-  var imageData = context.getImageData(0, 0, cv.width, cv.height);
-  var pixels = imageData.data;
-  var numPixels = imageData.width * imageData.height;
-  for ( var i = 0; i < numPixels; i++ ) {
-      var r = pixels[ i * 4 ];
-      var g = pixels[ i * 4 + 1 ];
-      var b = pixels[ i * 4 + 2 ];
-
-      var grey = ( r + g + b ) / 3;
-
-      if (grey < 80 ){
-        pixels[ i * 4 ] = 0;
-        pixels[ i * 4 + 1 ] = 0;
-        pixels[ i * 4 + 2 ] = 0;
-      }else{
-        pixels[ i * 4 ] = 255;
-        pixels[ i * 4 + 1 ] = 255;
-        pixels[ i * 4 + 2 ] = 255;
-      }
-  }
-
-  context.putImageData( imageData, 0, 0 );
-
-}
