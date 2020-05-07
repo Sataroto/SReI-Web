@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Equipo; //USAR LAS COLECCIONES
-use App\checklist;
+ //Estos apartados son para usar las colecciones de los datos
+use App\Equipo;
+use App\User;
+use App\checklist; //Este realmente no se de que sea
 use App\Laboratorio;
 use App\Bitacora;
 use MongoDB\BSON\ObjectID;
@@ -22,7 +24,7 @@ class ArticulosPersonalesController extends Controller
      */
     public function index()
     {
-      // return view('listaPersonal');
+
     }
 
     /**
@@ -45,14 +47,17 @@ class ArticulosPersonalesController extends Controller
 
     public function list() {
         /*
-            Busqueda de los objetos de 'Equipo' de tipo 'electronica' dentro de
+            Busqueda de los objetos de 'Personal' de tipo '1' dentro de
             la base de datos
         */
-        $equipo = Equipo::where('tipo','=','Electronica')->get();
+        $personal = Equipo::where('tipo','=','maquinaria')->get();
+
+
+        //where('tipo','=','1.0')->get();
 
 
         $array = [
-            'equipoElectronica' => $equipo
+            'personal' => $personal
         ];
 
         return view('articulosPersonales.listaPersonal', $array);
@@ -198,20 +203,4 @@ class ArticulosPersonalesController extends Controller
     {
 
     }
-
-  // public function list() {
-      /*
-          Busqueda de los objetos de 'Equipo' de tipo 'maquinaria' dentro de
-          la base de datos
-      */
-//     $personal = Equipo::where('tipo','=','Articulo Personal')->get();
-    // $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
-
-    //  $array = [
-      // 'tarjeta' => $tarjetas,
-        //  'laboratorios' => $laboratorios
-    //  ];
-
-  //  return view('personal/lista', $array);
-//    }
 }

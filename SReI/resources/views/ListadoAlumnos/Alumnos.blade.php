@@ -113,47 +113,82 @@ $array = array("Nombre del alumno ","Boleta ","Carrera ","Estado","Accion");
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="header">
-                <h2>
-                    Listado de Alumnos
-                    <small>Lista de los alumnos</small>
-                </h2>
-            </div>
-            <!-- Inicio de la tabla -->
-            <div class="body table-responsive">
-                    <table class="table">
-          <!--Cabecera de la tabla -->
-      <thead>
-          <tr>
-            @foreach($array as $valor)
-                <th>{{$valor}}</th>
-            @endforeach
-          </tr>
-      </thead>
-              <!-- Fin de la cabecera de la tabla -->
+              <div class="body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                                <li role="presentation" class="active"><a href="#home" data-toggle="tab">Alumnos</a></li>
+                                <li role="presentation"><a href="#profile" data-toggle="tab">Equipo Uso</a></li>
+                                <li role="presentation"><a href="#messages" data-toggle="tab">Pestaña1</a></li>
+                            </ul>
 
-          <!-- Cuerpo de la tabla -->
-      <tbody>
-        @foreach($usuarios as $array)
-            <tr>
-              @foreach($array as $contenido)
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                    <b>  <h2>
+                                          Listado de Alumnos
+                                          <small>Lista de los alumnos</small>
+                                      </h2></b>
+                                    <p>
+                                      <!-- Inicio de la tabla -->
+                                      <div class="body table-responsive">
+                                              <table class="table">
+                                    <!--Cabecera de la tabla -->
+                                <thead>
+                                    <tr>
+                                      @foreach($array as $valor)
+                                          <th>{{$valor}}</th>
+                                      @endforeach
+                                    </tr>
+                                </thead>
+                                        <!-- Fin de la cabecera de la tabla -->
 
-                  <td>{{$contenido}}</td>
-              @endforeach
-              <td>
-                <button type="button" class="btn btn-success waves-effect m-r-20"
-                data-toggle="modal" data-target="#defaultModal">Modificar</button>
-              <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
-                </div>
-              </td>
-            </tr>
-        @endforeach
-      </tbody>
-       <!-- Fin del cuerpo de la tabla -->
-  </table>
-     <!-- Fin de la tabla -->
+                                    <!-- Cuerpo de la tabla -->
+                                <tbody>
+                                  @foreach($usuarios as $array)
+                                      <tr>
+                                        @foreach($array as $contenido)
+
+                                            <td>{{$contenido}}</td>
+                                        @endforeach
+                                        <td>
+                                          <button type="button" class="btn btn-success waves-effect m-r-20"
+                                          data-toggle="modal" data-target="#defaultModal">Modificar</button>
+                                        <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+                                          </div>
+                                        </td>
+                                      </tr>
+                                  @endforeach
+                                </tbody>
+                                 <!-- Fin del cuerpo de la tabla -->
+                            </table>
+                               <!-- Fin de la tabla -->
+                                      </div>
+                                    </p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="profile">
+                                    <b><h2>
+                                          Equipo Uso
+                                          <small>Equipo en Uso</small>
+                                      </h2></b>
+                                    <p>
+                                      Insertar texto necesario, aqui va el equipo en uso
+                                    </p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="messages">
+                                    <b><h2>
+                                          Pestaña1
+                                          <small>Small text</small>
+                                      </h2></b>
+                                    <p>
+                                        Insertar aqui lo necesario
+                                    </p>
+                                </div>
+                            </div>
             </div>
+
         </div>
     </div>
+</div>
 </div>
 <!-- Fin del contenedor de la lista -->
 @stop()
