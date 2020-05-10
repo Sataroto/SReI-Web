@@ -1,20 +1,11 @@
 <!--
-    Versión 1.0
+    Versión 3.0
     Creado al 15/01/2020
-    Modificao al 16/01/2020
-    Editado por: obelmonte
+    Creado por: GBautista
+    Modificao al 07/05/2020
+    Editado por: GBautista
     Copyright SReI
 -->
-
-<!--
-$image = __DIR__ . "/qrcodes/hello_world.png";
-$qrcode = new QrReader($image);
-$this->assertSame("Hello world!", $qrcode->text());
--->
-
-<?php
-use Zxing\QrReader;
-?>
 
 @extends('layouts.layout')
 
@@ -23,24 +14,43 @@ use Zxing\QrReader;
 
 
 @section('content')
-<!-- Stream video via webcam -->
-<div class="video-wrap">
-    <video id="video" playsinline autoplay style="display: none"></video>
-    <canvas id="videoCanvas"></canvas>
-</div>
+    <video id="preview"></video> 
 
-<!-- Trigger canvas web API -->
-<div class="controller">
-    <button id="snap">Capture</button>
-    <button type="submit" id="can">Send</button>
-</div>
+    <p id="result"></p>
 
-<!-- Webcam video snapshot -->
-<canvas id="canvas" width="640" height="480"></canvas>
 
 @stop()
 
 @section('js')
+<!--
+  Script funcional en linea
+  Es necesario tener internet para que funcione
+  Posible mejora es encontrar ese script funcional de forma local
+<script src="{{asset('Template/custom-js/instascan.min.js')}}"></script>
+-->
+<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" ></script>
+<!--
+    Scanner sacado de git https://github.com/rcarneironet/qrcode-js
+    Aplicación de : https://github.com/schmich/instascan 
+-->
+<script>
+        let scanner = new Instascan.Scanner(
+            {
+                video: document.getElementById('preview')
+            }
+        );
+        scanner.addListener('scan', function(content) {
+            var texto = document.getElementById('result')
+            texto.innerHTML = content
+        });
+        Instascan.Camera.getCameras().then(cameras => 
+        {
+            if(cameras.length > 0){
+                scanner.start(cameras[0]);
+            } else {
+                console.error("No existe la camara o dispositivo");
+            }
+        });
+    </script>
 
-<script src="{{asset('Template/custom-js/photo.js')}}"></script>
 @stop
