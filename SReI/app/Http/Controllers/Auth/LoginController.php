@@ -53,7 +53,7 @@ class LoginController extends Controller
             'timeout' => 2.0
         ]);
 
-        $response = $client->request('GET', 'login',
+        $response = $client->request('GET', 'login/docente',
             [
                 'json' => [
                     'username' => "201800217",
@@ -64,21 +64,23 @@ class LoginController extends Controller
         $data = json_decode($response->getBody()->getContents());
         $object_data = $data->usuario[0];
 
-        $user = new User([
-            '_id' => $object_data->_id,
-            'tipo' => $object_data->tipo,
-            'usuario' => $object_data->usuario,
-            'clave' => $object_data->clave,
-            'nombre' => $object_data->nombre,
-            'apellidoPaterno' => $object_data->apellidoPaterno,
-            'apellidoMaterno' => $object_data->apellidoMaterno,
-            'activo' => $object_data->activo,
-            'permisos' => $object_data->permisos
-        ]);
+        if($data->estatus == true) {
+            $user = new User([
+                '_id' => $object_data->_id,
+                'tipo' => $object_data->tipo,
+                'usuario' => $object_data->usuario,
+                'clave' => $object_data->clave,
+                'nombre' => $object_data->nombre,
+                //'apellidoPaterno' => $object_data->apellidoPaterno,
+                //'apellidoMaterno' => $object_data->apellidoMaterno,
+                //'activo' => $object_data->activo,
+                'permisos' => $object_data->permisos
+            ]);
+            Auth::login($user);
 
-        Auth::login($user);
+            return view('pruebas', ['user' => $user,'object' => $object_data]);
+        }
 
-        //return view('pruebas', ['user' => $user,'object' => $object_data]);
 
     }
 }
