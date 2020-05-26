@@ -47,40 +47,46 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function searchUser() {
+    public function searchUser(Request $request) {
         $client = new Client([
             'base_uri' => 'http://localhost:3000/API/usuario/',
             'timeout' => 2.0
         ]);
 
-        $response = $client->request('GET', 'login/docente',
+        $response = $client->request('GET', 'login',
             [
                 'json' => [
-                    'username' => "201800217",
-                    'password' => "1234",
+                    'username' => $request->username,
+                    'password' => $reuqets->pass
                 ]
             ]);
 
         $data = json_decode($response->getBody()->getContents());
         $object_data = $data->usuario[0];
 
-        if($data->estatus == true) {
-            $user = new User([
-                '_id' => $object_data->_id,
-                'tipo' => $object_data->tipo,
-                'usuario' => $object_data->usuario,
-                'clave' => $object_data->clave,
-                'nombre' => $object_data->nombre,
-                //'apellidoPaterno' => $object_data->apellidoPaterno,
-                //'apellidoMaterno' => $object_data->apellidoMaterno,
-                //'activo' => $object_data->activo,
-                'permisos' => $object_data->permisos
-            ]);
-            Auth::login($user);
+        if($data->estatus) {
+            if(empty($object_data)) {
+                return back()->withErrors('Usuario no encontrado');
+            }
 
-            return view('pruebas', ['user' => $user,'object' => $object_data]);
+            login($data);
+        } else {
+            return back()->withErrors('No se encontro el rfc registrado en la escuela');
         }
+    }
 
+    public function login($data) {
+        $user = new User([
+            '_id' => $data->_id,
+            'tipo' => $data->tipo,
+            'usuario' => $data->usuario,
+            'clave' => $data->clave,
+            'nombre' => $data->nombre,
+            'edificio' => $data->edificio
+        ]);
 
+        Auth::login($user);
+
+        return view('pruebas', ['user' => $user,'object' => $data]);
     }
 }

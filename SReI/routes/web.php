@@ -17,8 +17,12 @@ Route::get('/layout', function() {
 
 Route::get('/', 'welcomeController@index');
 
-//---Login ---//
+//---Login---//
 //Route::get('/login', 'Auth\LoginController@searchUser');
+
+//---Register---//
+Route::POST('/registrar','Auth\RegisterController@create');
+
 
 //---Tarjetas Programables---//
 //Route::get('/tarjetas-programables/nuevo', 'TarjetaController@create');

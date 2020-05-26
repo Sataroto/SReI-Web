@@ -1,77 +1,69 @@
-@extends('layouts.app')
+@extends('layouts.loginLayout')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <!-- Advanced Form Example With Validation -->
+    <div class="body">
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <p>Corrige los siguientes errores:</p>
+            <ul>
+                @foreach ($errors->all() as $message)
+                <li>{{ $message }}</li>
+                @endforeach
+            </ul>
         </div>
+        @endif
+        {!!Form::open(['url'=>'/registrar','method'=>'POST','id'=>'wizard_with_validation'])!!}
+            <h3>Datos de acceso</h3>
+            <fieldset>
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        {!!Form::text('rfc',null,['class'=>'form-control','required','maxlength'=>'12','id'=>'rfc'])!!}
+                        <label class="form-label">rfc*</label>
+                    </div>
+                </div>
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        {!!Form::password('password',['class'=>'form-control','required','id'=>'password'])!!}
+                        <label class="form-label">Cotraseña*</label>
+                    </div>
+                </div>
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        {!!Form::password('password_confirmation',['class'=>'form-control','required','id'=>'password_confirmation'])!!}
+                        <label class="form-label">Confirma la contraseña*</label>
+                    </div>
+                </div>
+                <label>Comprobaremos su rfc con el SAES y su nombre será registrado automaticamente en el sistema</label>
+            </fieldset>
+
+            <h3>Información de trabajo</h3>
+            <fieldset>
+                <div class="form-group form-float">
+                    Seleccione su ocupación
+                    <div class="">
+                        {!!Form::radio('tipo',1,false,['class'=>'with-gap radio-col-blue-grey','id'=>'radio_2', 'required'])!!}
+                        <label for="radio_2">Docente</label>
+                    </div>
+                    <div class="">
+                        {!!Form::radio('tipo',2,false,['class'=>'with-gap radio-col-blue-grey','id'=>'radio_1', 'required'])!!}
+                        <label for="radio_1">Técnico</label>
+                    </div>
+                </div>
+
+                <div class="form-group form-float">
+                    Seleccione los edificios donde labora
+                    <div class="">
+                        {!!Form::radio('edificio','ligeros', false,['class'=>'with-gap radio-col-blue-grey','id'=>'ligeros','required'])!!}
+                        <label for="ligeros">Ligeros</label>
+                    </div>
+                    <div class="">
+                        {!!Form::radio('edificio','pesados', false,['class'=>'width-gap radio-col-blue-grey','id'=>'pesados','required'])!!}
+                        <label for="pesados">Pesados</label>
+                    </div>
+                </div>
+            </fieldset>
+        {!!Form::close()!!}
     </div>
-</div>
+    <!-- #END# Advanced Form Example With Validation -->
 @endsection

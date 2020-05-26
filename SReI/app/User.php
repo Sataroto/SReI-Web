@@ -25,11 +25,7 @@ class User extends Authenticatable
         'usuario',
         'clave',
         'nombre',
-        'apellidoPaterno',
-        'apellidoMaterno',
-        'activo',
-        'permisos',
-        'adscripcion',
+        'edificio'
     ];
 
     /**

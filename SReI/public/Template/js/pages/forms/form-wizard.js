@@ -62,7 +62,8 @@ $(function () {
             return form.valid();
         },
         onFinished: function (event, currentIndex) {
-            swal("Good job!", "Submitted!", "success");
+            form.submit();
+            //swal("Good job!", "Submitted!", "success");
         }
     });
 
@@ -77,7 +78,7 @@ $(function () {
             $(element).parents('.form-group').append(error);
         },
         rules: {
-            'confirm': {
+            'password_confirmation': {
                 equalTo: '#password'
             }
         }

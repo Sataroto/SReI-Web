@@ -6106,7 +6106,7 @@ fieldset[disabled] .form-control {
     margin: 0 0.5em; }
 
 .wizard > .actions a {
-  background: #009688;
+  background: #6B8A99;
   color: #fff;
   display: block;
   padding: 0.5em 1em;
@@ -6116,7 +6116,7 @@ fieldset[disabled] .form-control {
   -ms-border-radius: 0;
   border-radius: 0; }
   .wizard > .actions a:hover, .wizard > .actions a:active {
-    background: #009688;
+    background: #7495A6;
     color: #fff;
     display: block;
     padding: 0.5em 1em;
@@ -6219,17 +6219,25 @@ fieldset[disabled] .form-control {
     border-radius: 0; }
 
 .wizard .steps .done a {
-  background-color: rgba(0, 150, 136, 0.6); }
+  background-color: rgba(114, 149, 166, 0.6); }
   .wizard .steps .done a:hover, .wizard .steps .done a:active, .wizard .steps .done a:focus {
-    background-color: rgba(0, 150, 136, 0.5); }
+    background-color: rgba(114, 149, 166, 0.5); }
 
 .wizard .steps .error a {
   background-color: #F44336 !important; }
 
 .wizard .steps .current a {
-  background-color: #009688; }
+  background-color: #6B8A99; }
+  /*
+      #607D8B
+      #6A81A3
+      #6A9FA3
+      #6B8A99
+      #263740
+      #8C7269
+  */
   .wizard .steps .current a:active, .wizard .steps .current a:focus, .wizard .steps .current a:hover {
-    background-color: #009688; }
+    background-color: #7495A6; }
 
 /* Waves ======================================= */
 .waves-effect.waves-red .waves-ripple {
@@ -7765,7 +7773,7 @@ fieldset[disabled] .form-control {
 
 /* Login Page ================================== */
 .login-page {
-  background-color: #00BCD4;
+  background-color: #617D8B;
   padding-left: 0;
   max-width: 360px;
   margin: 5% auto;
@@ -7777,7 +7785,7 @@ fieldset[disabled] .form-control {
   .login-page .login-box a {
     font-size: 14px;
     text-decoration: none;
-    color: #00BCD4; }
+    /*color: #00BCD4;*/ }
   .login-page .login-box .logo {
     margin-bottom: 20px; }
     .login-page .login-box .logo a {
@@ -7785,7 +7793,7 @@ fieldset[disabled] .form-control {
       display: block;
       width: 100%;
       text-align: center;
-      color: #fff; }
+  color: #fff; }
     .login-page .login-box .logo small {
       display: block;
       width: 100%;

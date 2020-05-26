@@ -1,29 +1,48 @@
-@extends('layouts.app')
+@extends('layouts.loginLayout')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <div class="body">
+        {!!Form::open(array('url'=>'/login','method'=>'get','id'=>'sign_in'))!!}
 
-                <div class="card-body">
-                    {!!Form::open(['url'=>'/login','method'=>'post','id'=>'login'])!!}
-                    <div class="form-group">
-                        <label class="form-label">RFC</label>
-                        {!!Form::text('rfc',null,['class'=>'form-control','id'=>'rfc'])!!}
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Contraseña</label>
-                        {!!Form::password('pass',null,['class'=>'form-control','id'=>'pass'])!!}
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success" name="enviar">Enviar</button>
-                    </div>
-                    {!!Form::close()!!}
-                </div>
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="material-icons">person</i>
+            </span>
+            <div class="form-line">
+                {!!Form::text('rfc',null,['class'=>'form-control',
+                'placeholder'=>'RFC','required',
+                'aria-required'=>'true','maxlength'=>'12',
+                'id'=>'rfc'])!!}
             </div>
         </div>
+
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="material-icons">lock</i>
+            </span>
+            <div class="form-line">
+                {!!Form::password('pass',['class'=>'form-control',
+                'placeholder'=>'Contraseña','required',
+                'aria-required'=>'true','maxlength'=>'10',
+                'id'=>'pass'])!!}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4">
+            </div>
+            <div class="col-xs-4">
+                <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
+            </div>
+        </div>
+        <div class="row m-t-15 m-b--20">
+            <div class="col-xs-6">
+
+            </div>
+            <div class="col-xs-6 align-right">
+                <a href="forgot-password.html">Forgot Password?</a>
+            </div>
+        </div>
+        {!!Form::close()!!}
     </div>
-</div>
-@endsection
+@stop
