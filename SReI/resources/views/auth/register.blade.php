@@ -5,7 +5,7 @@
     <div class="body">
         @if (count($errors) > 0)
         <div class="alert alert-danger">
-            <p>Corrige los siguientes errores:</p>
+            <!--p>Corrige los siguientes errores:</p-->
             <ul>
                 @foreach ($errors->all() as $message)
                 <li>{{ $message }}</li>

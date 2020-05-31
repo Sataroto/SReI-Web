@@ -69,13 +69,13 @@ class LoginController extends Controller
                 return back()->withErrors('Usuario no encontrado');
             }
 
-            login($data);
+            self::login($data);
         } else {
             return back()->withErrors('No se encontro el rfc registrado en la escuela');
         }
     }
 
-    public function login($data) {
+    public static function login($data) {
         $user = new User([
             '_id' => $data->_id,
             'tipo' => $data->tipo,
