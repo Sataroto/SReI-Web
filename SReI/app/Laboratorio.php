@@ -11,6 +11,7 @@ class Laboratorio extends Eloquent
     protected $collection = 'Laboratorio';
 
     protected $fillable = [
+        '_id',
         'edificio',
         'nombre',
         'activo',

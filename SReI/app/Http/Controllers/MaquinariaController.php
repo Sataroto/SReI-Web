@@ -31,11 +31,21 @@ class MaquinariaController extends Controller
             la base de datos
         */
         $maquinaria = Equipo::where('tipo','=','Maquinaria')->get();
-        $laboratorios = Laboratorio::where('edificio', '=', 'Pesados 1')->lists('nombre','_id');
+        $laboratorios = Laboratorio::where('edificio', '=', 'Pesados 1')->get();
         $herramienta  = Equipo::where('tipo', '=', 'Herramienta')->get();
+        $labs = [];
+
+        foreach($laboratorios as $l) {
+            $lab = [$l->_id => $l->nombre];
+            $labs = array_merge($labs, $lab);
+        }
+
+//        dd($labs);
+//        die();
+
         $array = [
             'maquina' => $maquinaria,
-            'laboratorios' => $laboratorios,
+            'laboratorios' => $labs,
             'herramienta' => $herramienta
         ];
 

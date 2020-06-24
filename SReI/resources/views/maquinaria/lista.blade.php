@@ -17,11 +17,12 @@
 @extends('layouts.layout')
 
 @section('css')
-
+<!-- JQuery DataTable Css -->
+<link href="{{asset('Template/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css')}}" rel="stylesheet">
 @stop
 
 @section('popUp')
-<!-- Default Size -->
+<!-- Modal de creacion -->
 <div class="modal fade" id="maquinaria_form" tabindex="-1" role="dialog">
     <!-- Inicio del formulario de maquinaria -->
     {!!Form::open(array('url'=>'/maquinaria/nuevo', 'id'=>'add_maquina_form',
@@ -149,15 +150,17 @@
     {!!Form::close()!!}
     <!-- Fin del formulario de maquinaria -->
 </div>
+<!-- Fin modal de creacion de maquinaria -->
 
+<!--Modal de creacion de herramienta -->
 <div class="modal fade" id="herramienta_form" tabindex="-1" role="dialog">
-    <!-- Inicio del formulario de maquinaria -->
+    <!-- Inicio del formulario de herramienta -->
     {!!Form::open(array('url'=>'/maquinaria/nuevo/herramienta', 'id'=>'add_herrameinta_form',
     'method'=>'POST'))!!}
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="defaultModalLabel">Nueva herramienta</h5>
             </div>
             <div class="modal-body">
                 <!-- Contenedor del formulario -->
@@ -228,11 +231,123 @@
         </div>
     </div>
     {!!Form::close()!!}
-    <!-- Fin del formulario de maquinaria -->
+    <!-- Fin del formulario de herramienta -->
 </div>
+<!-- Fin modal de creacion de herramienta -->
+
+<!-- Modal informacion de maquinaria -->
+@foreach($maquina as $m)
+<div class="modal fade" id="{{$m->_id.'_edit'}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="herramienta_modal_title">Información de la maquina</h5>
+            </div>
+            <div class="modal-body">
+                {!!Form::open(array('url'=>'/maquinaria/edit', 'method'=>'patch'))!!}
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-xs-8">
+                                {!!Form::hidden('_id',$m->_id,['id'=>$m->_id.'_id'])!!}
+
+                                <h5 class="card-inside-title">Nombre</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('nombre', $m->nombre,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Nombre de la maquina',
+                                            'id'=>$m->_id.'_nombre', 'disabled'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Laboratorio</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::select('laboratorio',
+                                        $laboratorios, 0,
+                                        ['class'=>'form-control',
+                                        'id'=>$m->_id.'laboratorio', 'disabled'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Fabricante</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('fabricante', $m->caracteristicas[0],
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Fabricante de la maquina',
+                                            'id'=>$m->_id.'fabricante', 'disabled'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Modelo</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('modelo', $m->caracteristicas[1],
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Modelo de la maquina',
+                                            'id'=>$m->_id.'modelo', 'disabled'])!!}
+                                    </div>
+                                </div>
+
+                                @if(sizeof($m->caracteristicas) > 2)
+                                <h5 class="card-inside-title">Numero de serie</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('serie', $m->caracteristicas[2],
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Numero de serie',
+                                            'id'=>$m->_id.'serie'])!!}
+                                    </div>
+                                </div>
+                                @endif
+                                @if(sizeof($m->caracteristicas) > 3)
+                                <h5 class="card-inside-title">Descipción</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::textarea('descripcion', $m->caracteristicas[3],
+                                            ['class'=>'form-control',
+                                            'id'=>'descripcion'])!!}
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {!!Form::close()!!}
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+<!-- Fin modal informacion de maquinaria-->
+
+<!-- Modal informacion herramientas -->
+<div class="modal fade" id='herramienta_info' tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">información de la herramienta</h5>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin modal informacion herramientas -->
 @stop
 
 @section('content')
+
 <!-- Contenedor de la lista -->
 <div class="row clearfix">
     @if (count($errors) > 0)
@@ -271,123 +386,46 @@
 
                         </div>
                         <!-- Inicio de la tabla de maquinaria-->
-                        <div class="body table-responsive">
-                            <table class="table">
-                                <!--Cabecera de la tabla de maquinaria -->
-                                <thead>
-                                    <tr>
-                                        <th>Código</th>
-                                        <th>Nombre de la maquina</th>
-                                        <th>Fabricante</th>
-                                        <th>Modelo</th>
-                                        <th>Estado</th>
-                                        <th>Laboratorio</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <!-- Fin de la cabecera de la tabla de maquinaria -->
-
-                                <!-- Cuerpo de la tabla de maquinaria -->
-                                <tbody>
-                                    @unless($maquina == null)
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Estado</th>
+                                            <th>Disponibilidad</th>
+                                            <th>Laboratorio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Estado</th>
+                                            <th>Disponibilidad</th>
+                                            <th>Laboratorio</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
                                         @foreach($maquina as $m)
-                                            <tr id="{{$m->_id}}">
-                                                <th scope="row">{{$m->_id}}</th>
-                                                <td>
-                                                    <p>{{$m->nombre}}</p>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::text('nombre',$m->nombre,['class'=>'form-control', 'id'=>'nombre'])!!}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                @unless(sizeof($m->caracteristicas) == 0)
-                                                <td>
-                                                    <p>{{$m->caracteristicas[0]}}</p>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::text('fabricante',$m->caracteristicas[0],['class'=>'form-control', 'id'=>'fabricante'])!!}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p>{{$m->caracteristicas[1]}}</p>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::text('modelo',$m->caracteristicas[1],['class'=>'form-control', 'id'=>'modelo'])!!}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                @endunless
-                                                <td>
-                                                    <p>
-                                                        @if($m->estado == 0)
-                                                            Averiado
-                                                        @elseif($m->estado == 1)
-                                                            En buen estado
-                                                        <!Este estado esta sujeto a cambios>
-                                                        @elseif($m->estado == 2)
-                                                            En mantenimiento
-                                                        @endif
-                                                    </p>
-                                                    <b hidden>{{$m->estado}}</b>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::select('estado',$estados,$m->estado,['class'=>'form-control', 'id'=>'estado'])!!}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    @unless($m->laboratorio == null)
-                                                    <p>
-                                                            {{$m->lab->nombre}}
-                                                    </p>
-                                                    <b hidden>{{$m->lab->_id}}</b>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::select('estado',$laboratorios,$m->lab->_id,['class'=>'form-control', 'id'=>'estado'])!!}
-                                                        </div>
-                                                    </div>
-                                                    @endunless
-                                                </td>
-
-                                                <!-- Botones de acción -->
-                                                <th id="action_buttons">
-                                                    <button type="button"
-                                                        class="btn btn-primary m-t-6 waves-effect"
-                                                        onclick="edit('{{$m->_id}}');">
-
-                                                        <i class="material-icons">mode_edit</i>
-                                                    </button><br/>
-                                                    <button type="button"
-                                                        class="btn btn-danger m-t-6 waves-effect"
-                                                        onclick="destroy('{{$m->_id}}');">
-
-                                                        <i class="material-icons">delete</i>
-                                                    </button>
-                                                </th>
-                                                <!-- Fin de botones de acción -->
-
-                                                <th id="edit_buttons" hidden>
-                                                    <button type="button"
-                                                        class="btn btn-primary m-t-15 waves-effect"
-                                                        onclick="send('{{$m->_id}}');">
-
-                                                        <i class="material-icons">send</i>
-                                                    </button><br/>
-                                                    <button type="button"
-                                                        class="btn btn-danger m-t-15 waves-effect"
-                                                        onclick="cancel('{{$m->_id}}')">
-
-                                                        <i class="material-icons">close</i>
-                                                    </button>
-                                                </th>
-                                            </tr>
+                                        <tr>
+                                            <td>{{$m->_id}}</td>
+                                            <td>{{$m->nombre}}</td>
+                                            <td>{{$m->estado}}</td>
+                                            <td>{{$m->disponible}}</td>
+                                            <td>{{$m->lab->nombre}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-success waves-effect m-r-20"
+                                                data-toggle="modal" data-target="#{{$m->_id}}_edit">Edit</button>
+                                            </td>
+                                        </tr>
                                         @endforeach
-                                    @endunless
-                                </tbody>
-                                <!-- Find el cuerpo de la tabla de maquinaria-->
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <!-- Fin de la tabla de maquinaria -->
                     </div>
@@ -406,124 +444,7 @@
 
                         </div>
                         <!-- Inicio de la tabla de herramientas -->
-                        <div class="body table-responsive">
-                            <table class="table">
-                                <!--Cabecera de la tabla de herramientas -->
-                                <thead>
-                                    <tr>
-                                        <th>Código</th>
-                                        <th>Nombre de la maquina</th>
-                                        <th>Fabricante</th>
-                                        <th>Modelo</th>
-                                        <th>Estado</th>
-                                        <th>Laboratorio</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <!-- Fin de la cabecera de la tabla de herramientas -->
 
-                                <!-- Cuerpo de la tabla de herramientas-->
-                                <tbody>
-                                    @unless($herramienta == null)
-                                        @foreach($herramienta as $m)
-                                        @if($m->lab->edificio == "Pesados 1")
-                                            <tr id="{{$m->_id}}">
-                                                <th scope="row">{{$m->_id}}</th>
-                                                <td>
-                                                    <p>{{$m->nombre}}</p>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::text('nombre',$m->nombre,['class'=>'form-control', 'id'=>'nombre'])!!}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p>{{$m->caracteristicas[0]}}</p>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::text('fabricante',$m->caracteristicas[0],['class'=>'form-control', 'id'=>'fabricante'])!!}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p>{{$m->caracteristicas[1]}}</p>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::text('modelo',$m->caracteristicas[1],['class'=>'form-control', 'id'=>'modelo'])!!}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p>
-                                                        @if($m->estado == 0)
-                                                            Averiado
-                                                        @elseif($m->estado == 1)
-                                                            En buen estado
-                                                        <!Este estado esta sujeto a cambios>
-                                                        @elseif($m->estado == 2)
-                                                            En mantenimiento
-                                                        @endif
-                                                    </p>
-                                                    <b hidden>{{$m->estado}}</b>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::select('estado',$estados,$m->estado,['class'=>'form-control', 'id'=>'estado'])!!}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    @unless($m->laboratorio == null)
-                                                    <p>
-                                                            {{$m->lab->nombre}}
-                                                    </p>
-                                                    <b hidden>{{$m->lab->_id}}</b>
-                                                    <div class="form-group" hidden>
-                                                        <div class="form-line">
-                                                            {!!Form::select('estado',$laboratorios,$m->lab->_id,['class'=>'form-control', 'id'=>'estado'])!!}
-                                                        </div>
-                                                    </div>
-                                                    @endunless
-                                                </td>
-
-                                                <!-- Botones de acción -->
-                                                <th id="action_buttons">
-                                                    <button type="button"
-                                                        class="btn btn-primary m-t-6 waves-effect"
-                                                        onclick="edit('{{$m->_id}}');">
-
-                                                        <i class="material-icons">mode_edit</i>
-                                                    </button><br/>
-                                                    <button type="button"
-                                                        class="btn btn-danger m-t-6 waves-effect"
-                                                        onclick="destroy('{{$m->_id}}');">
-
-                                                        <i class="material-icons">delete</i>
-                                                    </button>
-                                                </th>
-                                                <!-- Fin de botones de acción -->
-
-                                                <th id="edit_buttons" hidden>
-                                                    <button type="button"
-                                                        class="btn btn-primary m-t-15 waves-effect"
-                                                        onclick="send('{{$m->_id}}');">
-
-                                                        <i class="material-icons">send</i>
-                                                    </button><br/>
-                                                    <button type="button"
-                                                        class="btn btn-danger m-t-15 waves-effect"
-                                                        onclick="cancel('{{$m->_id}}')">
-
-                                                        <i class="material-icons">close</i>
-                                                    </button>
-                                                </th>
-                                            </tr>
-                                            @endif
-                                        @endforeach
-                                    @endunless
-                                </tbody>
-                                <!-- Find el cuerpo de la tabla de herrmaientas -->
-                            </table>
-                        </div>
                         <!-- Fin de la tabla de herramientas -->
                     </div>
                 </div>
@@ -541,6 +462,18 @@
 <!-- js para la edición de la información de las maquinas -->
 <script src="{{asset('Template/custom-js/editMaquina.js')}}"></script>
 <script src="{{asset('Template/custom-js/editButtons.js')}}"></script>
+
+<!-- Jquery DataTable Plugin Js -->
+<script src="{{asset('Template/plugins/jquery-datatable/jquery.dataTables.js')}}"></script>
+<script src="{{asset('Template/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js')}}"></script>
+<script src="{{asset('Template/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('Template/plugins/jquery-datatable/extensions/export/buttons.flash.min.js')}}"></script>
+<script src="{{asset('Template/plugins/jquery-datatable/extensions/export/jszip.min.js')}}"></script>
+<script src="{{asset('Template/plugins/jquery-datatable/extensions/export/pdfmake.min.js')}}"></script>
+<script src="{{asset('Template/plugins/jquery-datatable/extensions/export/vfs_fonts.js')}}"></script>
+<script src="{{asset('Template/plugins/jquery-datatable/extensions/export/buttons.html5.min.js')}}"></script>
+<script src="{{asset('Template/plugins/jquery-datatable/extensions/export/buttons.print.min.js')}}"></script>
+<script src="{{asset('Template/js/pages/tables/jquery-datatable.js')}}"></script>
 
 <script>
     // Evita que el botón 'Enter' envie el formulario
