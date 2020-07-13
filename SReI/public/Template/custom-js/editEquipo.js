@@ -32,13 +32,15 @@ function abrirModal(eq) {
 }
 
 function setInfoModal() {
-    $("#_id_equipo").val(equipo._id);
-    $("#edit_nombre_equipo").val(equipo.nombre);
-    $("#edit_laboratorio_equipo").val(equipo.laboratorio);
-    $("#edit_fabricante_equipo").val(equipo.caracteristicas[0]);
-    $("#edit_modelo_equipo").val(equipo.caracteristicas[1]);
-    $("#edit_serie_equipo").val(equipo.caracteristicas[2]);
-    $("#edit_descripcion_equipo").val(equipo.caracteristicas[3]);
+    if(equipo.tipo != "Herramienta") {
+        $("#_id_equipo").val(equipo._id);
+        $("#edit_nombre_equipo").val(equipo.nombre);
+        $("#edit_laboratorio_equipo").val(equipo.laboratorio);
+        $("#edit_fabricante_equipo").val(equipo.caracteristicas[0]);
+        $("#edit_modelo_equipo").val(equipo.caracteristicas[1]);
+        $("#edit_serie_equipo").val(equipo.caracteristicas[2]);
+        $("#edit_descripcion_equipo").val(equipo.caracteristicas[3]);
+    }
 }
 
 function habilitarEdicion() {

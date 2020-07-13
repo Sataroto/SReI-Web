@@ -333,25 +333,98 @@
         </div>
     </div>
 </div>
-<!-- Fin modal informacion de maquinaria-->
+<!-- Fin modal informacion de maquinaria -->
 
-<!-- Modal informacion herramientas -->
-<div class="modal fade" id='herramienta_info' tabindex="-1" role="dialog">
+<!-- Modal informacion de herramienta -->
+<div class="modal fade" id="edit_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">información de la herramienta</h5>
+                <h5 class="modal-title" id="herramienta_modal_title">Información de la maquina</h5>
             </div>
             <div class="modal-body">
+                {!!Form::open(array('url'=>'/maquinaria/edit', 'method'=>'patch'))!!}
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-xs-8">
+                                {!!Form::hidden('_id_equipo',null,['id'=>'_id_equipo'])!!}
 
+                                <h5 class="card-inside-title">Nombre</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('edit_nombre_equipo', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Nombre de la maquina',
+                                            'id'=>'edit_nombre_equipo'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Laboratorio</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::select('edit_laboratorio_equipo',
+                                        $laboratorios, 0,
+                                        ['class'=>'form-control',
+                                        'id'=>'edit_laboratorio_equipo'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Fabricante</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('edit_fabricante_equipo', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Fabricante de la maquina',
+                                            'id'=>'edit_fabricante_equipo'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Modelo</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('edit_modelo_equipo', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Modelo de la maquina',
+                                            'id'=>'edit_modelo_equipo'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Numero de serie</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('edit_serie_equipo', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Numero de serie',
+                                            'id'=>'edit_serie_equipo'])!!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect"
+                    onclick="habilitarEdicion();"
+                    id="btn_editar_equipo">Editar</button>
 
+                <button type="submit" class="btn btn-link waves-effect"
+                    style="display:none;"
+                    id="btn_enviar_equipo">Enviar</button>
+                {!!Form::close()!!}
+                <button type="button" class="btn btn-link waves-effect"
+                    data-dismiss="modal"
+                    id="btn_cerrar_equipo">Cerrar</button>
+
+                <button type="button" class="btn btn-link waves-effect"
+                    style="display:none;" onclick="cancelarEdicion();"
+                    id="btn_cancelar_equipo">Cancelar</button>
             </div>
         </div>
     </div>
 </div>
-<!-- Fin modal informacion herramientas -->
+<!-- Fin modal informacion de herramienta -->
 @stop
 
 @section('content')
@@ -380,6 +453,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="home">
+                        <!-- Inicio de la tabla de maquinaria-->
                         <div class="header">
                             <h5>
                                 Maquinaria<br/>
@@ -393,7 +467,6 @@
                             </ul>
 
                         </div>
-                        <!-- Inicio de la tabla de maquinaria-->
                         <div class="body">
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
@@ -435,8 +508,10 @@
                                 </table>
                             </div>
                         </div>
-                        <!-- Fin de la tabla de maquinaria -->
                     </div>
+                    <!-- Fin de la tabla de maquinaria -->
+
+                    <!-- Inicio de la tabla de herramientas -->
                     <div role="tabpanel" class="tab-pane fade" id="profile">
                         <div class="header">
                             <h5>
@@ -451,10 +526,49 @@
                             </ul>
 
                         </div>
-                        <!-- Inicio de la tabla de herramientas -->
-
-                        <!-- Fin de la tabla de herramientas -->
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Estado</th>
+                                            <th>Disponibilidad</th>
+                                            <th>Laboratorio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Estado</th>
+                                            <th>Disponibilidad</th>
+                                            <th>Laboratorio</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach($herramienta as $h)
+                                        <tr>
+                                            <td>{{$h->_id}}</td>
+                                            <td>{{$h->nombre}}</td>
+                                            <td>{{$h->estado}}</td>
+                                            <td>{{$h->disponible}}</td>
+                                            <td>{{$h->lab->nombre}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-success waves-effect m-r-20"
+                                                data-toggle="modal" data-target="#edit_modal" onclick="abrirModal({{$m}});">Edit</button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div
                     </div>
+                    <!-- Fin de la tabla de herramientas -->
                 </div>
             </div>
         </div>
