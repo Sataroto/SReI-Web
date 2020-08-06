@@ -236,7 +236,7 @@
 <!-- Fin modal de creacion de herramienta -->
 
 <!-- Modal informacion de maquinaria -->
-<div class="modal fade" id="edit_modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="edit_modal_maquinaria" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -248,64 +248,64 @@
                     <div class="body">
                         <div class="row clearfix">
                             <div class="col-xs-8">
-                                {!!Form::hidden('_id_equipo',null,['id'=>'_id_equipo'])!!}
+                                {!!Form::hidden('_id_maquinaria',null,['id'=>'_id_maquinaria'])!!}
 
                                 <h5 class="card-inside-title">Nombre</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::text('edit_nombre_equipo', null,
+                                        {!!Form::text('edit_nombre_maquinaria', null,
                                             ['class'=>'form-control',
                                             'placeholder'=>'Nombre de la maquina',
-                                            'id'=>'edit_nombre_equipo'])!!}
+                                            'id'=>'edit_nombre_maquinaria'])!!}
                                     </div>
                                 </div>
 
                                 <h5 class="card-inside-title">Laboratorio</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::select('edit_laboratorio_equipo',
+                                        {!!Form::select('edit_laboratorio_maquinaria[]',
                                         $laboratorios, 0,
                                         ['class'=>'form-control',
-                                        'id'=>'edit_laboratorio_equipo'])!!}
+                                        'id'=>'edit_laboratorio_maquinaria'])!!}
                                     </div>
                                 </div>
 
                                 <h5 class="card-inside-title">Fabricante</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::text('edit_fabricante_equipo', null,
+                                        {!!Form::text('edit_fabricante_maquinaria', null,
                                             ['class'=>'form-control',
                                             'placeholder'=>'Fabricante de la maquina',
-                                            'id'=>'edit_fabricante_equipo'])!!}
+                                            'id'=>'edit_fabricante_maquinaria'])!!}
                                     </div>
                                 </div>
 
                                 <h5 class="card-inside-title">Modelo</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::text('edit_modelo_equipo', null,
+                                        {!!Form::text('edit_modelo_maquinaria', null,
                                             ['class'=>'form-control',
                                             'placeholder'=>'Modelo de la maquina',
-                                            'id'=>'edit_modelo_equipo'])!!}
+                                            'id'=>'edit_modelo_maquinaria'])!!}
                                     </div>
                                 </div>
 
                                 <h5 class="card-inside-title">Numero de serie</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::text('edit_serie_equipo', null,
+                                        {!!Form::text('edit_serie_maquinaria', null,
                                             ['class'=>'form-control',
                                             'placeholder'=>'Numero de serie',
-                                            'id'=>'edit_serie_equipo'])!!}
+                                            'id'=>'edit_serie_maquinaria'])!!}
                                     </div>
                                 </div>
 
                                 <h5 class="card-inside-title">Descipción</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::textarea('edit_descripcion_equipo', null,
+                                        {!!Form::textarea('edit_descripcion_maquinaria', null,
                                             ['class'=>'form-control',
-                                            'id'=>'edit_descripcion_equipo'])!!}
+                                            'id'=>'edit_descripcion_maquinaria'])!!}
                                     </div>
                                 </div>
                             </div>
@@ -315,20 +315,20 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect"
-                    onclick="habilitarEdicion();"
-                    id="btn_editar_equipo">Editar</button>
+                    onclick="habilitarEdicion('maquinaria');"
+                    id="btn_editar_maquinaria">Editar</button>
 
                 <button type="submit" class="btn btn-link waves-effect"
                     style="display:none;"
-                    id="btn_enviar_equipo">Enviar</button>
+                    id="btn_enviar_maquinaria">Enviar</button>
                 {!!Form::close()!!}
                 <button type="button" class="btn btn-link waves-effect"
                     data-dismiss="modal"
-                    id="btn_cerrar_equipo">Cerrar</button>
+                    id="btn_cerrar_maquinaria">Cerrar</button>
 
                 <button type="button" class="btn btn-link waves-effect"
-                    style="display:none;" onclick="cancelarEdicion();"
-                    id="btn_cancelar_equipo">Cancelar</button>
+                    style="display:none;" onclick="cancelarEdicion('maquinaria');"
+                    id="btn_cancelar_maquinaria">Cancelar</button>
             </div>
         </div>
     </div>
@@ -336,7 +336,7 @@
 <!-- Fin modal informacion de maquinaria -->
 
 <!-- Modal informacion de herramienta -->
-<div class="modal fade" id="edit_modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="edit_modal_herramienta" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -348,55 +348,56 @@
                     <div class="body">
                         <div class="row clearfix">
                             <div class="col-xs-8">
-                                {!!Form::hidden('_id_equipo',null,['id'=>'_id_equipo'])!!}
+                                {!!Form::hidden('_id_herramienta',null,['id'=>'_id_herramienta'])!!}
 
                                 <h5 class="card-inside-title">Nombre</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::text('edit_nombre_equipo', null,
+                                        {!!Form::text('edit_nombre_herramienta', null,
                                             ['class'=>'form-control',
                                             'placeholder'=>'Nombre de la maquina',
-                                            'id'=>'edit_nombre_equipo'])!!}
+                                            'id'=>'edit_nombre_herramienta'])!!}
                                     </div>
                                 </div>
 
                                 <h5 class="card-inside-title">Laboratorio</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::select('edit_laboratorio_equipo',
+
+                                        {!!Form::select('edit_laboratorio_herramienta',
                                         $laboratorios, 0,
                                         ['class'=>'form-control',
-                                        'id'=>'edit_laboratorio_equipo'])!!}
+                                        'id'=>'edit_laboratorio_herramienta'])!!}
                                     </div>
                                 </div>
 
                                 <h5 class="card-inside-title">Fabricante</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::text('edit_fabricante_equipo', null,
+                                        {!!Form::text('edit_fabricante_herramienta', null,
                                             ['class'=>'form-control',
                                             'placeholder'=>'Fabricante de la maquina',
-                                            'id'=>'edit_fabricante_equipo'])!!}
+                                            'id'=>'edit_fabricante_herramienta'])!!}
                                     </div>
                                 </div>
 
                                 <h5 class="card-inside-title">Modelo</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::text('edit_modelo_equipo', null,
+                                        {!!Form::text('edit_modelo_herramienta', null,
                                             ['class'=>'form-control',
                                             'placeholder'=>'Modelo de la maquina',
-                                            'id'=>'edit_modelo_equipo'])!!}
+                                            'id'=>'edit_modelo_herramienta'])!!}
                                     </div>
                                 </div>
 
                                 <h5 class="card-inside-title">Numero de serie</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::text('edit_serie_equipo', null,
+                                        {!!Form::text('edit_serie_herramienta', null,
                                             ['class'=>'form-control',
                                             'placeholder'=>'Numero de serie',
-                                            'id'=>'edit_serie_equipo'])!!}
+                                            'id'=>'edit_serie_herramienta'])!!}
                                     </div>
                                 </div>
                             </div>
@@ -406,20 +407,20 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect"
-                    onclick="habilitarEdicion();"
-                    id="btn_editar_equipo">Editar</button>
+                    onclick="habilitarEdicion('herramienta');"
+                    id="btn_editar_herramienta">Editar</button>
 
                 <button type="submit" class="btn btn-link waves-effect"
                     style="display:none;"
-                    id="btn_enviar_equipo">Enviar</button>
+                    id="btn_enviar_herramienta">Enviar</button>
                 {!!Form::close()!!}
                 <button type="button" class="btn btn-link waves-effect"
                     data-dismiss="modal"
-                    id="btn_cerrar_equipo">Cerrar</button>
+                    id="btn_cerrar_herramienta">Cerrar</button>
 
                 <button type="button" class="btn btn-link waves-effect"
-                    style="display:none;" onclick="cancelarEdicion();"
-                    id="btn_cancelar_equipo">Cancelar</button>
+                    style="display:none;" onclick="cancelarEdicion('herramienta');"
+                    id="btn_cancelar_herramienta">Cancelar</button>
             </div>
         </div>
     </div>
@@ -495,12 +496,30 @@
                                         <tr>
                                             <td>{{$m->_id}}</td>
                                             <td>{{$m->nombre}}</td>
-                                            <td>{{$m->estado}}</td>
-                                            <td>{{$m->disponible}}</td>
+                                            <td>
+                                                @switch($m->estado)
+                                                    @case(0)
+                                                        Aberiado
+                                                        @break
+                                                    @case(1)
+                                                        Funcionando
+                                                        @break
+                                                    @case(2)
+                                                        Mantenimiento
+                                                        @break
+                                                @endswitch
+                                            </td>
+                                            <td>
+                                                @if($m->disponible)
+                                                    Disponible
+                                                @else
+                                                    Ocupado
+                                                @endif
+                                            </td>
                                             <td>{{$m->lab->nombre}}</td>
                                             <td>
                                                 <button type="button" class="btn btn-success waves-effect m-r-20"
-                                                data-toggle="modal" data-target="#edit_modal" onclick="abrirModal({{$m}});">Edit</button>
+                                                data-toggle="modal" data-target="#edit_modal_maquinaria" onclick="abrirModal({{$m}});">Edit</button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -554,19 +573,37 @@
                                         <tr>
                                             <td>{{$h->_id}}</td>
                                             <td>{{$h->nombre}}</td>
-                                            <td>{{$h->estado}}</td>
-                                            <td>{{$h->disponible}}</td>
+                                            <td>
+                                                @switch($h->estado)
+                                                    @case(0)
+                                                        Aberiado
+                                                        @break
+                                                    @case(1)
+                                                        Funcionando
+                                                        @break
+                                                    @case(2)
+                                                        Mantenimiento
+                                                        @break
+                                                @endswitch
+                                            </td>
+                                            <td>
+                                                @if($h->disponible)
+                                                    Disponible
+                                                @else
+                                                    Ocupado
+                                                @endif
+                                            </td>
                                             <td>{{$h->lab->nombre}}</td>
                                             <td>
                                                 <button type="button" class="btn btn-success waves-effect m-r-20"
-                                                data-toggle="modal" data-target="#edit_modal" onclick="abrirModal({{$m}});">Edit</button>
+                                                data-toggle="modal" data-target="#edit_modal_herramienta" onclick="abrirModal({{$h}});">Edit</button>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                        </div
+                        </div>
                     </div>
                     <!-- Fin de la tabla de herramientas -->
                 </div>

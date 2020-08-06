@@ -40,8 +40,8 @@ class MaquinariaController extends Controller
             $labs = array_merge($labs, $lab);
         }
 
-//        dd($labs);
-//        die();
+        //dd($maquinaria);
+        //die();
 
         $array = [
             'maquina' => $maquinaria,

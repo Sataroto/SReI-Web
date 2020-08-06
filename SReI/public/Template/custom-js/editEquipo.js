@@ -10,55 +10,56 @@ var equipo;
 
 $(document).ready(deshabilitarModales())
 
-function deshabilitarModales() {
-    $("#edit_nombre_equipo").attr('disabled', 'disabled');
-    $("#edit_laboratorio_equipo").attr('disabled', 'disabled');
-    $("#edit_fabricante_equipo").attr('disabled', 'disabled');
-    $("#edit_modelo_equipo").attr('disabled', 'disabled');
-    $("#edit_serie_equipo").attr('disabled', 'disabled');
-    $("#edit_descripcion_equipo").attr('disabled', 'disabled');
+function deshabilitarModales(tipo) {
+    $("#edit_nombre_"+tipo).attr('disabled', 'disabled');
+    $("#edit_laboratorio_"+tipo).attr('disabled', 'disabled');
+    $("#edit_fabricante_"+tipo).attr('disabled', 'disabled');
+    $("#edit_modelo_"+tipo).attr('disabled', 'disabled');
+    $("#edit_serie_"+tipo).attr('disabled', 'disabled');
+    $("#edit_descripcion_"+tipo).attr('disabled', 'disabled');
 
-    $("#btn_editar_equipo").show();
-    $("#btn_enviar_equipo").hide();
+    $("#btn_editar_"+tipo).show();
+    $("#btn_enviar_"+tipo).hide();
 
-    $("#btn_cerrar_equipo").show();
-    $("#btn_cancelar_equipo").hide();
+    $("#btn_cerrar_"+tipo).show();
+    $("#btn_cancelar_"+tipo).hide();
 }
 
 function abrirModal(eq) {
     equipo = eq;
-    deshabilitarModales();
-    setInfoModal();
+    var tipo = equipo.tipo.toLowerCase();
+    deshabilitarModales(tipo);
+    setInfoModal(tipo);
 }
 
-function setInfoModal() {
-    if(equipo.tipo != "Herramienta") {
-        $("#_id_equipo").val(equipo._id);
-        $("#edit_nombre_equipo").val(equipo.nombre);
-        $("#edit_laboratorio_equipo").val(equipo.laboratorio);
-        $("#edit_fabricante_equipo").val(equipo.caracteristicas[0]);
-        $("#edit_modelo_equipo").val(equipo.caracteristicas[1]);
-        $("#edit_serie_equipo").val(equipo.caracteristicas[2]);
-        $("#edit_descripcion_equipo").val(equipo.caracteristicas[3]);
-    }
+function setInfoModal(tipo) {
+
+    $("#_id_"+tipo).val(equipo._id);
+    $("#edit_nombre_"+tipo).val(equipo.nombre);
+    $('#edit_laboratorio_'+tipo).val(equipo.laboratorio).change();
+    $("#edit_fabricante_"+tipo).val(equipo.caracteristicas[0]);
+    $("#edit_modelo_"+tipo).val(equipo.caracteristicas[1]);
+    $("#edit_serie_"+tipo).val(equipo.caracteristicas[2]);
+    $("#edit_descripcion_"+tipo).val(equipo.caracteristicas[3]);
+
 }
 
-function habilitarEdicion() {
-    $("#edit_nombre_equipo").removeAttr('disabled');
-    $("#edit_laboratorio_equipo").removeAttr('disabled');
-    $("#edit_fabricante_equipo").removeAttr('disabled');
-    $("#edit_modelo_equipo").removeAttr('disabled');
-    $("#edit_serie_equipo").removeAttr('disabled');
-    $("#edit_descripcion_equipo").removeAttr('disabled');
+function habilitarEdicion(tipo) {
+    $("#edit_nombre_"+tipo).removeAttr('disabled');
+    $("#edit_laboratorio_"+tipo).removeAttr('disabled');
+    $("#edit_fabricante_"+tipo).removeAttr('disabled');
+    $("#edit_modelo_"+tipo).removeAttr('disabled');
+    $("#edit_serie_"+tipo).removeAttr('disabled');
+    $("#edit_descripcion_"+tipo).removeAttr('disabled');
 
-    $("#btn_editar_equipo").hide();
-    $("#btn_enviar_equipo").show();
+    $("#btn_editar_"+tipo).hide();
+    $("#btn_enviar_"+tipo).show();
 
-    $("#btn_cerrar_equipo").hide();
-    $("#btn_cancelar_equipo").show();
+    $("#btn_cerrar_"+tipo).hide();
+    $("#btn_cancelar_"+tipo).show();
 }
 
-function cancelarEdicion() {
-    setInfoModal();
-    deshabilitarModales();
+function cancelarEdicion(tipo) {
+    setInfoModal(tipo);
+    deshabilitarModales(tipo);
 }
