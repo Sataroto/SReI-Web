@@ -120,17 +120,31 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/equipoElectronica/lista">
-                            <span>Lista de equipo de electronica</span>
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                            <i class="material-icons">settings_input_composite</i>
+                            <span>Inventario de ligeros</span>
                         </a>
-                    </li>
-                    <li>
-                        <a href="/tarjetas-programables/lista">
-                            <span>Lista de tarjetas programables</span>
-                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="/tarjetas-programables/lista">
+                                    <span>Tarjetas programables</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/equipoElectronica/lista">
+                                    <span>Equipo de electronica</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span>Equipo de general</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="/maquinaria/lista">
+                            <i class="material-icons">build</i>
                             <span>Inventario de pesados</span>
                         </a>
                     </li>
