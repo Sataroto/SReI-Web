@@ -31,12 +31,18 @@ class EquipoElectronicaController extends Controller
             la base de datos
         */
         $equipo = Equipo::where('tipo','=','Electronica')->get();
-        $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
+        $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->get();
         $herramienta = Laboratorio::where('tipo', '=', 'Herramiena');
+        $labs = [];
+
+        foreach($laboratorios as $l) {
+            $lab = [$l->_id => $l->nombre];
+            $labs = array_merge($labs, $lab);
+        }
 
         $array = [
             'equipoElectronica' => $equipo,
-            'laboratorios' => $laboratorios,
+            'laboratorios' => $labs,
             'herramienta' => $herramienta,
         ];
 

@@ -1,18 +1,10 @@
 <!--
     Versión 1.1
     Creado al 17/12/2019
-    Modificao al 02/07/2020
+    Modificao al 09/08/2020
     Editado por: obelmonte
     Copyright SReI
 -->
-
-<?php
-    $estados = [
-        "Averiado",
-        "En buen estado",
-        "En mantenimiento"
-    ];
-?>
 
 @extends('layouts.layout')
 
@@ -264,9 +256,9 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         {!!Form::select('edit_laboratorio_maquinaria[]',
-                                        $laboratorios, 0,
-                                        ['class'=>'form-control',
-                                        'id'=>'edit_laboratorio_maquinaria'])!!}
+                                            $laboratorios, 0,
+                                            ['class'=>'form-control',
+                                            'id'=>'edit_laboratorio_maquinaria'])!!}
                                     </div>
                                 </div>
 
@@ -322,6 +314,7 @@
                     style="display:none;"
                     id="btn_enviar_maquinaria">Enviar</button>
                 {!!Form::close()!!}
+
                 <button type="button" class="btn btn-link waves-effect"
                     data-dismiss="modal"
                     id="btn_cerrar_maquinaria">Cerrar</button>
@@ -518,8 +511,14 @@
                                             </td>
                                             <td>{{$m->lab->nombre}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-success waves-effect m-r-20"
-                                                data-toggle="modal" data-target="#edit_modal_maquinaria" onclick="abrirModal({{$m}});">Edit</button>
+                                                <button type="button"
+                                                        class="btn btn-success waves-effect m-r-20"
+                                                        data-toggle="modal"
+                                                        data-target="#edit_modal_maquinaria"
+                                                        onclick="abrirModal({{$m}});"
+                                                >
+                                                    Edit
+                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -618,9 +617,8 @@
 <!-- js del formulario de registro de maquinaria -->
 <script src="{{asset('Template/custom-js/maquinariaForm.js')}}"></script>
 
-<!-- js para la edición de la información de las maquinas -->
+<!-- js para la edición de la información dl equipo -->
 <script src="{{asset('Template/custom-js/editEquipo.js')}}"></script>
-<script src="{{asset('Template/custom-js/editButtons.js')}}"></script>
 
 <!-- Jquery DataTable Plugin Js -->
 <script src="{{asset('Template/plugins/jquery-datatable/jquery.dataTables.js')}}"></script>
