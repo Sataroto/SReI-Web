@@ -27,7 +27,9 @@ function deshabilitarModales(tipo) {
 
 function abrirModal(eq) {
     equipo = eq;
-    var tipo = equipo.tipo.toLowerCase();
+    var s = equipo.tipo.split(" ")[0];
+    var tipo = s.toLowerCase();
+    console.log(tipo);
     deshabilitarModales(tipo);
     setInfoModal(tipo);
 }

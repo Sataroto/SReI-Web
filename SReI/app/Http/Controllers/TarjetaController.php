@@ -151,11 +151,17 @@ class TarjetaController extends Controller
             la base de datos
         */
         $tarjetas = Equipo::where('tipo','=','Tarjeta Programable')->get();
-        $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
+        $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->get();
+        $labs = [];
+
+        foreach($laboratorios as $l) {
+            $lab = [$l->_id => $l->nombre];
+            $labs = array_merge($labs, $lab);
+        }
 
         $array = [
             'tarjeta' => $tarjetas,
-            'laboratorios' => $laboratorios
+            'laboratorios' => $labs
         ];
 
         return view('tarjetasProgramables.listaTarjetas', $array);
