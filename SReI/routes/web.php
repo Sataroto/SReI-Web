@@ -61,6 +61,9 @@ Route::get('/', function(){
     return view('ListadoAlumnos/Alumnos');
 });
 
+//---Mantenimiento ---
+Route::get('/Calendario', 'mantenimientoController@show');
+
 Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
 Route::post('/registro', 'welcomeController@registrar');
