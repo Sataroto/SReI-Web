@@ -11,6 +11,13 @@
 
 @section('css')
 <link href="{{asset('Template/plugins/fullcalendar/fullcalendar.min.css')}}" rel="stylesheet" />
+<style>
+#calendar {
+  max-width: 800px;
+  max-height: 800px;
+  margin: 10px auto;
+}
+</style>
 @stop
 
 
@@ -24,6 +31,7 @@
 <script src="{{asset('Template/plugins/fullcalendar/fullcalendar.min.js')}}"></script>
 <script src="{{asset('Template/plugins/fullcalendar/locale/es.js')}}"></script>
 <script>
+  var mantenimientos =[];//arreglo de colecciones
   $(function(){
     $("#calendar").fullCalendar(
       {
@@ -47,22 +55,70 @@
           add: {
             text: 'Nuevo',
             //bootstrapGlyphicon:'glyphicon glyphicon-plus-sign',
-            click: function() {//listener del boton
-              alert('clicked the custom button!');
-            }
+            click: function() {
+                    var nameEv = prompt('Name your new event:');
+                    var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+                    var date = moment(dateStr);
+
+                    if (date.isValid()) {
+                      $('#calendar').fullCalendar('renderEvent', {
+                        title: nameEv,
+                        start: date,
+                        allDay: true
+                      });
+                      alert('Great. Now, update your database...');
+                    } else {
+                      alert('Invalid date.');
+                    }
+                  }
           }
         },
         // ocultamos los domingos por ser dia no avil
         hiddenDays: [ 0 ],
-
         //listener de casilla
         dayClick: function(date, jsEvent, view) {
           alert('Clicked on: ' + date.format());
-        }
+        },
+        businessHours: { // horas de trabajo
+          // dias de la semana
+          dow: [ 1, 2, 3, 4, 5, 6 ], 
 
+          start: '07:00', 
+          end: '16:00', 
+        },
+/*
+ Este elemento se presentara para jalar los elementos de la API
+ el formato JSON debe ser un arreglo de colecciones del tipo:
+ [
+  {
+    title  : 'event1',
+    start  : '2010-01-01'
+  },
+  {
+    title  : 'event2',
+    start  : '2010-01-05',
+    end    : '2010-01-07'
+  },
+  {
+    title  : 'event3',
+    start  : '2010-01-09T12:30:00',
+  }
+ ]
+*/
+        eventSources: [
+
+          // your event source
+          {
+            events:mantenimientos,
+            color: 'yellow',    // an option!
+            textColor: 'black'  // an option!
+          }
+
+          // any other sources...
+
+          ]
 
       })
   });
-
 </script>
 @stop
