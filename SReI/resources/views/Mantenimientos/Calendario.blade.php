@@ -1,8 +1,8 @@
 <!--
-    Versión 1.2
+    Versión 1.3
     Creado al 30/08/2020
     Creado por: GBautista
-    Modificado al: 31/08/2020
+    Modificado al: 01/09/2020
     Editado por: GBautista
     Copyright SReI
 -->
