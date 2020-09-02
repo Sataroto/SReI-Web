@@ -20,10 +20,65 @@
 </style>
 @stop
 
+@section('popUp')
+<!-- Modal de creacion -->
+<div class="modal fade" id="addMantenimiento" tabindex="-1" role="dialog">
+    <!-- Inicio del formulario -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Nuevo mantenimiento</h5>
+            </div>
+            <div class="modal-body">
+                <!-- Contenedor del formulario -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-xs-8">
+                                <h5 class="modal-title">Nombre</h5>
+                                <div class="form-group">
+                                    <div class="form-line" id="bs_datepicker_container">
+                                    <input type="text" id="nameMant">
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Fecha inicial</h5>
+                                <div class="form-group">
+                                    <div class="form-line" id="ds_datepicker_container">
+                                      <div id = "FI"> </div>
+                                      <input type="date" id="dateStart">
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Fecha final</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                    <input type="date" id="dateEnd">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" onClick="actualizar()">Enviar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <!-- Fin del formulario mantenimiento -->
+</div>
+<!-- Fin modal -->
+
+@stop
 
 @section('content')
+<ul class="header-dropdown m-r--5">
+  <button type="button" class="btn btn-success waves-effect m-r-20"
+  data-toggle="modal" data-target="#addMantenimiento">add</button>
+</ul>
 <div id='calendar'></div>
-
 @stop()
 
 @section('js')
@@ -31,8 +86,31 @@
 <script src="{{asset('Template/plugins/fullcalendar/fullcalendar.min.js')}}"></script>
 <script src="{{asset('Template/plugins/fullcalendar/locale/es.js')}}"></script>
 <script>
+function actualizar(){
+  var nameEv = document.getElementById("nameMant").value;
+  var sD = document.getElementById("dateStart").value;
+  var eD = document.getElementById("dateEnd").value;
+  sD = moment(sD);
+  eD = moment(eD);
+  if (sD.isValid() && eD.isValid()){
+    $('#calendar').fullCalendar('renderEvent', {
+            title: nameEv,
+            start: sD,
+            end: eD,
+            allDay: false
+          });
+  }else{
+    alert('error.');
+  }
+  $('#addMantenimiento').modal('toggle');
+}
+</script>
+<script>
   var mantenimientos =[];//arreglo de colecciones
-  $(function(){
+  $(document).ready(function() { 
+
+    //window.toggel = function(){ $('#addMantenimiento').modal('toggle');}
+
     $("#calendar").fullCalendar(
       {
         header: { //presentacion con boton customizado
@@ -55,30 +133,21 @@
           add: {
             text: 'Nuevo',
             //bootstrapGlyphicon:'glyphicon glyphicon-plus-sign',
-            click: function() {
-                    var nameEv = prompt('Name your new event:');
-                    var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-                    var date = moment(dateStr);
+            click: function(){
+              //document.getElementById("demo").innerHTML = x;
 
-                    if (date.isValid()) {
-                      $('#calendar').fullCalendar('renderEvent', {
-                        title: nameEv,
-                        start: date,
-                        allDay: true
-                      });
-                      alert('Great. Now, update your database...');
-                    } else {
-                      alert('Invalid date.');
-                    }
-                  }
+              $('#addMantenimiento').modal('toggle');
+            },
           }
         },
         // ocultamos los domingos por ser dia no avil
         hiddenDays: [ 0 ],
         //listener de casilla
-        dayClick: function(date, jsEvent, view) {
-          alert('Clicked on: ' + date.format());
-        },
+        dayClick:function(date,jsEvent, view){
+            $('#addMantenimiento').modal('toggle');
+            document.getElementById("dateStart").value = date.format();
+            document.getElementById("dateEnd").value = date.add(1,"day").format();
+          }, 
         businessHours: { // horas de trabajo
           // dias de la semana
           dow: [ 1, 2, 3, 4, 5, 6 ], 
@@ -86,25 +155,6 @@
           start: '07:00', 
           end: '16:00', 
         },
-/*
- Este elemento se presentara para jalar los elementos de la API
- el formato JSON debe ser un arreglo de colecciones del tipo:
- [
-  {
-    title  : 'event1',
-    start  : '2010-01-01'
-  },
-  {
-    title  : 'event2',
-    start  : '2010-01-05',
-    end    : '2010-01-07'
-  },
-  {
-    title  : 'event3',
-    start  : '2010-01-09T12:30:00',
-  }
- ]
-*/
         eventSources: [
 
           // your event source
