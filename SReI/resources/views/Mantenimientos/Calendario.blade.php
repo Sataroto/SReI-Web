@@ -74,10 +74,6 @@
 @stop
 
 @section('content')
-<ul class="header-dropdown m-r--5">
-  <button type="button" class="btn btn-success waves-effect m-r-20"
-  data-toggle="modal" data-target="#addMantenimiento">add</button>
-</ul>
 <div id='calendar'></div>
 @stop()
 
