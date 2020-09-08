@@ -41,8 +41,35 @@ for($i=0;$i<count($usuarios);$i++){
 }
 
 $array = array("Nombre del alumno ","Boleta ","Carrera ","Estado","Accion");
+
+//<!--Este array list se hizo para rellenar la tabla con los campos de "Nombre", "Boleta", "Carrera", "Estado", "Acción" -->
+
+//<!-- muestra para bitacora -->
+$bitacora=
+array(
+    array('02/06/2019','Orlando Odiseo Belmonte Flores','Multimetro Fuente','10:00','11:30'),
+    array('02/06/2019','Jose Garica Maldonado','Osiciloscopio, Generador de Señales','10:00','11:30'),
+    array('02/06/2019','Jorge de Luna Dorado','Multimetro','12:15','14:00')
+);
+
+$bitacora_array=array();
+foreach ($bitacora as $barray){
+    if($array[3])
+    {
+        $bitacora_array[$array[2]]=$array[3];
+    }
+}
+
+for($i=0;$i<count($bitacora);$i++){
+    if($bitacora[$i][3]=="" && array_key_exists($bitacora[$i][2], $bitacora_array))
+    {
+        $usuarios[$i][3]=$colores[$usuarios[$i][2]];
+    }
+}
+
+$barray = array("Fecha","Nombre","Material","Hora de solicitud","Hora de entrega");
 ?>
-<!--Este array list se hizo para rellenar la tabla con los campos de "Nombre", "Boleta", "Carrera", "Estado", "Acción" -->
+
 
 
 @extends('layouts.layout')
@@ -119,6 +146,8 @@ $array = array("Nombre del alumno ","Boleta ","Carrera ","Estado","Accion");
                                 <li role="presentation" class="active"><a href="#home" data-toggle="tab">Alumnos</a></li>
                                 <li role="presentation"><a href="#profile" data-toggle="tab">Equipo Uso</a></li>
                                 <li role="presentation"><a href="#messages" data-toggle="tab">Pestaña1</a></li>
+				                <!-- Gayala 7-sep-20-->
+				                <li role="presentatio"><a href="#bitacora" data-toggle="tab">Bitacora</a></li>
                             </ul>
 
                             <!-- Tab panes -->
@@ -182,6 +211,56 @@ $array = array("Nombre del alumno ","Boleta ","Carrera ","Estado","Accion");
                                     <p>
                                         Insertar aqui lo necesario
                                     </p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="bitacora">
+                                <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                    <b>  <h2>
+                                          Bitacora
+                                </div>
+                                      </h2></b>
+                                      <div class="search-icon">
+                                        <i class="material-icons">search</i>
+                                        <input type="text" placeholder="Buscar">
+                                        <button type="button" class="btn bg-gray waves-effect">
+                                    
+                                        <i class="material-icons">print</i>
+                                        <span>Imprimir</span>
+                                    </button>
+                                         </div>
+                                    <p>
+                                      <!-- Inicio de la tabla -->
+                                      <div class="body table-responsive">
+                                              <table class="table">
+                                    <!--Cabecera de la tabla -->
+                                <thead>
+                                    <tr>
+                                      @foreach($barray as $bvalor)
+                                          <th>{{$bvalor}}</th>
+                                      @endforeach
+                                    </tr>
+                                </thead>
+                                        <!-- Fin de la cabecera de la tabla -->
+
+                                    <!-- Cuerpo de la tabla -->
+                                <tbody>
+                                  @foreach($bitacora as $barray)
+                                      <tr>
+                                        @foreach($barray as $bcontenido)
+
+                                            <td>{{$bcontenido}}</td>
+                                        @endforeach
+                                        <td>
+                                          <button type="button" class="btn btn-success waves-effect m-r-20"
+                                          data-toggle="modal" data-target="#defaultModal">Entregar</button>
+                                        <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+                                          </div>
+                                        </td>
+                                      </tr>
+                                  @endforeach
+                                </tbody>
+                                 <!-- Fin del cuerpo de la tabla -->
+                            </table>
                                 </div>
                             </div>
             </div>
