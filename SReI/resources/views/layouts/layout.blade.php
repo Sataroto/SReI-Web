@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -48,7 +47,7 @@
     <link href="{{asset('Template/plugins/nouislider/nouislider.min.css')}}" rel="stylesheet" />
 
     <!-- Custom Css -->
-    <link href="{{asset('Template/css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('Template/css/style.css')}}" rel="stylesheet"/>
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{{asset('Template/css/themes/all-themes.css')}}" rel="stylesheet" />
@@ -56,6 +55,33 @@
 </head>
 
 <body class="theme-blue-grey">
+    <?php
+        $modal_error = function($err) {
+            $errors = [
+                1 => 'first error',
+                2 => 'second error',
+                3 => 'third error'
+            ];
+            print(
+                "<div class='col-lg-12 col-md-3 col-sm-12 col-xs-12'>".
+                    "<div class='card'>".
+                        "<div class='body'>".
+                            "<div class='align-center'>".
+                                "<b>".
+                                    "Oops, an error ocurred</br>".
+                                    $errors[$err].
+                                "</b>".
+                            "</div>".
+                        "</div>".
+                    "</div>".
+                    /*"<div class='actions'>".
+                        "<button class='close_button' onclick='closeModal();'>Close</button>".
+                    "</div>".*/
+                "</div>"
+            );
+        };
+    ?>
+
     @yield('popUp')
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -151,7 +177,7 @@
                     <li>
                         <a href="/Calendario">
                             <i class="material-icons">event_available</i>
-                            
+
                             <span>Calendario de mantenimiento</span>
                         </a>
                     </li>
@@ -192,8 +218,9 @@
 
     <section class="content">
         <div class="container-fluid">
+            
 
-                @yield('content')
+            @yield('content')
         </div>
     </section>
 

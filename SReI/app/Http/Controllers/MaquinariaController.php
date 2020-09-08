@@ -46,7 +46,8 @@ class MaquinariaController extends Controller
         $array = [
             'maquina' => $maquinaria,
             'laboratorios' => $labs,
-            'herramienta' => $herramienta
+            'herramienta' => $herramienta,
+            'api_errors' => 1
         ];
 
         return view('maquinaria.lista', $array);

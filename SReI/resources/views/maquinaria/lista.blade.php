@@ -6,7 +6,7 @@
     Copyright SReI
 -->
 
-@extends('layouts.layout')
+@extends('layouts.layout', ['api_errors' => $api_errors])
 
 @section('css')
 <!-- JQuery DataTable Css -->
@@ -423,6 +423,7 @@
 
 @section('content')
 
+@if($api_errors == 0)
 <!-- Contenedor de la lista -->
 <div class="row clearfix">
     @if (count($errors) > 0)
@@ -611,6 +612,8 @@
     </div>
 </div>
 <!-- Fin del contenedor de la lista -->
+@endif()
+
 @stop()
 
 @section('js')
