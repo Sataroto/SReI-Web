@@ -1,7 +1,7 @@
 <?php
 /*
     Versión 1.5
-    Creado al 15/11/2019
+    Creado al 15/01/2020
     Creado por: GBautista
     Modificado al: 09/09/2020
     Editado por: GBautista
