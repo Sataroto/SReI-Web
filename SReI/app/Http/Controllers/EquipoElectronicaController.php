@@ -1,5 +1,12 @@
 <?php
-
+/*
+    Versión 1.5
+    Creado al 15/11/2019
+    Creado por: GBautista
+    Modificado al: 09/09/2020
+    Editado por: GBautista
+    Copyright SReI
+*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -31,8 +38,8 @@ class EquipoElectronicaController extends Controller
             la base de datos
         */
         $equipo = Equipo::where('tipo','=','Electronica')->get();
-        $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->get();
-        $herramienta = Laboratorio::where('tipo', '=', 'Herramiena');
+        $laboratorios = Laboratorio::where('edificio','=','Ligeros 1')->get();
+        $herramienta = Laboratorio::where('tipo','=','Herramiena');
         $labs = [];
 
         foreach($laboratorios as $l) {
@@ -51,7 +58,6 @@ class EquipoElectronicaController extends Controller
 
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'nombre' => 'required|between:3,50|alpha_num',
             'fabricante' => 'required|between:3,100|alpha_num',
@@ -82,14 +88,12 @@ class EquipoElectronicaController extends Controller
         Equipo::create([
             'tipo' => "Electronica",
             'nombre' => $request->nombre,
-
             /*
                 Estados :
                     0 -> Dañado
                     1 -> en buen estado
                     2 -> en mantenimiento
             */
-
             'estado' => 1.0,
             'disponible' => true,
             'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
@@ -118,18 +122,15 @@ class EquipoElectronicaController extends Controller
             'fabricante' => 'Por favor llene el campo "fabricante" de formulario de herramienta',
             'modelo' => 'Por favor llene el campo "Modelo" de formulario de herramienta'
         ]);
-
         $herramienta = Equippo::create([
             'tipo' => "Electronica",
             'nombre' => $request->nombre,
-
             /*
                 Estados :
                     0 -> Dañado
                     1 -> en buen estado
                     2 -> en mantenimiento
             */
-
             'estado' => 1.0,
             'disponible' => true,
             'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
@@ -141,7 +142,6 @@ class EquipoElectronicaController extends Controller
                 $request->descripcion,
             ],
         ]);
-
         return redirect('/equipoElectronica/lista');
     }
 
@@ -152,17 +152,12 @@ class EquipoElectronicaController extends Controller
      */
      public function create()
      {
-         //
-
-         $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
-
+         $laboratorios = Laboratorio::where('edificio','=','Ligeros 1')->lists('nombre','_id');
          $array = [
              'laboratorios' => $laboratorios,
          ];
-
          return view('equipoElectronica.registroEquipoElectronica', $array);
      }
-
 
     /**
      * Display the specified resource.
@@ -170,11 +165,11 @@ class EquipoElectronicaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+     public function show($id)
     {
         //
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -195,8 +190,6 @@ class EquipoElectronicaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-
         $this->validate($request, [
             'nombre' => 'required|between:3,50|alpha_num',
             'fabricante' => 'required|between:3,100|alpha_num',
@@ -213,11 +206,7 @@ class EquipoElectronicaController extends Controller
             'modelo.between' => '"Modelo" esta fuera del rango',
         ]
     );
-
-
         $equipo = Equipo::find($id);
-
-
         $equipo->update([
             'nombre' => $request->nombre,
             'estado' => $request->estado,
@@ -229,16 +218,13 @@ class EquipoElectronicaController extends Controller
   //              $request->procedencia
             ],
             'laboratorio' => new ObjectId($request->laboratorio)
-
         ]);
-
         /*Bitacora([
             'tipo' => 'Edición',
             'movimiento' => 'Maquinaria editada',
             'usuario' => new ObjectID(),
             'coleccion' => 'Equipo'
         ]);*/
-
         return response()->json(['success'=>'Got Simple Ajax Request.']);
     }
 
