@@ -1,6 +1,6 @@
 <?php
 /*
-    Versión 1.8
+    Versión 1.3
     Creado al 18/01/2020
     Creado por: RRios
     Modificado al: 09/09/2020
