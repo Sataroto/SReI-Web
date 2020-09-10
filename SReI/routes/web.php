@@ -71,6 +71,3 @@ Route::post('/registro', 'welcomeController@registrar');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-Route::get('/firetest', 'TestController@index');
