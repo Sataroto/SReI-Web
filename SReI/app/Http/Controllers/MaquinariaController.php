@@ -1,4 +1,11 @@
 <?php
+/*
+    @author obelmonte
+    @date 26/05/20
+    @modificado obelmonte
+    @modified 10/09/20
+    @copyright SReI
+*/
 
 namespace App\Http\Controllers;
 
@@ -230,10 +237,7 @@ class MaquinariaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-
         $maquina = Equipo::find($id);
-
 
         $maquina->update([
             'nombre' => $request->nombre,
