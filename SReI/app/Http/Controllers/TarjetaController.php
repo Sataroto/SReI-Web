@@ -1,3 +1,10 @@
+<!--
+    Versión 1.0
+    Creado al 14/01/2020
+    Modificao al 11/09/2020
+    Editado por: lmendez
+    Copyright SReI
+-->
 <?php
 
 namespace App\Http\Controllers;
