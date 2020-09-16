@@ -13,22 +13,27 @@ class Equipo extends Eloquent
     protected $collection = 'Equipo';
 
     protected $fillable = [
+        '_id',
         'tipo',
         'nombre',
         'estado',
         'disponible',
         'propietario',
         'laboratorio',
-        'mantenimientos',
-        'mantenimiento',
         'caracteristicas',
-        'descripcion',
-        'especificaciones',
         'checklist'
     ];
 
     public function lab() {
-        return $this->hasOne('\App\Laboratorio', '_id', 'laboratorio');
+        //return $this->hasOne('\App\Laboratorio', '_id', 'laboratorio');
+        $firestore = config('global.firestore');
+        $collection = $firestore->collection('LAB');
+        $document = $collection->document($this->laboratorio);
+        $snapshot = $document->snapshot();
+        $data = $snapshot->data();
+
+        $laboratorio = new \App\Laboratorio($data);
+        return $laboratorio;
     }
 
     /*
@@ -39,4 +44,17 @@ class Equipo extends Eloquent
         return $this->embedsMany('App\checklist');
     }
 
+    public function caracteristicas() {
+        return $this->embedsOne('Caracteristicas');
+    }
+}
+
+class Carecteristicas extends Eloquent
+{
+    protected $fillable = [
+        'fabricante',
+        'modelo',
+        'serie',
+        'descripcion'
+    ];
 }
