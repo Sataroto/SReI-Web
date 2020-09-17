@@ -510,7 +510,7 @@
                                                     Ocupado
                                                 @endif
                                             </td>
-                                            <td>{{$m->lab->nombre}}</td>
+                                            <td>{{$m->lab()->nombre}}</td>
                                             <td>
                                                 <button type="button"
                                                         class="btn btn-success waves-effect m-r-20"
@@ -593,7 +593,7 @@
                                                     Ocupado
                                                 @endif
                                             </td>
-                                            <td>{{$h->lab->nombre}}</td>
+                                            <td>{{$h->lab()->nombre}}</td>
                                             <td>
                                                 <button type="button" class="btn btn-success waves-effect m-r-20"
                                                 data-toggle="modal" data-target="#edit_modal_herramienta" onclick="abrirModal({{$h}});">Edit</button>

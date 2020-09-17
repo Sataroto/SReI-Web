@@ -37,24 +37,72 @@ class MaquinariaController extends Controller
             Busqueda de los objetos de 'Equipo' de tipo 'maquinaria' dentro de
             la base de datos
         */
-        $maquinaria = Equipo::where('tipo','=','Maquinaria')->get();
-        $laboratorios = Laboratorio::where('edificio', '=', 'Pesados 1')->get();
-        $herramienta  = Equipo::where('tipo', '=', 'Herramienta')->get();
-        $labs = [];
+        $maquinaria = [];
+        $herramientas = [];
+        $laboratorios = [];
 
-        foreach($laboratorios as $l) {
-            $lab = [$l->_id => $l->nombre];
-            $labs = array_merge($labs, $lab);
+        $firestore = config('global.firestore');
+        $equipo = $firestore->collection('EQP');
+        $laboratorio = $firestore->collection('LAB');
+
+        /* -- Equipo --*/
+        // extrayendo datos
+        $query = $equipo->where('tipo', '=', 'Maquinaria');
+        $result = $query->documents();
+        $documents = $result->rows();
+
+        // reyenando el arreglo de maquinaria
+        foreach($documents as $doc) {
+            $data = $doc->data();
+
+            $obj = new Equipo($data);
+            $obj->_id = $data['id'];
+            $obj->estado = $data['estado'] - 1;
+
+            $maquina = [$obj];
+            $maquinaria = array_merge($maquinaria, $maquina);
         }
+        /* -- Fin de Equipo--*/
 
-        //dd($maquinaria);
-        //die();
+        /* -- Herramientas -- */
+        // extrayendo datos
+        $query = $equipo->where('tipo', '=', 'Herramienta');
+        $result = $query->documents();
+        $documents = $result->rows();
+
+        // reyenando arreglo de herramientas
+        foreach($documents as $doc) {
+            $data = $doc->data();
+
+            $obj = new Equipo($data);
+            $obj->_id = $data['id'];
+            $obj->estado = $data['estado'] - 1;
+
+            $herr = [$obj];
+            $herramientas = array_merge($herramientas, $herr);
+        }
+        /* -- Fin de Herramientas -- */
+
+        /* -- Laboratorios -- */
+        // extrayendo datos
+        $query = $laboratorio->where('edificio', '=', 'Y');
+        $result = $query->documents();
+        $documents = $result->rows();
+
+        // reyenando el arreglo de laboratorios
+        foreach($documents as $doc) {
+            $data = $doc->data();
+
+            $labs = [$data['id'] => $data['nombre']];
+            $laboratorios = array_merge($laboratorios, $labs);
+        }
+        /* -- Fin de Laboratorios -- */
 
         $array = [
             'maquina' => $maquinaria,
-            'laboratorios' => $labs,
-            'herramienta' => $herramienta,
-            'api_errors' => 1
+            'laboratorios' => $laboratorios,
+            'herramienta' => $herramientas,
+            'api_errors' => 0
         ];
 
         return view('maquinaria.lista', $array);
