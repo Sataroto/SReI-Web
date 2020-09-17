@@ -1,9 +1,9 @@
 <?php
 /*
-    Versión 1.5
+    Versión 1.6
     Creado al 15/01/2020
     Creado por: GBautista
-    Modificado al: 09/09/2020
+    Modificado al: 16/09/2020
     Editado por: GBautista
     Copyright SReI
 */
