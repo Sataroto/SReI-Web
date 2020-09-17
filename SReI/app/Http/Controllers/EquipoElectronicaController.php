@@ -33,24 +33,42 @@ class EquipoElectronicaController extends Controller
     }
 
     public function list() {
-        /*
-            Busqueda de los objetos de 'Equipo' de tipo 'electronica' dentro de
-            la base de datos
-        */
-        $equipo = Equipo::where('tipo','=','Electronica')->get();
-        $laboratorios = Laboratorio::where('edificio','=','Ligeros 1')->get();
-        $herramienta = Laboratorio::where('tipo','=','Herramiena');
-        $labs = [];
+        //arreglos necesarios
+        $equipos=[];
+        $labs=[];
+        //conexion con base de datos 
+        $firetore = config('global.firestore');
+        $equipo = $firetore->collection('EQP');
+        $lab = $firetore->collection('LAB');
+        //datos especificos de equipo electronica 
+        $query = $equipo->where('tipo','=','Electronica');
+        $document = $query->documents()->rows();
 
-        foreach($laboratorios as $l) {
-            $lab = [$l->_id => $l->nombre];
-            $labs = array_merge($labs, $lab);
+        foreach($document as $doc){
+            $data = $doc->data();
+
+            $obj = new Equipo($data);
+            $obj->_id = $data['id'];
+
+            $aux = [$obj];
+            $equipo = array_merge($equipos,$aux);
+        }
+        //datos especificos de laboratorio electronica
+        $query = $lab->where('edificio','=','X');
+        $document = $query->documents()->rows();
+        
+        foreach($document as $doc){
+            $data = $doc->data();
+
+            $aux = [$data['id'] => $data['nombre']];
+            $labs = array_merge($labs,$aux);
         }
 
+        //envio de info
         $array = [
             'equipoElectronica' => $equipo,
             'laboratorios' => $labs,
-            'herramienta' => $herramienta,
+            'api_errors' => 1
         ];
 
         return view('equipoElectronica.listaElectronica', $array);
@@ -59,30 +77,27 @@ class EquipoElectronicaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nombre' => 'required|between:3,50|alpha_num',
-            'fabricante' => 'required|between:3,100|alpha_num',
-            'modelo' =>'required|between:3,50|alpha_dash',
-            'descrip'=>'required|between:10,350',
-            'serie' => 'required|between:1,25',
-            'procede' =>'required|between:5,50'
-        ],
-        [
-            'nombre.required' => 'Por favor llene el campo "Nombre"',
-            'nombre.between' => '"Nombre" esta fuera del rango',
-            'nombre.alpha_num' => 'Favor de usar valores alfanumericos',
-            'fabricante.required' => 'Por favor llene el campo "Fabricante"',
-            'fabricante.between' => '"Fabricante" esta fuera del rango',
-            'fabricante.alpha_num' => 'Favor de usar valores alfanumericos',
-            'modelo.required' => 'Por favor llene el campo "Modelo"',
-            'modelo.between' => '"Modelo" esta fuera del rango',
-            'descrip.required' => 'Por favor llene el campo "Descripción"',
-            'descrip.between' => '"Descripcion" esta fuera del rango',
-            'serie.required' => 'Por favor llene el campo "Serie"',
-            'serie.between' => '"Serie" esta fuera del rango',
-            'procede.required' => 'Por favor llene el campo "Procedencia"',
-            'procede.between' => '"Procedencia" esta fuera del rango',
-        ]
-    );
+                'nombre' => 'required|between:3,50|alpha_num',
+                'fabricante' => 'required|between:3,100|alpha_num',
+                'modelo' =>'required|between:3,50|alpha_dash',
+                'descrip'=>'required|between:10,350',
+                'serie' => 'required|between:1,25',
+            ],
+            [
+                'nombre.required' => 'Por favor llene el campo "Nombre"',
+                'nombre.between' => '"Nombre" esta fuera del rango',
+                'nombre.alpha_num' => 'Favor de usar valores alfanumericos',
+                'fabricante.required' => 'Por favor llene el campo "Fabricante"',
+                'fabricante.between' => '"Fabricante" esta fuera del rango',
+                'fabricante.alpha_num' => 'Favor de usar valores alfanumericos',
+                'modelo.required' => 'Por favor llene el campo "Modelo"',
+                'modelo.between' => '"Modelo" esta fuera del rango',
+                'descrip.required' => 'Por favor llene el campo "Descripción"',
+                'descrip.between' => '"Descripcion" esta fuera del rango',
+                'serie.required' => 'Por favor llene el campo "Serie"',
+                'serie.between' => '"Serie" esta fuera del rango',
+            ]
+        );
 
         // Creación de objeto 'Equipo' dentro de la base de datos
         Equipo::create([
@@ -102,8 +117,7 @@ class EquipoElectronicaController extends Controller
                 $request->fabricante,
                 $request->modelo,
                 $request->descrip,
-                $request->serie,
-                $request->procede
+                $request->serie
 
             ],
         ]);
@@ -134,7 +148,7 @@ class EquipoElectronicaController extends Controller
             'estado' => 1.0,
             'disponible' => true,
             'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
-            'laboratorio' => new ObjectId($request->laboratorio),
+            'laboratorio' => $request->laboratorio,
             'caracteristicas' => [
                 $request->fabricante,
                 $request->modelo,
