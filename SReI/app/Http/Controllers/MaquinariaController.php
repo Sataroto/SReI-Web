@@ -134,75 +134,45 @@ class MaquinariaController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
-            'nombre' => 'required',
-            'fabricante' => 'required',
-            'modelo' =>'required',
-            'serie' => 'required',
-        ],
-        [
-            'nombre.required' => 'Por favor llene el campo "Nombre" del formulario de maquinaria',
-            'fabricante.required' => 'Por favor llene el campo "Fabricante" del formulario de maquinaria',
-            'modelo.required' => 'Por favor llene el campo "Modelo" del formulario de maquinaria',
-            'serie.required' => 'Por favor llene el campo "Numero de serie" del formulario de maquinaria',
-        ]
-    );
-
-    for($i=0;$i<$request->cantidad;$i++) {
-        // Creación de objeto 'Equipo' dentro de la base de datos
-        $maquina = Equipo::create([
-            'tipo' => "Maquinaria",
-            'nombre' => $request->nombre,
-
-            /*
-                Estados :
-                    0 -> Dañado
-                    1 -> en buen estado
-                    2 -> en mantenimiento
-            */
-            'estado' => 1.0,
-            'disponible' => true,
-            'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
-            'laboratorio' => new ObjectId($request->laboratorio),
-            'caracteristicas' => [],
-//            'checklist' => [],
+              'nombre' => 'required',
+              'fabricante' => 'required',
+              'modelo' =>'required',
+              'serie' => 'required',
+          ],
+          [
+              'nombre.required' => 'Por favor llene el campo "Nombre" del formulario de maquinaria',
+              'fabricante.required' => 'Por favor llene el campo "Fabricante" del formulario de maquinaria',
+              'modelo.required' => 'Por favor llene el campo "Modelo" del formulario de maquinaria',
+              'serie.required' => 'Por favor llene el campo "Numero de serie" del formulario de maquinaria',
         ]);
 
-        if(strlen($request->descripcion) == 0) {
-            $maquina->update([
-                'caracteristicas' => [
-                    $request->fabricante,
-                    $request->modelo,
-                    $request->serie
-                ],
-            ]);
-        } else {
-            $maquina->update([
-                'caracteristicas' => [
-                    $request->fabricante,
-                    $request->modelo,
-                    $request->serie,
-                    $request->descripcion
-                ],
-            ]);
-        }
+        // Conección a al API
+        $api = config('global.api');
 
-        // Recorrer el arreglo de checklist tomado del forulario
-        foreach ($request->checklist as $ch) {
+        // Datos tomados del formulario
+        $send = [
+          'nombre' => $request->nombre,
+          'caracteristicas' => [
+            'fabricanta' => $request->fabricante,
+            'modelo' => $request->modelo,
+            'serie' => $request->serie,
+            'descripcion' => $request->descripcion
+          ],
+          'tipo' => 'Maquinaria',
+          'laboratorio' => $request->laboratorio,
+        ];
 
-            /*
-            El objeto 'checklist' tiene un modelo pero no una colección
-            dentro de la base de datos, siendo un objeto embebido o
-            subcolección del objeto 'Equipo'
-            */
-            // Creació de un objeto 'checklist'
-            $check = $maquina->checklist()->create([
-                'nomenclatura' => $ch,
-                'estado' => 1.0,
-            ]);
-        }
-    }
+        // Union de datos del formulario con datos generales para los catalogos
+        $send = array_merge($send, config('global.data'));
+
+        // Consulta a la API para crear el equipo
+        $query = $api->request('POST', 'catalogos/equipo', [
+          'json' => $send
+        ]);
+
+        // Resupuesta de la API tras crear el equipo
+        $data = json_decode($query->getBody()->getContents());
 
         /*Bitacora([
             'tipo' => 'Borrado',
@@ -211,8 +181,18 @@ class MaquinariaController extends Controller
             'coleccion' => 'Equipo'
         ]);*/
 
-        //return redirect('/maquinaria/nuevo');
-        return redirect('/maquinaria/lista');
+        /*
+            Retorno segun la respuesta de la api
+                * Si la respuesta es 'true' redirige con normalidad
+                * Si la respuesta no es 'true' separa los errores y los manda de regreso
+        */
+        if($data->estatus == 'true') {
+            return redirect('/maquinaria/lista');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors($errors);
+        }
+
     }
 
     public function nuevaHerramienta(Request $request) {

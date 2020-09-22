@@ -131,7 +131,6 @@
                     </div>
                 </div>
                 <!-- Fin del contenedor del formulario -->
-                {!!Form::number('cantidad',1,['class'=>'form-control'])!!}
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-link waves-effect">Enviar</button>
@@ -214,7 +213,6 @@
                     </div>
                 </div>
                 <!-- Fin del contenedor del formulario -->
-                {!!Form::number('cantidad',1,['class'=>'form-control'])!!}
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-link waves-effect">Enviar</button>
