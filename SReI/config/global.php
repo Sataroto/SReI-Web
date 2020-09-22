@@ -16,7 +16,11 @@ $api = new Client([
 
 
 return [
-    'upiiz' => '09h0FOHyr6xF2MAzGoyP',
+    'data' => [
+        'propietario' => '09h0FOHyr6xF2MAzGoyP',
+        'estado' => 2,
+        'disponible' => true
+    ],
     // Conecciones
     'firestore' => $db,
     'api' => $api,
