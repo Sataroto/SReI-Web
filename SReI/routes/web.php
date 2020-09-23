@@ -30,6 +30,9 @@ Route::post('/tarjetas-programables/nuevo', 'TarjetaController@store');
 Route::get('/tarjetas-programables/lista', 'TarjetaController@list');
 Route::patch('/tarjetas-programables/edit/{id}', 'TarjetaController@update');
 
+//---Mapeo de Mesas---//
+Route::get('/mapeo-mesas/mapa', 'MesasController@store');
+
 //---Equipo de Electronica---//
 Route::get('/equipoElectronica/nuevo', 'EquipoElectronicaController@create');
 Route::post('/equipoElectronica/nuevo', 'EquipoElectronicaController@store');
