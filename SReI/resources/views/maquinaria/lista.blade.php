@@ -131,7 +131,6 @@
                     </div>
                 </div>
                 <!-- Fin del contenedor del formulario -->
-                {!!Form::number('cantidad',1,['class'=>'form-control'])!!}
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-link waves-effect">Enviar</button>
@@ -214,7 +213,6 @@
                     </div>
                 </div>
                 <!-- Fin del contenedor del formulario -->
-                {!!Form::number('cantidad',1,['class'=>'form-control'])!!}
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-link waves-effect">Enviar</button>
@@ -510,7 +508,7 @@
                                                     Ocupado
                                                 @endif
                                             </td>
-                                            <td>{{$m->lab->nombre}}</td>
+                                            <td>{{$m->lab()->nombre}}</td>
                                             <td>
                                                 <button type="button"
                                                         class="btn btn-success waves-effect m-r-20"
@@ -593,7 +591,7 @@
                                                     Ocupado
                                                 @endif
                                             </td>
-                                            <td>{{$h->lab->nombre}}</td>
+                                            <td>{{$h->lab()->nombre}}</td>
                                             <td>
                                                 <button type="button" class="btn btn-success waves-effect m-r-20"
                                                 data-toggle="modal" data-target="#edit_modal_herramienta" onclick="abrirModal({{$h}});">Edit</button>

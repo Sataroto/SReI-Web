@@ -71,6 +71,7 @@ Route::get('/create', 'welcomeController@formCreate');
 Route::post('/create', 'welcomeController@create');
 Route::post('/registro', 'welcomeController@registrar');
 
+Route::get('/profile', 'HomeController@profile');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

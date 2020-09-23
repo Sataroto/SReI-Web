@@ -1,12 +1,13 @@
 <!--
-    Versión 1.0
+    Versión 1.4
     Creado al 15/01/2020
-    Modificao al 16/01/2020
-    Editado por: obelmonte
+    Creado por: GBautista
+    Modificado al: 16/09/2020
+    Editado por: GBautista
     Copyright SReI
 -->
 
-@extends('layouts.layout')
+@extends('layouts.layout', ['api_errors' => $api_errors])
 
 @section('css')
 <!-- JQuery DataTable Css -->
@@ -272,7 +273,7 @@
                                                     @break
                                                 @case(2)
                                                     Mantenimiento
-                                                    $break
+                                                    @break
                                             @endswitch
                                         </td>
                                         <td>
@@ -282,7 +283,7 @@
                                                 Ocupado
                                             @endif
                                         </td>
-                                        <td>{{$e->lab->nombre}}</td>
+                                        <td>{{$e->lab()->nombre}}</td>
                                         <td>
                                             <button type="button"
                                                     class="btn btn-success waves-effect m-r-20"

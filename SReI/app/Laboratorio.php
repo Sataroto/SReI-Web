@@ -14,6 +14,5 @@ class Laboratorio extends Eloquent
         '_id',
         'edificio',
         'nombre',
-        'activo',
     ];
 }
