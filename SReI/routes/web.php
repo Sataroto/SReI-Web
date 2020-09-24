@@ -38,7 +38,6 @@ Route::get('/equipoElectronica/lista', 'EquipoElectronicaController@list');
 Route::patch('/eE/edit/{id}', 'EquipoElectronicaController@update');
 
 //---Maquinaria---//
-//Route::get('/maquinaria/nuevo', 'MaquinariaController@create');
 Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
 Route::post('maquinaria/nuevo/herramienta', 'MaquinariaController@nuevaHerramienta');
 Route::get('/maquinaria/lista', 'MaquinariaController@list');

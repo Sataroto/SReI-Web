@@ -29,7 +29,7 @@ function abrirModal(eq) {
     equipo = eq;
     var s = equipo.tipo.split(" ")[0];
     var tipo = s.toLowerCase();
-    console.log(tipo);
+    console.log(equipo.caracteristicas);
     deshabilitarModales(tipo);
     setInfoModal(tipo);
 }
@@ -39,10 +39,10 @@ function setInfoModal(tipo) {
     $("#_id_"+tipo).val(equipo._id);
     $("#edit_nombre_"+tipo).val(equipo.nombre);
     $('#edit_laboratorio_'+tipo).val(equipo.laboratorio).change();
-    $("#edit_fabricante_"+tipo).val(equipo.caracteristicas[0]);
-    $("#edit_modelo_"+tipo).val(equipo.caracteristicas[1]);
-    $("#edit_serie_"+tipo).val(equipo.caracteristicas[2]);
-    $("#edit_descripcion_"+tipo).val(equipo.caracteristicas[3]);
+    $("#edit_fabricante_"+tipo).val(equipo.caracteristicas.fabricante);
+    $("#edit_modelo_"+tipo).val(equipo.caracteristicas.modelo);
+    $("#edit_serie_"+tipo).val(equipo.caracteristicas.serie);
+    $("#edit_descripcion_"+tipo).val(equipo.caracteristicas.descripcion);
 
 }
 

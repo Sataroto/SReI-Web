@@ -84,12 +84,12 @@ class MaquinariaController extends Controller
         /* -- Fin de Herramientas -- */
 
         /* -- Laboratorios -- */
-        // extrayendo datos
+        // Extrayendo datos
         $query = $laboratorio->where('edificio', '=', 'Y');
         $result = $query->documents();
         $documents = $result->rows();
 
-        // reyenando el arreglo de laboratorios
+        // Reyenando el arreglo de laboratorios
         foreach($documents as $doc) {
             $data = $doc->data();
 
@@ -106,24 +106,6 @@ class MaquinariaController extends Controller
         ];
 
         return view('maquinaria.lista', $array);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-
-        $laboratorios = Laboratorio::where('edificio', '=', 'Pesados 1')->lists('nombre','_id');
-
-        $array = [
-            'laboratorios' => $laboratorios,
-        ];
-
-        return view('maquinaria.registro', $array);
     }
 
     /**
@@ -154,7 +136,7 @@ class MaquinariaController extends Controller
         $send = [
           'nombre' => $request->nombre,
           'caracteristicas' => [
-            'fabricanta' => $request->fabricante,
+            'fabricante' => $request->fabricante,
             'modelo' => $request->modelo,
             'serie' => $request->serie,
             'descripcion' => $request->descripcion
@@ -208,30 +190,31 @@ class MaquinariaController extends Controller
             'serie.required' => 'Por favor llene el campo "Numero de serie" del formulario de herramienta',
         ]);
 
-        for($i=0;$i<$request->cantidad;$i++) {
-        $herramienta = Equipo::create([
-            'tipo' => "Herramienta",
+        // Conección a al API
+        $api = config('global.api');
+
+        // Datos tomados del formulario
+        $send = [
             'nombre' => $request->nombre,
-
-            /*
-                Estados :
-                    0 -> Dañado
-                    1 -> en buen estado
-                    2 -> en mantenimiento
-            */
-            'estado' => 1.0,
-            'disponible' => true,
-            'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
-            'laboratorio' => new ObjectId($request->laboratorio),
             'caracteristicas' => [
-                $request->fabricante,
-                $request->modelo,
-                $request->serie,
+                'fabricante' => $request->fabricante,
+                'modelo' => $request->modelo,
+                'serie' => $request->serie
             ],
-        ]);
-        }
+            'tipo' => 'Herramienta',
+            'laboratorio' => $request->laboratorio,
+        ];
 
-        return redirect('maquinaria/lista');
+        // Union de datos del formulario con datos generales para los catalogos
+        $send = array_merge($send, config('global.data'));
+
+        // Consulta a la API para crear el equipo
+        $request = $api->request('POST', 'catalogos/equipo', [
+          'json' => $send
+        ]);
+
+        // Resupuesta de la API tras crear el equipo
+        $data = json_decode($request->getBody()->getContents());
     }
     /**
      * Display the specified resource.
@@ -245,39 +228,37 @@ class MaquinariaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-        return response()->json(['success'=>'Got Simple Ajax Request.']);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $maquina = Equipo::find($id);
+        $api = config('global.api');
 
-        $maquina->update([
-            'nombre' => $request->nombre,
-            'estado' => $request->estado,
+        $send = [
+            'id' => $request->_id_maquinaria,
+            'nombre' => $request->edit_nombre_maquinaria,
+            'tipo' => 'Maquinaria',
+            'laboratorio' => $request->edit_laboratorio_maquinaria,
             'caracteristicas' => [
-                $request->fabricante,
-                $request->modelo
+                'fabricante' => $request->edit_fabricante_maquinaria,
+                'modelo' => $request->edit_modelo_maquinaria,
+                'serie' => $request->edit_serie_maquinaria,
+                'descripcion' => $request->edit_descripcion_maquinaria
             ],
-            'laboratorio' => new ObjectId($request->laboratorio)
+            'estado' => 2,
+            'disponible' => true,
+            'propietario' => config('global.upiiz')
+        ];
 
+        $request = $api->request('POST', 'catalogos/equipo', [
+            'json' => $send
         ]);
 
+        $data = json_decode($request->getBody()->getContents());
         /*Bitacora([
             'tipo' => 'Edición',
             'movimiento' => 'Maquinaria editada',
@@ -285,7 +266,12 @@ class MaquinariaController extends Controller
             'coleccion' => 'Equipo'
         ]);*/
 
-        return response()->json(['success'=>'Got Simple Ajax Request.']);
+        if($data->estatus == 'true') {
+            return redirect('/maquinaria/lista');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors($errors);
+        }
     }
 
     /**

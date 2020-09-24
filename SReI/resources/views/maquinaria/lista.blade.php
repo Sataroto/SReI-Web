@@ -253,7 +253,7 @@
                                 <h5 class="card-inside-title">Laboratorio</h5>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        {!!Form::select('edit_laboratorio_maquinaria[]',
+                                        {!!Form::select('edit_laboratorio_maquinaria',
                                             $laboratorios, 0,
                                             ['class'=>'form-control',
                                             'id'=>'edit_laboratorio_maquinaria'])!!}
