@@ -3,7 +3,7 @@
     @author obelmonte
     @date 26/05/20
     @modificado obelmonte
-    @modified 10/09/20
+    @modified 24/09/20
     @copyright SReI
 */
 
@@ -249,12 +249,10 @@ class MaquinariaController extends Controller
                 'serie' => $request->edit_serie_maquinaria,
                 'descripcion' => $request->edit_descripcion_maquinaria
             ],
-            'estado' => 2,
-            'disponible' => true,
-            'propietario' => config('global.upiiz')
+            'estado' => $request->edit_estado_maquinaria+1
         ];
 
-        $request = $api->request('POST', 'catalogos/equipo', [
+        $request = $api->request('PUT', 'catalogos/equipo', [
             'json' => $send
         ]);
 
