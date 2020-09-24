@@ -2,7 +2,7 @@
     Versión 1.4
     Creado al 15/01/2020
     Creado por: GBautista
-    Modificado al: 16/09/2020
+    Modificado al: 24/09/2020
     Editado por: GBautista
     Copyright SReI
 -->
@@ -169,6 +169,31 @@
                                             ['class'=>'form-control',
                                             'placeholder'=>'Numero de serie',
                                             'id'=>'edit_serie_electronica'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Estado</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::radio('edit_estado_electronica',
+                                            0, false,
+                                            ['class'=>'radio-col-blue edit_estado_electronica',
+                                            'id'=>'edit_estado_electronica_0'])!!}
+                                        <label for="edit_estado_electronica_0">Aberiado</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_electronica',
+                                            1, false,
+                                            ['class'=>'radio-col-blue edit_estado_electronica',
+                                            'id'=>'edit_estado_electronica_1'])!!}
+                                        <label for="edit_estado_electronica_1">Funcionando</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_electronica',
+                                            2, false,
+                                            ['class'=>'radio-col-blue edit_estado_electronica',
+                                            'id'=>'edit_estado_electronica_2'])!!}
+                                        <label for="edit_estado_electronica_2">Mantenimiento</label>
                                     </div>
                                 </div>
 

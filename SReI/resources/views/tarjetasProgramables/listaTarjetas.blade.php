@@ -1,7 +1,7 @@
 <!--
     Versión 1.0
     Creado al 14/01/2020
-    Modificao al 10/08/2020
+    Modificao al 24/09/2020
     Editado por: obelmonte
     Copyright SReI
 -->
@@ -159,6 +159,31 @@
                                             ['class'=>'form-control',
                                             'placeholder'=>'Numero de serie',
                                             'id'=>'edit_serie_tarjeta'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Estado</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::radio('edit_estado_tarjeta',
+                                            0, false,
+                                            ['class'=>'radio-col-blue edit_estado_tarjeta',
+                                            'id'=>'edit_estado_tarjeta_0'])!!}
+                                        <label for="edit_estado_tarjeta_0">Aberiado</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_tarjeta',
+                                            1, false,
+                                            ['class'=>'radio-col-blue edit_estado_tarjeta',
+                                            'id'=>'edit_estado_tarjeta_1'])!!}
+                                        <label for="edit_estado_tarjeta_1">Funcionando</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_tarjeta',
+                                            2, false,
+                                            ['class'=>'radio-col-blue edit_estado_tarjeta',
+                                            'id'=>'edit_estado_tarjeta_2'])!!}
+                                        <label for="edit_estado_tarjeta_2">Mantenimiento</label>
                                     </div>
                                 </div>
 

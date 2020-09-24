@@ -1,7 +1,7 @@
 <!--
-    Versión 1.1
+    Versión 1.2
     Creado al 17/12/2019
-    Modificao al 09/08/2020
+    Modificao al 24/09/2020
     Editado por: obelmonte
     Copyright SReI
 -->
@@ -277,6 +277,41 @@
                                             ['class'=>'form-control',
                                             'placeholder'=>'Modelo de la maquina',
                                             'id'=>'edit_modelo_maquinaria'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Numero de serie</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('edit_serie_maquinaria', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Numero de serie',
+                                            'id'=>'edit_serie_maquinaria'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Estado</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::radio('edit_estado_maquinaria',
+                                            0, false,
+                                            ['class'=>'radio-col-blue edit_estado_maquinaria',
+                                            'id'=>'edit_estado_maquinaria_0'])!!}
+                                        <label for="edit_estado_maquinaria_0">Aberiado</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_maquinaria',
+                                            1, false,
+                                            ['class'=>'radio-col-blue edit_estado_maquinaria',
+                                            'id'=>'edit_estado_maquinaria_1'])!!}
+                                        <label for="edit_estado_maquinaria_1">Funcionando</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_maquinaria',
+                                            2, false,
+                                            ['class'=>'radio-col-blue edit_estado_maquinaria',
+                                            'id'=>'edit_estado_maquinaria_2'])!!}
+                                        <label for="edit_estado_maquinaria_2">Mantenimiento</label>
                                     </div>
                                 </div>
 

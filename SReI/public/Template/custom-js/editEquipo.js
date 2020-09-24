@@ -17,6 +17,7 @@ function deshabilitarModales(tipo) {
     $("#edit_modelo_"+tipo).attr('disabled', 'disabled');
     $("#edit_serie_"+tipo).attr('disabled', 'disabled');
     $("#edit_descripcion_"+tipo).attr('disabled', 'disabled');
+    $(".edit_estado_"+tipo).attr('disabled', 'disabled');
 
     $("#btn_editar_"+tipo).show();
     $("#btn_enviar_"+tipo).hide();
@@ -29,7 +30,6 @@ function abrirModal(eq) {
     equipo = eq;
     var s = equipo.tipo.split(" ")[0];
     var tipo = s.toLowerCase();
-    console.log(equipo.caracteristicas);
     deshabilitarModales(tipo);
     setInfoModal(tipo);
 }
@@ -43,7 +43,7 @@ function setInfoModal(tipo) {
     $("#edit_modelo_"+tipo).val(equipo.caracteristicas.modelo);
     $("#edit_serie_"+tipo).val(equipo.caracteristicas.serie);
     $("#edit_descripcion_"+tipo).val(equipo.caracteristicas.descripcion);
-
+    $("#edit_estado_"+tipo+"_"+equipo.estado).prop('checked', true);
 }
 
 function habilitarEdicion(tipo) {
@@ -53,6 +53,7 @@ function habilitarEdicion(tipo) {
     $("#edit_modelo_"+tipo).removeAttr('disabled');
     $("#edit_serie_"+tipo).removeAttr('disabled');
     $("#edit_descripcion_"+tipo).removeAttr('disabled');
+    $(".edit_estado_"+tipo).removeAttr('disabled');
 
     $("#btn_editar_"+tipo).hide();
     $("#btn_enviar_"+tipo).show();
