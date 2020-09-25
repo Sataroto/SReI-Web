@@ -1,7 +1,7 @@
 <!--
     Versión 1.2
     Creado al 17/12/2019
-    Modificao al 24/09/2020
+    Modificao al 25/09/2020
     Editado por: obelmonte
     Copyright SReI
 -->
@@ -369,7 +369,7 @@
                 <h5 class="modal-title" id="herramienta_modal_title">Información de la maquina</h5>
             </div>
             <div class="modal-body">
-                {!!Form::open(array('url'=>'/maquinaria/edit', 'method'=>'patch'))!!}
+                {!!Form::open(array('url'=>'/maquinaria/edit/herramienta', 'method'=>'patch'))!!}
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="body">
                         <div class="row clearfix">
@@ -424,6 +424,31 @@
                                             ['class'=>'form-control',
                                             'placeholder'=>'Numero de serie',
                                             'id'=>'edit_serie_herramienta'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Estado</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::radio('edit_estado_herramienta',
+                                            0, false,
+                                            ['class'=>'radio-col-blue edit_estado_herramienta',
+                                            'id'=>'edit_estado_herramienta_0'])!!}
+                                        <label for="edit_estado_herramienta_0">Aberiado</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_herramienta',
+                                            1, false,
+                                            ['class'=>'radio-col-blue edit_estado_herramienta',
+                                            'id'=>'edit_estado_herramienta_1'])!!}
+                                        <label for="edit_estado_herramienta_1">Funcionando</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_herramienta',
+                                            2, false,
+                                            ['class'=>'radio-col-blue edit_estado_herramienta',
+                                            'id'=>'edit_estado_herramienta_2'])!!}
+                                        <label for="edit_estado_herramienta_2">Mantenimiento</label>
                                     </div>
                                 </div>
                             </div>
@@ -546,12 +571,22 @@
                                             <td>{{$m->lab()->nombre}}</td>
                                             <td>
                                                 <button type="button"
-                                                        class="btn btn-success waves-effect m-r-20"
+                                                        class="btn btn-success waves-effect
+                                                                m-r-10 m-b-10"
                                                         data-toggle="modal"
                                                         data-target="#edit_modal_maquinaria"
                                                         onclick="abrirModal({{$m}});"
                                                 >
-                                                    Edit
+                                                    <i class="material-icons">visibility</i>
+                                                </button>
+                                                {!!Form::open(
+                                                    array('url'=>'/maquinaria/eliminar/'.$m->_id,
+                                                    'method'=>'delete'
+                                                ))!!}
+                                                <button type="submit"
+                                                   class="btn btn-danger waves-effect m-r-0 m-b-10"
+                                                >
+                                                    <i class="material-icons">delete</i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -628,8 +663,23 @@
                                             </td>
                                             <td>{{$h->lab()->nombre}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-success waves-effect m-r-20"
-                                                data-toggle="modal" data-target="#edit_modal_herramienta" onclick="abrirModal({{$h}});">Edit</button>
+                                                <button type="button"
+                                                        class="btn btn-success waves-effect m-r-10 m-b-10"
+                                                        data-toggle="modal"
+                                                        data-target="#edit_modal_herramienta"
+                                                        onclick="abrirModal({{$h}});"
+                                                >
+                                                    <i class="material-icons">visibility</i>
+                                                </button>
+                                                {!!Form::open(
+                                                    array('url'=>'/maquinaria/eliminar/'.$m->_id,
+                                                    'method'=>'delete'
+                                                ))!!}
+                                                <button type="submit"
+                                                   class="btn btn-danger waves-effect m-r-0 m-b-10"
+                                                >
+                                                    <i class="material-icons">delete</i>
+                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach

@@ -3,7 +3,7 @@
     @author obelmonte
     @date 26/05/20
     @modificado obelmonte
-    @modified 24/09/20
+    @modified 25/09/20
     @copyright SReI
 */
 
@@ -179,15 +179,13 @@ class MaquinariaController extends Controller
 
     public function nuevaHerramienta(Request $request) {
         $this->validate($request,[
-            'nombre' => 'required|between:3,50|alpha_num',
-            'fabricante' => 'required|between:3,100|alpha_num',
-            'modelo' =>'required|between:3,50|alpha_dash',
-            'serie' => 'required|between:3,25|alpha_dash',
+            'nombre' => 'required|between:3,50',
+            'fabricante' => 'required|between:3,100',
+
         ],[
             'nombre.required' => 'Por favor llene el campo "Nombre"',
             'fabricante.required' => 'Por favor llene el campo "Fabricante" del formulario de herramienta',
-            'modelo.required' => 'Por favor llene el campo "Modelo" del formulario de herramienta',
-            'serie.required' => 'Por favor llene el campo "Numero de serie" del formulario de herramienta',
+
         ]);
 
         // Conección a al API
@@ -215,16 +213,18 @@ class MaquinariaController extends Controller
 
         // Resupuesta de la API tras crear el equipo
         $data = json_decode($request->getBody()->getContents());
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+
+        /*
+            Retorno segun la respuesta de la api
+                * Si la respuesta es 'true' redirige con normalidad
+                * Si la respuesta no es 'true' separa los errores y los manda de regreso
+        */
+        if($data->estatus == 'true') {
+            return redirect('/maquinaria/lista');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors($errors);
+        }
     }
 
     /**
@@ -241,7 +241,6 @@ class MaquinariaController extends Controller
         $send = [
             'id' => $request->_id_maquinaria,
             'nombre' => $request->edit_nombre_maquinaria,
-            'tipo' => 'Maquinaria',
             'laboratorio' => $request->edit_laboratorio_maquinaria,
             'caracteristicas' => [
                 'fabricante' => $request->edit_fabricante_maquinaria,
@@ -272,6 +271,43 @@ class MaquinariaController extends Controller
         }
     }
 
+    public function updateHerramienta(Request $request)
+    {
+        $api = config('global.api');
+
+        $send = [
+            'id' => $request->_id_herramienta,
+            'nombre' => $request->edit_nombre_herramienta,
+            'laboratorio' => $request->edit_laboratorio_herramienta,
+            'caracteristicas' => [
+                'fabricante' => $request->edit_fabricante_herramienta,
+                'modelo' => $request->edit_modelo_herramienta,
+                'serie' => $request->edit_serie_maquinaria
+            ],
+            'estado' => $request->edit_estado_herramienta+1
+        ];
+
+        $request = $api->request('PUT', 'catalogos/equipo', [
+          'json' => $send,
+          'timeout' => 3000,
+        ]);
+
+        $data = json_decode($request->getBody()->getContents());
+        /*Bitacora([
+            'tipo' => 'Edición',
+            'movimiento' => 'Maquinaria editada',
+            'usuario' => new ObjectID(),
+            'coleccion' => 'Equipo'
+        ]);*/
+
+        if($data->estatus) {
+            return redirect('/maquinaria/lista');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors($errors);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -282,7 +318,10 @@ class MaquinariaController extends Controller
     {
         //
 
-        Equipo::find($id)->delete();
+        $api = config('global.api');
+
+        $response = $api->request('DELETE', 'catalogos/equipo/'.$id);
+        $data = json_decode($response->getBody()->getContents());
 
         /*Bitacora([
             'tipo' => 'Borrado',
@@ -291,6 +330,11 @@ class MaquinariaController extends Controller
             'coleccion' => 'Equipo'
         ]);*/
 
-        return response()->json(['success'=>'Got Simple Ajax Request.']);
+        if($data->estatus == 'true') {
+            return redirect('/maquinaria/lista');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors(['Hubo problemas al eliminar, porfabor intente de nuevo']);
+        }
     }
 }

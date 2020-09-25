@@ -38,10 +38,11 @@ Route::get('/equipoElectronica/lista', 'EquipoElectronicaController@list');
 Route::patch('/eE/edit/{id}', 'EquipoElectronicaController@update');
 
 //---Maquinaria---//
-Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
-Route::post('maquinaria/nuevo/herramienta', 'MaquinariaController@nuevaHerramienta');
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
+Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
 Route::patch('/maquinaria/edit/', 'MaquinariaController@update');
+Route::post('maquinaria/nuevo/herramienta', 'MaquinariaController@nuevaHerramienta');
+Route::patch('maquinaria/edit/herramienta', 'MaquinariaController@updateHerramienta');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
 
 //--Ejemplo fotos--//
