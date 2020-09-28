@@ -33,9 +33,9 @@ Route::patch('/tarjetas-programables/edit/{id}', 'TarjetaController@update');
 //---Equipo de Electronica---//
 Route::get('/equipoElectronica/nuevo', 'EquipoElectronicaController@create');
 Route::post('/equipoElectronica/nuevo', 'EquipoElectronicaController@store');
-Route::get('/equipoElectronica/nuevo/herramienta', 'EquipoElectronicaController@nuevaHerramienta');
 Route::get('/equipoElectronica/lista', 'EquipoElectronicaController@list');
-Route::patch('/eE/edit/{id}', 'EquipoElectronicaController@update');
+Route::patch('/equipoElectronica/edit', 'EquipoElectronicaController@update');
+Route::delete('/equipoElectronica/eliminar/{id}', 'EquipoElectronicaController@destroy');
 
 //---Maquinaria---//
 Route::get('/maquinaria/lista', 'MaquinariaController@list');

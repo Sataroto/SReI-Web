@@ -311,12 +311,22 @@
                                         <td>{{$e->lab()->nombre}}</td>
                                         <td>
                                             <button type="button"
-                                                    class="btn btn-success waves-effect m-r-20"
+                                                    class="btn btn-success waves-effect 
+                                                        m-r-10 m-b-10"
                                                     data-toggle="modal"
                                                     data-target="#edit_equipo"
                                                     onclick="abrirModal({{$e}});"
                                             >
-                                                Edit
+                                                <i class="material-icons">visibility</i>
+                                            </button>
+                                            {!!Form::open(
+                                                array('url'=>'/equipoElectronica/eliminar/'.$e->_id,
+                                                'method'=>'delete'
+                                            ))!!}
+                                            <button type="submit"
+                                                class="btn btn-danger waves-effect m-r-0 m-b-10"
+                                            >
+                                                <i class="material-icons">delete</i>
                                             </button>
                                         </td>
                                     </tr>
