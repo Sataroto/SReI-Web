@@ -18,7 +18,6 @@ use App\Equipo;
 use App\checklist;
 use App\Laboratorio;
 use App\Bitacora;
-use MongoDB\BSON\ObjectID;
 
 class MaquinariaController extends Controller
 {

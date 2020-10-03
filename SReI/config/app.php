@@ -168,15 +168,7 @@ return [
 
          /*HTML Service Provider*/
          Collective\Html\HtmlServiceProvider::class,
-
-         /*MongoDB Service Provider*/
-         Jenssegers\Mongodb\MongodbServiceProvider::class,
-         DesignMyNight\Mongodb\MongodbPassportServiceProvider::class,
-
-         /* laravel Oauth */
-         Laravel\Passport\PassportServiceProvider::class, // Para creación de api's
-         Laravel\Socialite\SocialiteServiceProvider::class, // Para login con api's externas
-
+         
         /*
          * Application Service Providers...
          */

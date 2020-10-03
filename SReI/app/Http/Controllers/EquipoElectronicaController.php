@@ -18,7 +18,6 @@ use App\Equipo;
 use App\checklist;
 use App\Laboratorio;
 use App\Bitacora;
-use MongoDB\BSON\ObjectID;
 
 class EquipoElectronicaController extends Controller
 {
@@ -36,13 +35,13 @@ class EquipoElectronicaController extends Controller
         //arreglos necesarios
         $equipos=[];
         $labs=[];
-        //conexion con base de datos 
+        //conexion con base de datos
         $firetore = config('global.firestore');
         $lab = $firetore->collection('LAB');
         //datos especificos de laboratorio electronica
         $query = $lab->where('edificio','=','X');
         $document = $query->documents()->rows();
-        
+
         foreach($document as $doc){
             $data = $doc->data();
 
@@ -54,7 +53,7 @@ class EquipoElectronicaController extends Controller
         $api = config('global.api');
         // Consulta a la API para crear el equipo
         $query = $api->request('GET', 'catalogos/equipo/tipo/Electronica');
-  
+
         // Resupuesta de la API tras crear el equipo
         $data = json_decode($query->getBody()->getContents());
 
@@ -73,15 +72,15 @@ class EquipoElectronicaController extends Controller
                 'laboratorios' => $labs,
                 'api_errors' => 1
             ];
-        
+
             return view('equipoElectronica.listaElectronica', $array);
-    
+
         } else {
             $errors = explode(',', $data->mensaje);
             return back()->withErrors($errors);
         }
     }
-    
+
 
     public function store(Request $request)
     {
@@ -130,7 +129,7 @@ class EquipoElectronicaController extends Controller
         $query = $api->request('POST', 'catalogos/equipo', [
             'json' => $send
           ]);
-  
+
         // Resupuesta de la API tras crear el equipo
         $data = json_decode($query->getBody()->getContents());
 
@@ -150,13 +149,13 @@ class EquipoElectronicaController extends Controller
      public function create()
      {
         $labs=[];
-        //conexion con base de datos 
+        //conexion con base de datos
         $firetore = config('global.firestore');
         $lab = $firetore->collection('LAB');
         //datos especificos de laboratorio electronica
         $query = $lab->where('edificio','=','X');
         $document = $query->documents()->rows();
-        
+
         foreach($document as $doc){
             $data = $doc->data();
 
@@ -180,7 +179,7 @@ class EquipoElectronicaController extends Controller
     {
         //
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -219,7 +218,7 @@ class EquipoElectronicaController extends Controller
             'json' => $send
         ]);
         $data = json_decode($request->getBody()->getContents());
-        
+
         if($data->estatus == 'true') {
             return redirect('/equipoElectronica/lista');
         } else {
