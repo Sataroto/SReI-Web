@@ -28,60 +28,36 @@
                     <!-- Inicio del formulario -->
                     {!!Form::open(array('url'=>'/mapeo-mesas/mapa',
                         'id'=>'add_mapm_form', 'method'=>'POST'))!!}
-                    <div class="row clearfix">
-                        <div class="col-xs-3">
-                            <h5 class="card-inside-title">Nombre tarjeta</h5>
-                            <div class="form-group">
-                                <div class="form-line" id="bs_datepicker_container">
-                                    {!!Form::text('nombre', null,
-                                        ['class'=>'form-control',
-                                        'placeholder'=>'nombre de la tarjeta',
-                                        'id'=>'nombre'])!!}
-                                </div>
-                            </div>
-
-                            <h5 class="card-inside-title">Laboratorio</h5>
-                            <div class="form-group">
-                                <div class="form-line" id="ds_datepicker_container">
-                                    {!!Form::select('laboratorio',
-                                        $laboratorios, 0,
-                                        ['class'=>'form-control',
-                                        'id'=>'laboratorio'])!!}
-                                </div>
-                            </div>
-
-                            <h5 class="card-inside-title">Fabricante</h5>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {!!Form::text('fabricante', null,
-                                        ['class'=>'form-control',
-                                        'placeholder'=>'Fabricante de la tarjeta',
-                                        'id'=>'fabricante'])!!}
-                                </div>
-                            </div>
-
-                            <h5 class="card-inside-title">Modelo</h5>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {!!Form::text('modelo', null,
-                                        ['class'=>'form-control',
-                                        'placeholder'=>'Modelo de la tarjeta',
-                                        'id'=>'modelo'])!!}
-                                </div>
-                            </div>
-
-                            <h5 class="card-inside-title">Descripción</h5>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {!!Form::textarea('descripcion', null,
-                                        ['class'=>'form-control',
-                                        'placeholder'=>'Descripción de la tarjeta',
-                                        'id'=>'descripcion'])!!}
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary waves-effect">Enviar</button>
-                        </div>
+                    
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_title">Mapa de mesas</h5>
+                    </div>
+             
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable" border="0">
+                        <tr >
+                            
+                            <th>A</th>
+                            <th>B</th>
+                          
+                        </tr>
+                        <tr>
+                        
+                            <th>A</th>
+                            <th>B</th>
+                            
+                        </tr>
+                        
+                        </table>
+                    </div>
+                    <div class="">
+                    <h6> Numero de mesas ocupadas:</h6>
+                    </div>
+                    <div class="">
+                    <h6> Mesas usadas:</h6>
+                    </div>
+                    <div class="">
+                    <h6> Tiempo total de uso:</h6>
                     </div>
                     {!!Form::close()!!}
                     <!-- Fin del formulario -->
