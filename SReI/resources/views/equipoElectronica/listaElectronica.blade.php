@@ -2,7 +2,7 @@
     Versión 1.4
     Creado al 15/01/2020
     Creado por: GBautista
-    Modificado al: 16/09/2020
+    Modificado al: 24/09/2020
     Editado por: GBautista
     Copyright SReI
 -->
@@ -172,6 +172,31 @@
                                     </div>
                                 </div>
 
+                                <h5 class="card-inside-title">Estado</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::radio('edit_estado_electronica',
+                                            0, false,
+                                            ['class'=>'radio-col-blue edit_estado_electronica',
+                                            'id'=>'edit_estado_electronica_0'])!!}
+                                        <label for="edit_estado_electronica_0">Aberiado</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_electronica',
+                                            1, false,
+                                            ['class'=>'radio-col-blue edit_estado_electronica',
+                                            'id'=>'edit_estado_electronica_1'])!!}
+                                        <label for="edit_estado_electronica_1">Funcionando</label>
+                                        <br/>
+
+                                        {!!Form::radio('edit_estado_electronica',
+                                            2, false,
+                                            ['class'=>'radio-col-blue edit_estado_electronica',
+                                            'id'=>'edit_estado_electronica_2'])!!}
+                                        <label for="edit_estado_electronica_2">Mantenimiento</label>
+                                    </div>
+                                </div>
+
                                 <h5 class="card-inside-title">Descipción</h5>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -286,12 +311,22 @@
                                         <td>{{$e->lab()->nombre}}</td>
                                         <td>
                                             <button type="button"
-                                                    class="btn btn-success waves-effect m-r-20"
+                                                    class="btn btn-success waves-effect 
+                                                        m-r-10 m-b-10"
                                                     data-toggle="modal"
                                                     data-target="#edit_equipo"
                                                     onclick="abrirModal({{$e}});"
                                             >
-                                                Edit
+                                                <i class="material-icons">visibility</i>
+                                            </button>
+                                            {!!Form::open(
+                                                array('url'=>'/equipoElectronica/eliminar/'.$e->_id,
+                                                'method'=>'delete'
+                                            ))!!}
+                                            <button type="submit"
+                                                class="btn btn-danger waves-effect m-r-0 m-b-10"
+                                            >
+                                                <i class="material-icons">delete</i>
                                             </button>
                                         </td>
                                     </tr>

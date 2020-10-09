@@ -3,7 +3,7 @@
     Versión 1.6
     Creado al 15/01/2020
     Creado por: GBautista
-    Modificado al: 16/09/2020
+    Modificado al: 27/09/2020
     Editado por: GBautista
     Copyright SReI
 */
@@ -18,7 +18,6 @@ use App\Equipo;
 use App\checklist;
 use App\Laboratorio;
 use App\Bitacora;
-use MongoDB\BSON\ObjectID;
 
 class EquipoElectronicaController extends Controller
 {
@@ -36,27 +35,13 @@ class EquipoElectronicaController extends Controller
         //arreglos necesarios
         $equipos=[];
         $labs=[];
-        //conexion con base de datos 
+        //conexion con base de datos
         $firetore = config('global.firestore');
-        $equipo = $firetore->collection('EQP');
         $lab = $firetore->collection('LAB');
-        //datos especificos de equipo electronica 
-        $query = $equipo->where('tipo','=','Electronica');
-        $document = $query->documents()->rows();
-
-        foreach($document as $doc){
-            $data = $doc->data();
-
-            $obj = new Equipo($data);
-            $obj->_id = $data['id'];
-
-            $aux = [$obj];
-            $equipo = array_merge($equipos,$aux);
-        }
         //datos especificos de laboratorio electronica
         $query = $lab->where('edificio','=','X');
         $document = $query->documents()->rows();
-        
+
         foreach($document as $doc){
             $data = $doc->data();
 
@@ -64,32 +49,53 @@ class EquipoElectronicaController extends Controller
             $labs = array_merge($labs,$aux);
         }
 
-        //envio de info
-        $array = [
-            'equipoElectronica' => $equipo,
-            'laboratorios' => $labs,
-            'api_errors' => 1
-        ];
+        //Conexion a API
+        $api = config('global.api');
+        // Consulta a la API para crear el equipo
+        $query = $api->request('GET', 'catalogos/equipo/tipo/Electronica');
 
-        return view('equipoElectronica.listaElectronica', $array);
+        // Resupuesta de la API tras crear el equipo
+        $data = json_decode($query->getBody()->getContents());
+
+        if($data->estatus == 'true') {
+            foreach($data->eqps as $eqp){
+                $obj = new Equipo((array)$eqp);
+                $obj->_id = $eqp->id;
+                $obj->estado = $eqp->estado - 1;
+
+                $equipo = [$obj];
+                $equipos = array_merge($equipos, $equipo);
+            }
+            //envio de info
+            $array = [
+                'equipoElectronica' => $equipos,
+                'laboratorios' => $labs,
+                'api_errors' => 1
+            ];
+
+            return view('equipoElectronica.listaElectronica', $array);
+
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors($errors);
+        }
     }
+
 
     public function store(Request $request)
     {
         $this->validate($request, [
-                'nombre' => 'required|between:3,50|alpha_num',
-                'fabricante' => 'required|between:3,100|alpha_num',
-                'modelo' =>'required|between:3,50|alpha_dash',
+                'nombre' => 'required|between:3,50',
+                'fabricante' => 'required|between:3,100',
+                'modelo' =>'required|between:3,50',
                 'descrip'=>'required|between:10,350',
                 'serie' => 'required|between:1,25',
             ],
             [
                 'nombre.required' => 'Por favor llene el campo "Nombre"',
                 'nombre.between' => '"Nombre" esta fuera del rango',
-                'nombre.alpha_num' => 'Favor de usar valores alfanumericos',
                 'fabricante.required' => 'Por favor llene el campo "Fabricante"',
                 'fabricante.between' => '"Fabricante" esta fuera del rango',
-                'fabricante.alpha_num' => 'Favor de usar valores alfanumericos',
                 'modelo.required' => 'Por favor llene el campo "Modelo"',
                 'modelo.between' => '"Modelo" esta fuera del rango',
                 'descrip.required' => 'Por favor llene el campo "Descripción"',
@@ -99,64 +105,40 @@ class EquipoElectronicaController extends Controller
             ]
         );
 
-        // Creación de objeto 'Equipo' dentro de la base de datos
-        Equipo::create([
-            'tipo' => "Electronica",
+        //Conexion a API
+
+        $api = config('global.api');
+
+        // Datos tomados del formulario
+        $send = [
             'nombre' => $request->nombre,
-            /*
-                Estados :
-                    0 -> Dañado
-                    1 -> en buen estado
-                    2 -> en mantenimiento
-            */
-            'estado' => 1.0,
-            'disponible' => true,
-            'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
-            'laboratorio' => new ObjectId($request->laboratorio),
             'caracteristicas' => [
-                $request->fabricante,
-                $request->modelo,
-                $request->descrip,
-                $request->serie
-
+              'fabricante' => $request->fabricante,
+              'modelo' => $request->modelo,
+              'serie' => $request->serie,
+              'descripcion' => $request->descrip
             ],
-        ]);
-
-        //return redirect('/equipoElectronica/nuevo');
-        return redirect('/equipoElectronica/lista');
-    }
-
-    public function nuevaHerramienta(Request $request) {
-        $this->validate($request,[
-            'nombre' => 'required|between:3,50|alpha_num',
-            'fabricante' => 'required|between:3,100|alpha_num',
-            'modelo' =>'required|between:3,50|alpha_dash',
-        ],[
-            'nombre.required' => 'Por favor llene el campo "Nombre" del formulario de herramienta',
-            'fabricante' => 'Por favor llene el campo "fabricante" de formulario de herramienta',
-            'modelo' => 'Por favor llene el campo "Modelo" de formulario de herramienta'
-        ]);
-        $herramienta = Equippo::create([
-            'tipo' => "Electronica",
-            'nombre' => $request->nombre,
-            /*
-                Estados :
-                    0 -> Dañado
-                    1 -> en buen estado
-                    2 -> en mantenimiento
-            */
-            'estado' => 1.0,
-            'disponible' => true,
-            'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
+            'tipo' => 'Electronica',
             'laboratorio' => $request->laboratorio,
-            'caracteristicas' => [
-                $request->fabricante,
-                $request->modelo,
-                $request->serie,
-                $request->descripcion,
-            ],
-        ]);
-        return redirect('/equipoElectronica/lista');
+          ];
+
+        // Union de datos del formulario con datos generales para los catalogos
+        $send = array_merge($send, config('global.data'));
+
+        // Consulta a la API para crear el equipo
+        $query = $api->request('POST', 'catalogos/equipo', [
+            'json' => $send
+          ]);
+
+        // Resupuesta de la API tras crear el equipo
+        $data = json_decode($query->getBody()->getContents());
+
+        if($data->estatus == 'true') {
+            return redirect('/equipoElectronica/lista');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors($errors);
+        }
     }
 
     /**
@@ -166,9 +148,23 @@ class EquipoElectronicaController extends Controller
      */
      public function create()
      {
-         $laboratorios = Laboratorio::where('edificio','=','Ligeros 1')->lists('nombre','_id');
+        $labs=[];
+        //conexion con base de datos
+        $firetore = config('global.firestore');
+        $lab = $firetore->collection('LAB');
+        //datos especificos de laboratorio electronica
+        $query = $lab->where('edificio','=','X');
+        $document = $query->documents()->rows();
+
+        foreach($document as $doc){
+            $data = $doc->data();
+
+            $aux = [$data['id'] => $data['nombre']];
+            $labs = array_merge($labs,$aux);
+        }
+
          $array = [
-             'laboratorios' => $laboratorios,
+             'laboratorios' => $labs,
          ];
          return view('equipoElectronica.registroEquipoElectronica', $array);
      }
@@ -183,7 +179,7 @@ class EquipoElectronicaController extends Controller
     {
         //
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -202,44 +198,34 @@ class EquipoElectronicaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $this->validate($request, [
-            'nombre' => 'required|between:3,50|alpha_num',
-            'fabricante' => 'required|between:3,100|alpha_num',
-            'modelo' =>'required|between:3,50|alpha_dash',
-        ],
-        [
-            'nombre.required' => 'Por favor llene el campo "Nombre"',
-            'nombre.between' => '"Nombre" esta fuera del rango',
-            'nombre.alpha_num' => 'Favor de usar valores alfanumericos',
-            'fabricante.required' => 'Por favor llene el campo "Fabricante"',
-            'fabricante.between' => '"Fabricante" esta fuera del rango',
-            'fabricante.alpha_num' => 'Favor de usar valores alfanumericos',
-            'modelo.required' => 'Por favor llene el campo "Modelo"',
-            'modelo.between' => '"Modelo" esta fuera del rango',
-        ]
-    );
-        $equipo = Equipo::find($id);
-        $equipo->update([
-            'nombre' => $request->nombre,
-            'estado' => $request->estado,
+        $api = config('global.api');
+        $send = [
+            'id' => $request->_id_electronica,
+            'nombre' => $request->edit_nombre_electronica,
+            'laboratorio' => $request->edit_laboratorio_electronica,
             'caracteristicas' => [
-                $request->fabricante,
-                $request->modelo,
-  //            $request->descripcion,
-  //              $request->numeroSerie,
-  //              $request->procedencia
+                'fabricante' => $request->edit_fabricante_electronica,
+                'modelo' => $request->edit_modelo_electronica,
+                'serie' => $request->edit_serie_electronica,
+                'descripcion' => $request->edit_descripcion_electronica
             ],
-            'laboratorio' => new ObjectId($request->laboratorio)
+            'estado' => $request->edit_estado_electronica+1
+        ];
+
+        $request = $api->request('PUT', 'catalogos/equipo', [
+            'json' => $send
         ]);
-        /*Bitacora([
-            'tipo' => 'Edición',
-            'movimiento' => 'Maquinaria editada',
-            'usuario' => new ObjectID(),
-            'coleccion' => 'Equipo'
-        ]);*/
-        return response()->json(['success'=>'Got Simple Ajax Request.']);
+        $data = json_decode($request->getBody()->getContents());
+
+        if($data->estatus == 'true') {
+            return redirect('/equipoElectronica/lista');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors($errors);
+        }
+
     }
 
     /**
@@ -250,6 +236,15 @@ class EquipoElectronicaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $api = config('global.api');
+
+        $response = $api->request('DELETE', 'catalogos/equipo/'.$id);
+        $data = json_decode($response->getBody()->getContents());
+        if($data->estatus == 'true') {
+            return redirect('/equipoElectronica/lista');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors(['Hubo problemas al eliminar, porfavor intente de nuevo']);
+        }
     }
 }

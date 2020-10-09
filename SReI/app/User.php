@@ -3,8 +3,8 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use DesignMyNight\Mongodb\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\Authenticable;
+//use DesignMyNight\Mongodb\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -15,9 +15,6 @@ class User extends Authenticatable
      *
      * @var array
      */
-
-     protected $connectoin = "mongobd";
-     protected $collection = "Usuarios";
 
     protected $fillable = [
         '_id',

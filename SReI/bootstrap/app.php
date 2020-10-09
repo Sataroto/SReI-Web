@@ -42,8 +42,7 @@ $app->singleton(
 );
 
 /* Configuraciones para usar mongo con Eloquent*/
-$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
-$app->register(DesignMyNight\Mongodb\MongodbPassportServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

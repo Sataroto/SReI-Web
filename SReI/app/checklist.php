@@ -2,14 +2,11 @@
 
 namespace App;
 
-//use Illuminate\Database\Eloquent\Model;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
 class checklist extends Eloquent
 {
     //
-    protected $connection = 'mongodb';
-    protected $collection = 'checklist';
 
     /*
         Al no existir una colección de checklist dentro de la base de datos

@@ -36,16 +36,16 @@ Route::get('/mapeo-mesas/mapa', 'MesasController@store');
 //---Equipo de Electronica---//
 Route::get('/equipoElectronica/nuevo', 'EquipoElectronicaController@create');
 Route::post('/equipoElectronica/nuevo', 'EquipoElectronicaController@store');
-Route::get('/equipoElectronica/nuevo/herramienta', 'EquipoElectronicaController@nuevaHerramienta');
 Route::get('/equipoElectronica/lista', 'EquipoElectronicaController@list');
-Route::patch('/eE/edit/{id}', 'EquipoElectronicaController@update');
+Route::patch('/equipoElectronica/edit', 'EquipoElectronicaController@update');
+Route::delete('/equipoElectronica/eliminar/{id}', 'EquipoElectronicaController@destroy');
 
 //---Maquinaria---//
-//Route::get('/maquinaria/nuevo', 'MaquinariaController@create');
-Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
-Route::post('maquinaria/nuevo/herramienta', 'MaquinariaController@nuevaHerramienta');
 Route::get('/maquinaria/lista', 'MaquinariaController@list');
+Route::post('/maquinaria/nuevo', 'MaquinariaController@store');
 Route::patch('/maquinaria/edit/', 'MaquinariaController@update');
+Route::post('maquinaria/nuevo/herramienta', 'MaquinariaController@nuevaHerramienta');
+Route::patch('maquinaria/edit/herramienta', 'MaquinariaController@updateHerramienta');
 Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
 
 //--Ejemplo fotos--//
