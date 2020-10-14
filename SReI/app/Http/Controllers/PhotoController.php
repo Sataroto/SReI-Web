@@ -24,8 +24,12 @@ class PhotoController extends Controller
 
     public function photo()
     {
-        //
         return view('Photo.photoEjemplo');
+    }
+
+    public function qr()
+    {
+        return view('Photo.QR');
     }
 
     public function read()
@@ -53,11 +57,3 @@ class PhotoController extends Controller
     }
 
 }
-/*      try {
-        $image = __DIR__ . "../wop.jpg";
-        $qrcode = new QrReader($image);
-        $this->assertSame("Hello world!", $qrcode->text());
-      } catch (Exception $e) {
-        $this->assertSame('Excepción capturada: ',  $e->getMessage(), "\n");
-      }
-  */
