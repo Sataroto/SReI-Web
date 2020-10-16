@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class checklist extends Eloquent
+class checklist extends Model
 {
     //
 

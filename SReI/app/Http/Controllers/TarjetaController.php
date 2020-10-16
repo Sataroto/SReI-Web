@@ -1,12 +1,12 @@
 <?php
-
 /*
 Versión 1.0
 Creado al 14/01/2020
-Modificao al 11/09/2020
+Modificao al 14/10/2020
 Editado por: lmendez
 Copyright SReI
 */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -19,8 +19,6 @@ use App\checklist;
 use App\Laboratorio;
 use App\Bitacora;
 
-use MongoDB\BSON\ObjectID;
-
 class TarjetaController extends Controller
 {
     /**
@@ -30,25 +28,62 @@ class TarjetaController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //objeto laboratorio donde se hace la consulta a la base de datos accediendo a el nombre y el Id
-        $laboratorio = Laboratorio::where('edificio', '=', 'Ligeros 1')->lists('nombre','_id');
+    public function list() {
+        /*
+            Busqueda de los objetos de 'Equipo' de tipo 'Tarjetas Programables' dentro de
+            la base de datos
+        */
+        $tarjetaP = [];
+        $laboratorios = [];
+
+        $firestore = config('global.firestore');
+        $equipo = $firestore->collection('EQP');
+        $laboratorio = $firestore->collection('LAB');
+
+        /* -- Tarjeta Programable--*/
+        // extrayendo datos
+        $query = $equipo->where('tipo', '=', 'Tarjetas Programables');
+        $result = $query->documents();
+        $documents = $result->rows();
+
+        // reyenando el arreglo de Tarjeta Programable
+        foreach($documents as $doc) {
+            $data = $doc->data();
+
+            $obj = new Equipo($data);
+            $obj->_id = $data['id'];
+            $obj->estado = $data['estado'] - 1;
+
+            $tarjeta = [$obj];
+            $tarjetaP = array_merge($tarjetaP, $tarjeta);
+        }
+        /* -- Fin de Tarjeta Programable--*/
+
+        /* -- Laboratorios -- */
+        // Extrayendo datos
+        $query = $laboratorio->where('edificio', '=', 'X'); 
+        $result = $query->documents();
+        $documents = $result->rows();
+
+        // Reyenando el arreglo de laboratorios
+        foreach($documents as $doc) {
+            $data = $doc->data();
+
+            $labs = [$data['id'] => $data['nombre']];
+            $laboratorios = array_merge($laboratorios, $labs);
+        }
+        /* -- Fin de Laboratorios -- */
 
         $array = [
-          'laboratorios' => $laboratorio,
-
+            'tarjeta' => $tarjetaP,
+            'laboratorios' => $laboratorios,
+            'api_errors' => 0
         ];
-        //regresa una vista que se encuentra en la direccion de los parametros
-        return view('tarjetasProgramables.registroTarjetas', $array);
+
+        return view('tarjetasProgramables.listaTarjetas', $array);
     }
 
     /**
@@ -59,60 +94,66 @@ class TarjetaController extends Controller
      */
     public function store(Request $request)
     {
-        //dentro de la clase se hacen las siguientes evaluaciones donde se marcan como campos requeridos
-        $this->validate($request,[
-            'nombre' => 'required',
-            'fabricante' => 'required',
-            'modelo' => 'required',
-            'descripcion' => 'required'
-        ],[
-            //en caso de no cumplir con algun requerimiento
-            'nombre.required' => 'Por favor llene el campo "Nombre"',
-            'fabricante.required' => 'Por favor llene el campo "Fabricante"',
-            'modelo.required' => 'Por favor llene el campo "Modelo"',
-            'descripcion.required' => 'por favor agregue una descripción'
+        //nueva tarjeta programable
+        $this->validate($request, [
+              'nombre' => 'required',
+              'fabricante' => 'required',
+              'modelo' =>'required',
+              'serie' => 'required',
+          ],
+          [
+              'nombre.required' => 'Por favor llene el campo "Nombre" del formulario de Tarjeta programable',
+              'fabricante.required' => 'Por favor llene el campo "Fabricante" del formulario de Tarjeta programable',
+              'modelo.required' => 'Por favor llene el campo "Modelo" del formulario de Tarjeta programable',
+              'serie.required' => 'Por favor llene el campo "Numero de serie" del formulario de Tarjeta programable',
         ]);
 
-        Equipo::create([
-            //parametros segidos al crear una targeta programable, aqui se pueden ver los valores por defaul y los obtenidos del formulario
-            'tipo' => 'Tarjeta Programable',
-            'nombre' => $request->nombre,
-            'estado' => 1,
-            'disponible' => true,
-            'propietario' => new ObjectId("5dd9f07fa37ae152693bc5ea"),
-            'laboratorio' => new ObjectId($request->laboratorio),
-            'caracteristicas' => [
-                $request->fabricante,
-                $request->modelo
-            ],
-            'descripcion' => $request->descripcion
+        // Conección a al API
+        $api = config('global.api');
+
+        // Datos tomados del formulario
+        $send = [
+          'nombre' => $request->nombre,
+          'caracteristicas' => [
+            'fabricante' => $request->fabricante,
+            'modelo' => $request->modelo,
+            'serie' => $request->serie,
+            'descripcion' => $request->descripcion  
+          ],
+          'tipo' => 'Tarjetas Programables',
+          'laboratorio' => $request->laboratorio,
+        ];
+
+        // Union de datos del formulario con datos generales para los catalogos
+        $send = array_merge($send, config('global.data'));
+
+        // Consulta a la API para crear la tarjeta programable
+        $query = $api->request('POST', 'catalogos/equipo', [
+          'json' => $send
         ]);
 
-        //return redirect('/tarjetas-programables/nuevo');
-        //regresa la direccion de la lista
-        return redirect('/tarjetas-programables/lista');
-    }
+        // Resupuesta de la API tras crear la tarjeta programable
+        $data = json_decode($query->getBody()->getContents());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        /*Bitacora([
+            'tipo' => 'Borrado',
+            'movimiento' => 'Tarjeta dada de baja',
+            'usuario' => new ObjectID(),
+            'coleccion' => 'Equipo'
+        ]);*/
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        /*
+            Retorno segun la respuesta de la api
+                * Si la respuesta es 'true' redirige con normalidad
+                * Si la respuesta no es 'true' separa los errores y los manda de regreso
+        */
+        if($data->estatus == 'true') {
+            return redirect('/tarjetasProgramables/listaTarjetas');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors($errors);
+        }
+
     }
 
     /**
@@ -122,23 +163,41 @@ class TarjetaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //se crea un objeto lista para hacer una consulta a la base de datos
-        $tarjeta = Equipo::find($id);
+        $api = config('global.api');
 
-        //se manda llamar el metodo update y manda la informacion obtenida en el formulario para modificarla
-        $tarjeta->update([
-            'nombre' => $request->nombre,
-            'estado' => $request->estado,
-            'laboratorio' => new ObjectID($request->laboratorio),
+        $send = [
+            'id' => $request->_id_tarjeta,
+            'nombre' => $request->edit_nombre_tarjeta,
+            'laboratorio' => $request->edit_laboratorio_tarjeta,
             'caracteristicas' => [
-                $request->fabricante,
-                $request->modelo
-            ]
+                'fabricante' => $request->edit_fabricante_tarjeta,
+                'modelo' => $request->edit_modelo_tarjeta,
+                'serie' => $request->edit_serie_tarjeta,
+                'descripcion' => $request->edit_descripcion_tarjeta
+            ],
+            'estado' => $request->edit_estado_tarjeta+1
+        ];
+
+        $request = $api->request('PUT', 'catalogos/equipo', [
+            'json' => $send
         ]);
-        //ejecuta el metodo response donde accede al Json y manda un mensaje de exito
-        return response()->json(['success' => 'Got Simple Ajax Request']);
+
+        $data = json_decode($request->getBody()->getContents());
+        /*Bitacora([
+            'tipo' => 'Edición',
+            'movimiento' => 'Tarjeta editada',
+            'usuario' => new ObjectID(),
+            'coleccion' => 'Equipo'
+        ]);*/
+
+        if($data->estatus == 'true') {
+            return redirect('/tarjetasProgramables/listaTarjetas');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors($errors);
+        }
     }
 
     /**
@@ -149,28 +208,23 @@ class TarjetaController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $api = config('global.api');
 
-    public function list() {
-        /*
-            Busqueda de los objetos de 'Equipo' de tipo 'maquinaria' dentro de
-            la base de datos
-        */
-        $tarjetas = Equipo::where('tipo','=','Tarjeta Programable')->get();
-        $laboratorios = Laboratorio::where('edificio', '=', 'Ligeros 1')->get();
-        $labs = [];
+        $response = $api->request('DELETE', 'catalogos/equipo/'.$id);
+        $data = json_decode($response->getBody()->getContents());
 
-        foreach($laboratorios as $l) {
-            $lab = [$l->_id => $l->nombre];
-            $labs = array_merge($labs, $lab);
+        /*Bitacora([
+            'tipo' => 'Borrado',
+            'movimiento' => 'Tarjeta dada de baja',
+            'usuario' => new ObjectID(),
+            'coleccion' => 'Equipo'
+        ]);*/
+
+        if($data->estatus == 'true') {
+            return redirect('/tarjetasProgramables/listaTarjetas');
+        } else {
+            $errors = explode(',', $data->mensaje);
+            return back()->withErrors(['Hubo problemas al eliminar, por favor intente de nuevo']);
         }
-
-        $array = [
-            'tarjeta' => $tarjetas,
-            'laboratorios' => $labs
-        ];
-
-        return view('tarjetasProgramables.listaTarjetas', $array);
     }
 }

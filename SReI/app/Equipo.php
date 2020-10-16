@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\checklist;
 
-class Equipo extends Eloquent
+class Equipo extends Model
 {
 
     protected $fillable = [
@@ -46,7 +46,7 @@ class Equipo extends Eloquent
     }
 }
 
-class Carecteristicas extends Eloquent
+class Carecteristicas extends Model
 {
     protected $fillable = [
         'fabricante',

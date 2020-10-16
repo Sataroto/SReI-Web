@@ -1,11 +1,11 @@
 <!--
     Versión 1.0
     Creado al 14/01/2020
-    Modificao al 24/09/2020
-    Editado por: obelmonte
+    Modificao al 14/10/2020
+    Editado por: lmendez
     Copyright SReI
 -->
-@extends('layouts.layout')
+@extends('layouts.layout', ['api_errors' => $api_errors])
 
 @section('css')
 <!-- JQuery DataTable Css -->
@@ -67,6 +67,16 @@
                                             ['class'=>'form-control',
                                             'placeholder'=>'Modelo de la tarjeta',
                                             'id'=>'modelo'])!!}
+                                    </div>
+                                </div>
+
+                                <h5 class="card-inside-title">Numero de serie</h5>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        {!!Form::text('serie', null,
+                                            ['class'=>'form-control',
+                                            'placeholder'=>'Numero de serie',
+                                            'id'=>'serie'])!!}
                                     </div>
                                 </div>
 
@@ -224,6 +234,8 @@
 @stop
 
 @section('content')
+
+@if($api_errors == 0)
 <!-- Contenedor de la lista -->
 <div class="row clearfix">
     @if (count($errors) > 0)
@@ -318,6 +330,8 @@
     </div>
 </div>
 <!-- Fin del contenedor de la lista -->
+@endif()
+
 @stop()
 
 @section('js')

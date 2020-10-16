@@ -50,6 +50,7 @@ Route::delete('/maquinaria/eliminar/{id}', 'MaquinariaController@destroy');
 
 //--Ejemplo fotos--//
 Route::get('/photo', 'PhotoController@photo');
+Route::get('/qr', 'PhotoController@qr');
 Route::post('/photo', 'PhotoController@xxj');
 Route::get('/photo/new', 'PhotoController@read');
 
